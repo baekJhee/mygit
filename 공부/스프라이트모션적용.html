@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스프라이트모션적용</title>
+    <style>
+        .dudu {
+            width: auto;
+            height: 400px;
+            /* 필수 보이는 이미지 사이즈*/
+            aspect-ratio: 239/ 383;
+            background-image: url(./img/soc_03_04_0101_n1_02_mo00/soc_03_04_0101_n1_02_mo00_sh.png);
+            background-repeat: no-repeat;
+            background-size: auto 100%;
+            /*steps(메모장에 기입되어있음)*/
+            animation: motion 3s steps(59) infinite;
+        }
+
+        @keyframes motion {
+            0% {
+                background-position: 0 center;
+            }
+
+            100% {
+                background-position: right center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dudu"></div>
+</body>
+
+</html>

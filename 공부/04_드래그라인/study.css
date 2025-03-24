@@ -1,0 +1,83 @@
+#ct {
+    background-color: rgb(40, 55, 97);
+}
+
+.dragLineContainer {
+    padding: 135px 130px 100px 25px;
+}
+
+.left {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.content {
+    margin-bottom: 65px;
+    height: 165px !important;
+    width: 400px;
+}
+
+.img1 {
+    background: url(./quiz1_01.svg)no-repeat center / contain;
+}
+
+.img2 {
+    background: url(./quiz1_02.svg)no-repeat center / contain;
+}
+
+.img3 {
+    background: url(./quiz1_03.svg)no-repeat center / contain;
+}
+
+.right_text {
+    height: 550px;
+    margin-top: 35px;
+    color: white;
+    justify-content: space-between;
+    flex-direction: column;
+    display: flex;
+}
+
+.left {
+
+    left: 450px;
+}
+
+.right {
+
+    right: 250px;
+}
+
+.top_1 {
+    top: 210px;
+}
+
+.top_2 {
+    top: 450px;
+}
+
+.top_3 {
+    top: 680px;
+}
+
+
+.dragLineArea {
+    width: 70px;
+    height: 70px;
+}
+
+.dragLineArea::after {
+    width: 50px;
+    height: 50px;
+    background: url(star.svg);
+}
+
+[data-quiz="dragLine"].complete .svgContainer line {
+    stroke: #e08737 !important;
+}
+
+.quiz-answer {
+    bottom: 50px;
+    right: 60px;
+}

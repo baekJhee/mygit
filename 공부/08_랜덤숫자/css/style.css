@@ -1,0 +1,206 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+.wrap {
+    width: 1363px;
+    height: 952px;
+    padding: 0 35px;
+    margin: auto;
+}
+
+header {
+    background-color: pink;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    width: 200px;
+    height: 50px;
+    background-color: palevioletred;
+}
+
+main {
+    position: relative;
+    height: 800px;
+    padding: 0 35px;
+    margin: auto;
+}
+
+main>span {
+    top: -50px;
+    position: relative;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgb(255, 153, 0);
+    display: inline-block;
+}
+
+main>span+div {
+    letter-spacing: -1px;
+    margin: 35px 0 0 5px;
+    width: 1100px;
+    font-size: 35px;
+    display: inline-block;
+}
+
+main>span+div>span {
+    top: 10px;
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 3px solid #999;
+}
+
+.con {
+    align-items: center;
+    margin-top: 200px;
+    justify-content: space-around;
+    display: flex;
+}
+
+.mouse {
+    text-indent: -9999px;
+    cursor: pointer;
+    float: left;
+    border: none;
+    height: 80px;
+    width: 80px;
+    background: url(../img/mouse.png)no-repeat center/ cover;
+}
+
+.con>div>ul {
+    float: left;
+    padding: 20px 30px;
+    border-radius: 20px;
+    width: 260px;
+    border: 5px solid sandybrown;
+}
+
+.con>div>ul {
+    justify-content: space-around;
+    display: flex;
+}
+
+.con>div li {
+    border-radius: 10px;
+    text-align: center;
+    font-size: 35px;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #999;
+}
+
+.con>div li:first-child {
+    border: none;
+}
+
+.con>ul {
+    overflow: hidden;
+    display: flex;
+    border-radius: 20px;
+    width: 400px;
+    border: 5px solid #999;
+}
+
+.con>ul>li {
+    font-size: 35px;
+    text-align: center;
+    margin: auto;
+    width: 200px;
+}
+
+.con>ul>li:first-child {
+    border-right: 3px solid #999;
+}
+
+.con>ul>li>div:first-child {
+    padding: 10px;
+    background-color: #c8efff;
+}
+
+.pencle {
+    opacity: .3;
+    float: left;
+    border: none;
+    background: url(../img/pencle.png) no-repeat center / cover;
+    width: 50px;
+    height: 50px;
+}
+
+input {
+    z-index: -9;
+    position: relative;
+    border: none;
+    font-size: 40px;
+    width: 135px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none;
+}
+
+footer {
+    height: 50px;
+    overflow: hidden;
+    background-color: pink;
+}
+
+footer li {
+    line-height: 45px;
+    text-align: center;
+    padding: 0 10px;
+    font-size: 20px;
+    width: 150px;
+    float: left;
+}
+
+.on {
+    opacity: 1;
+}
+
+.on_2 {
+    margin: 20px 30px 0 0;
+    background-color: skyblue;
+    border-radius: 10px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    float: left;
+    border: none;
+    height: 50px;
+    width: 50px;
+}
+
+.answer_icon {
+    right: 50px;
+    bottom: 50px;
+    position: absolute;
+    padding: 8px;
+    text-align: center;
+    background-color: skyblue;
+    border-radius: 10px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    border: none;
+    width: 70px;
+}
+
+.answer_icon::after {
+    content: "확인";
+}

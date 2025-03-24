@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <main>
+        <div>
+            <div class="img" data-index=""></div>
+        </div>
+    </main>
+    <script>
+
+        const imgs = document.querySelector(".img");
+        imgs.addEventListener("click", function () {
+            const medalIndex = imgs.getAttribute("data-index");
+            if (medalIndex < 3) {
+                imgs.setAttribute("data-index", +medalIndex + 1);
+            } else imgs.setAttribute("data-index", "0")
+        });
+        console.log(medalIndex)
+
+        /*  const imgs = document.querySelector(".img");
+          let classes = ["img", "rd", "nd", "st"];
+          let idx = 0;
+          imgs.addEventListener("click", function () {
+              imgs.classList.remove(classes[idx])
+  
+              for (let i = 0; i < classes.length; i++) {
+                  if (i == idx) {
+                      idx = (idx + 1) % classes.length;
+                      //return;
+                      break;
+                  }
+              }
+  
+              imgs.classList.add(classes[idx]);
+              console.log(idx)
+          });*/
+
+        /*const imgs = document.querySelector(".img");
+        const i = 1;
+        imgs.addEventListener("click", function () {
+            //console.log(1)
+            //imgs.className(".rd")
+            const rd = "rd"
+            // const nd = "nd"
+            // const st = "st"
+            if (imgs.classList.contains(rd)) {
+                // i++;
+                imgs.classList.remove(rd)
+                console.log(rd)
+            } else {
+                imgs.classList.add(rd)
+            }
+        })*/
+
+        /*const imgs = document.querySelector(".img");
+    function click(){
+      const i = 1
+      if(imgs.classList.contains(i)){
+          i++;
+          console.log(i)
+      }
+    }*/
+
+        /* var num = 0;
+         const imgs = document.querySelector(".img");
+          const rd = "rd"
+          const nd = "nd"
+          const st = "st"
+    
+         imgs.addEventListener("click", function () {
+            if(num<3){
+                num++;
+                //document.getElementsByClassName("img").innerHTML = num;
+                console.log(num)
+                imgs.classList.add(rd)
+            }else if(num<1){
+                imgs.classList.add(nd)
+                //imgs.classList.remove(rd)
+            } else if (num<2) {
+                imgs.classList.add(st)
+            }
+             
+         })*/
+
+        /*var num = 0;
+        const imgs = document.querySelector(".img");
+        imgs.addEventListener("click", function () {
+            num = num + 1;
+            //document.getElementsByClassName("img").innerHTML = num;
+            console.log(num)
+            
+        })*/
+
+        /* const imgs = document.querySelector(".img");
+
+         imgs.addEventListener("click", function () {
+             console.log(1)
+             imgs.className(".rd")
+           
+         })*/
+
+    </script>
+</body>
+
+</html>

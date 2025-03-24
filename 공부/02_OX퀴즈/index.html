@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/02.css">
+</head>
+
+<body>
+    <div id="wrap">
+        <main id="ct">
+            <div class="contentsBox">
+                <div class="top">
+                    <div class="img_check"></div>
+                    <p>설명을 읽고 맞으면 O 틀리면 X 표시해 보세요.</p>
+                </div>
+                <div class="contents">
+                    <div class="img_point"></div>
+                    <p>찰흙을 말리거나 구우면 단단해져 일상생활에서 사용하기에 좋은 재료다.</p>
+                    <div class="img">
+                        <div class="img_true on"></div>
+                        <div class="img_false"></div>
+                    </div>
+                </div>
+                <div class="quiz-answer">
+                    <button type="button" class="icon-answer"></button>
+                </div>
+            </div>
+        </main>
+        <section class="popup_container">
+            <div class="pop_true">
+                <div class="pop_true_img"></div>
+                <button class="popup_closeBtn"></button>
+            </div>
+            <div class="pop_false">
+                <div class="pop_false_img"></div>
+                <button class="popup_closeBtn"></button>
+            </div>
+        </section>
+    </div>
+    <script src="script/jquery.min.js"></script>
+    <!-- <script>
+            $(function () {
+                var selectedAnswer = null;
+    
+                $(".img_true").removeClass("off");
+    
+                $(".img_true").click(function () {
+                    selectedAnswer = "true";
+                    $(".quiz-answer").show();
+                    $(".img_true").removeClass("off");
+                    $(".img_false").addClass("off");
+                });
+    
+                $(".img_false").click(function () {
+                    selectedAnswer = "false";
+                    $(".quiz-answer").show();
+                    $(".img_false").removeClass("off");
+                    $(".img_true").addClass("off");
+                });
+    
+                $(".quiz-answer").click(function () {
+                    if (selectedAnswer === "true") {
+                        $(".pop_true").show();
+                    } else if (selectedAnswer === "false") {
+                        $(".pop_false").show();
+                    }
+                    $("popup_container").show();
+                });
+    
+                $(".popup_closeBtn").click(function () {
+                    $(this).closest("div").hide();
+                    $("section").hide();
+                    $(".quiz-answer").hide();
+                    $(".img_true").removeClass("off");
+                    $(".img_false").removeClass("off");
+                });
+    
+            })
+        </script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var selectedAnswer = null;
+            // 처음 로드될 때 스타일을 초기화합니다.
+            document.querySelectorAll('.img_true').forEach(function (elem) {
+                elem.classList.remove('off');
+            });
+
+            // .img_true 클릭 시
+            document.querySelectorAll('.img_true').forEach(function (elem) {
+                elem.addEventListener('click', function () {
+                    selectedAnswer = 'true';
+                    document.querySelectorAll('.quiz-answer').forEach(function (answer) {
+                        answer.style.display = 'block';
+                    });
+                    document.querySelectorAll('.img_true').forEach(function (img) {
+                        img.classList.remove('off');
+                    });
+                    document.querySelectorAll('.img_false').forEach(function (img) {
+                        img.classList.add('off');
+                    });
+                });
+            });
+
+            // .img_false 클릭 시
+            document.querySelectorAll('.img_false').forEach(function (elem) {
+                elem.addEventListener('click', function () {
+                    selectedAnswer = 'false';
+                    document.querySelectorAll('.quiz-answer').forEach(function (answer) {
+                        answer.style.display = 'block';
+                    });
+                    document.querySelectorAll('.img_false').forEach(function (img) {
+                        img.classList.remove('off');
+                    });
+                    document.querySelectorAll('.img_true').forEach(function (img) {
+                        img.classList.add('off');
+                    });
+                });
+            });
+
+            // .quiz-answer 클릭 시
+            document.querySelectorAll('.quiz-answer').forEach(function (elem) {
+                elem.addEventListener('click', function () {
+                    if (selectedAnswer === 'true') {
+                        document.querySelectorAll('.pop_true').forEach(function (pop) {
+                            pop.style.display = 'block';
+                        });
+                    } else if (selectedAnswer === 'false') {
+                        document.querySelectorAll('.pop_false').forEach(function (pop) {
+                            pop.style.display = 'block';
+                        });
+                    }
+                    document.querySelectorAll('section').forEach(function (section) {
+                        section.style.display = 'block';
+                    });
+                });
+            });
+
+            // .popup_closeBtn 클릭 시
+            document.querySelectorAll('.popup_closeBtn').forEach(function (elem) {
+                elem.addEventListener('click', function () {
+                    var closestDiv = elem.closest('div');
+                    if (closestDiv) {
+                        closestDiv.style.display = 'none';
+                    }
+                    document.querySelectorAll('section').forEach(function (section) {
+                        section.style.display = 'none';
+                    });
+                    document.querySelectorAll('.quiz-answer').forEach(function (answer) {
+                        answer.style.display = 'none';
+                    });
+                    document.querySelectorAll('.img_true').forEach(function (img) {
+                        img.classList.remove('off');
+                    });
+                    document.querySelectorAll('.img_false').forEach(function (img) {
+                        img.classList.remove('off');
+                    });
+                });
+            });
+
+        });
+    </script>
+</body>
+
+</html>

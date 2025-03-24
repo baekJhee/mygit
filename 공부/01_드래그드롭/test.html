@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="ko">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=1363,height=952" name="viewport" />
+  <title></title>
+  <link rel="preload" href="../../../../font/NotoSansCJKkr-Bold.woff" as="font" type="font/woff" crossorigin>
+  <script src="../../../../js_ts/jquery.min.js"></script>
+  <script src="../../../../js_ts/jquery-ui.min.js"></script>
+  <script src="../../../../js_ts/jquery.ui.touch-punch.min.js"></script>
+  <script src="../../../../js_ts/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../../../../css_ts_2/integrate.css" />
+  <link rel="stylesheet" href="../../../../include_ts/contents/css/integrate.css">
+  <link rel="stylesheet" href="test.css">
+</head>
+
+<body>
+
+  <div id="wrap" class="integrate step2">
+    <header id="hd">
+    </header>
+    <main id="ct">
+      <div class="dragContainer" data-quiz="dragDrop" data-option="">
+        <!-- <div class="js-dropArea dropArea" data-drop-area-answer="1"></div> -->
+        <div class="dragBox">
+          <div class="js-dragObj js-dragObj_1 lineBox gray" data-name="drag-obj" data-drag-obj-answer="1"></div>
+          <div class="js-dragObj js-dragObj_2 lineBox gray" data-name="drag-obj" data-drag-obj-answer="1"></div>
+          <div class="js-dragObj js-dragObj_3 lineBox gray" data-name="drag-obj" data-drag-obj-answer="1"></div>
+          <div class="js-dragObj js-dragObj_4 lineBox gray" data-name="drag-obj" data-drag-obj-answer="1"></div>
+          <div class="js-dragObj js-dragObj_5 lineBox gray" data-name="drag-obj" data-drag-obj-answer="1"></div>
+          <div class="js-dragObj js-dragObj_6 lineBox gray" data-name="drag-obj" data-drag-obj-answer="2"></div>
+          <div class="js-dragObj js-dragObj_7 lineBox gray" data-name="drag-obj" data-drag-obj-answer="2"></div>
+          <div class="js-dragObj js-dragObj_8 lineBox gray" data-name="drag-obj" data-drag-obj-answer="2"></div>
+          <div class="js-dragObj js-dragObj_9 lineBox gray" data-name="drag-obj" data-drag-obj-answer="2"></div>
+          <div class="js-dragObj js-dragObj_10 lineBox gray" data-name="drag-obj" data-drag-obj-answer="2"></div>
+          <div class="js-dragObj js-dragObj_11 lineBox gray" data-name="drag-obj" data-drag-obj-answer="3"></div>
+          <div class="js-dragObj js-dragObj_12 lineBox gray" data-name="drag-obj" data-drag-obj-answer="3"></div>
+          <div class="js-dragObj js-dragObj_13 lineBox gray" data-name="drag-obj" data-drag-obj-answer="3"></div>
+          <div class="js-dragObj js-dragObj_14 lineBox gray" data-name="drag-obj" data-drag-obj-answer="3"></div>
+          <div class="js-dragObj js-dragObj_15 lineBox gray" data-name="drag-obj" data-drag-obj-answer="3"></div>
+        </div>
+        <div class="dropBox">
+          <!-- <div class="img char1 lineBox pink"></div> -->
+          <div class="js-dropArea dropArea dropArea_1" data-drop-area-answer="1" data-name="drag-obj" data-index="1">
+          </div>
+          <!-- <div class="img char2 lineBox pink"></div> -->
+          <div class="js-dropArea dropArea dropArea_2" data-drop-area-answer="2" data-name="drag-obj" data-index="2">
+          </div>
+          <!-- <div class="img char3 lineBox pink"></div> -->
+          <div class="js-dropArea dropArea dropArea_3" data-drop-area-answer="3" data-name="drag-obj" data-index="3">
+          </div>
+          <div class="js-buttons quizButtons icon-answer" data-hover="" data-answer-btn=""></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../../../js_ts/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script src="../../../../js_ts/swiper.min.js"></script>
+  <script src="../../../../js_ts/video.js"></script>
+  <script src="../../../../js_ts/data.make.js"></script>
+  <script src="../../../../js_ts/common.js"></script>
+  <script type="text/javascript" src="../../../../include_ts/libs/js/ts.js"></script>
+  <script type="text/javascript" src="../../../../include_ts/libs/js/animate.js"></script>
+  <script type="text/javascript" src="../../../../include_ts/libs/js/appear.js"></script>
+  <script type="text/javascript" src="../../../../include_ts/libs/js/slider.js"></script>
+  <script type="text/javascript" src="../../../../include_ts/libs/js/scroll.js"></script>
+  <script type="text/javascript" src="../../../../include_ts/libs/js/popup.js"></script>
+  <script type="text/javascript" src="../../../../include_ts/contents/js/quiz/quiz.js"></script>
+  <script type="text/javascript" src="../../../../include_ts/contents/js/pageManager.js"></script>
+  <script src="../../../../js_ts/common.send.js"></script>
+  <script src="../../../../js_ts/common.receive.js"></script>
+  <script>
+    window.dragDropCallbacks = {
+      "drag-obj": dragCallback,
+    };
+
+    function dragCallback(DRAG) {
+      // console.log(DRAG);
+
+      if (DRAG._droppedArea) {
+        // console.log("드랍됨");      
+        // console.log(DRAG._droppedArea.element.childElementCount);
+        console.log(DRAG);
+
+        if (DRAG._droppedArea.element.childElementCount == 6) {
+          DRAG._droppedArea.DISABLED = true
+        }
+      } else {
+        console.log("드랍안됨");
+      }
+    }
+
+    const btn = document.querySelector(".quizButtons");
+    const areas = document.querySelectorAll(".dropArea")
+
+    btn.addEventListener("click", function () {
+      if (!btn.classList.contains("reset")) {
+        console.log("클릭");
+
+        areas.forEach(function (area, i) {
+          console.log(area.children);
+
+          area.innerHTML = ' ';
+
+        })
+
+      }
+    })
+  </script>
+</body>
+
+</html>

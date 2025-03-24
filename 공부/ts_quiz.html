@@ -1,0 +1,137 @@
+<!-- quiz - toggle  -->
+<!-- quiz - toggle  -->
+<!-- 1. obj를 누르면 target이 보인다. -->
+<!-- 2. data-option=”toggle”이 없을경우 toggle되지 않고 한번만 오픈 됨 -->
+<div data-quiz="toggle" data-option="toggle">
+  <div data-toggle-obj="1"></div>
+  <div data-toggle-obj="2"></div>
+  <div data-toggle-target="1"></div>
+  <div data-toggle-target="2"></div>
+  <div class="js-buttons quizButtons" data-hover="" data-answer-btn=""></div>
+</div>
+<!-- 사용가능한 콜백  -->
+<script>
+  window.$callBack.toggleAnswer = function (TOGGLE) { };
+  window.$callBack.toggleReset = function (TOGGLE) { };
+  window.$callBack.toggleClick = function (TOGGLE) { };
+  window.$callBack.toggleBack = function (TOGGLE) { };
+</script>
+<!--  -->
+<!--  -->
+<!--  -->
+<!-- quiz - input -->
+<!-- quiz - input -->
+<!-- 1. 정답버튼을 누르면 사용자 입력값이 사라지고 data-answer 값이 노출 됨. -->
+<div data-quiz="input">
+  <!-- input -->
+  <input type="text" data-input-obj="1" data-answer="정답입니다." />
+  <!-- textarea -->
+  <textarea data-input-obj="1" data-answer="정답입니다."></textarea>
+  <div class="js-buttons quizButtons" data-hover="" data-answer-btn=""></div>
+</div>
+<!-- 사용가능한 콜백  -->
+<script>
+  window.$callBack.inputAnswer = function (INPUT) { };
+  window.$callBack.inputReset = function (INPUT) { };
+</script>
+<!--  -->
+<!--  -->
+<!--  -->
+<!-- 해당 기능은 data-quiz 없이 아무 곳에서 사용 가능합니다. -->
+<div data-click-obj="1"></div>
+<div data-click-target="1"></div>
+<!-- data-quiz=”input” 인풋에 노출되는 텍스트 한계를 보완하기 위해 사용 됨. -->
+<!--  -->
+<!--  -->
+<!--  -->
+<!-- quiz - ox  -->
+<!-- quiz - ox  -->
+<!-- 1. 정답인 곳에 data-answer을 붙혀야함 -->
+<!-- 2. 정답이 모두 오픈되면 퀴즈가 끝납니다. -->
+<!-- 2-1. data-option=”noAnser”을 넣을시 정답이 오픈 되어도 정답버튼을 누르기 전까지는 퀴즈가 진행됨. -->
+<div class="quizContainer" data-quiz="ox" data-option="noAnswer">
+  <div class="oxObj" data-ox-obj="1" data-answer>
+    <div class="icon icon_o" data-ox-target="1"></div>
+  </div>
+  <div class="oxObj" data-ox-obj="2">
+    <div class="icon icon_x" data-ox-target="2"></div>
+  </div>
+  <div class="oxObj" data-ox-obj="3" data-answer>
+    <div class="icon icon_o" data-ox-target="3"></div>
+  </div>
+  <div class="js-buttons quizButtons" data-hover="" data-answer-btn=""></div>
+</div>
+<!-- 사용가능한 콜백  -->
+<script>
+  window.$callBack.oxIncorrect = function (OX) { };
+  window.$callBack.oxCorrect = function (OX) { };
+  window.$callBack.oxAnswer = function (OX) { };
+  window.$callBack.oxReset = function (OX) { };
+</script>
+<!--  -->
+<!--  -->
+<!--  -->
+<!-- quiz - dragdrop -->
+<!-- quiz - dragdrop -->
+<!-- dragObj를 감싸는 dragBox 필요 -->
+<div class="dragContainer" data-quiz="dragDrop" data-option="answer,copy" data-total-complete-count="1">
+  <div class="js-dropArea dropArea" data-drop-area-answer="1"></div>
+  <div class="dragBox">
+    <div class="js-dragObj" data-name="drag-obj" data-index="1" data-drag-obj-answer="1"></div>
+  </div>
+  <div class="js-buttons quizButtons" data-hover="" data-answer-btn=""></div>
+</div>
+<!-- 사용가능한 콜백  -->
+<script>
+  window.dragDropCallbacks = {
+    "drag-obj": dragCallback,
+  };
+
+  function dragCallback(DRAG) { }
+</script>
+<!--  -->
+<!--  -->
+<!--  -->
+<!-- quiz - dragline -->
+<!-- quiz - dragline -->
+<!-- 1. .dragLineContainer 안에  js-svgContainer 필수로 들어가야함 -->
+<!-- 2. data-total-complete-count는 총 몇개의 선이 이어지는지를 표시함 -->
+<!-- 3. js-dragLineArea(점 위치)와 js-dragLineObj(드래그 되는 object)가 세트로 존재함 -->
+<!-- 4. data-group이 다른 선끼리 매칭됨(같은 그룹끼리는 선이 이어지지 않음) -->
+<div class="dragLineContainer" data-quiz="dragLine" data-option="answer" data-total-complete-count="1">
+  <svg class="js-svgContainer svgContainer"></svg>
+  <div class="js-dragLineArea dragLineArea" data-group="1" data-name="dragLine" data-answer="1"></div>
+  <div class="js-dragLineObj dragLineObj" data-group="1" data-name="dragLine" data-answer="1"></div>
+
+  <div class="js-dragLineArea dragLineArea" data-group="2" data-name="dragLine" data-answer="1"></div>
+  <div class="js-dragLineObj dragLineObj" data-group="2" data-name="dragLine" data-answer="1"></div>
+  <div class="js-buttons quizButtons" data-hover="" data-answer-btn=""></div>
+</div>
+<!-- 사용가능한 콜백  -->
+<script>
+  window.dragDropCallbacks = {
+    dragLine: dragLineCallback,
+  };
+
+  function dragLineCallback(dragdrop) { }
+</script>
+<!--  -->
+<!--  -->
+<!--  -->
+<!-- quiz(한 페이지에 여러개의 퀴즈가 들어가고 하나의 정답 버튼으로 제어되는 경우 사용)  -->
+<!-- quiz엔 data-quiz-name, 정답버튼엔 data-quiz-chain이 들어갑니다.-->
+<div data-quiz="input" data-quiz-name="quiz">
+  <input type="text" data-input-obj="1" data-answer="정답입니다." />
+</div>
+<div data-quiz="toggle" data-option="toggle" data-quiz-name="quiz">
+  <div data-toggle-obj="1"></div>
+  <div data-toggle-target="1"></div>
+</div>
+<div class="js-chainButtons quizButtons" data-quiz-chain="quiz" data-hover=""></div>
+<!-- 사용가능한 콜백  -->
+<script>
+  window.$callBack.quizChainAnswer = function (QUIZCHAIN) { };
+  window.$callBack.quizChainReset = function (QUIZCHAIN) { };
+  window.$callBack.quizAnswer = function () { };
+  window.$callBack.quizReset = function () { };
+</script>

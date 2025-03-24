@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <h1>분수의 나눗셈</h1>
+        </header>
+        <main>
+            <span>5</span>
+            <div>친구가 불러주는숫자 3개를 <span></span> 안에 써넣어 네 자리 수를 완성하고, 반올림하여 주어진 자리까지 나타내 봅시다.</div>
+            <div class="con">
+                <div>
+                    <button class="mouse">예</button>
+                    <ul>
+                        <li>8</li>
+                        <li class="rendom st"></li>
+                        <li class="rendom nd"></li>
+                        <li class="rendom rd"></li>
+                    </ul>
+                </div>
+                <ul>
+                    <li>
+                        <div>백의 자리</div>
+                        <div>
+                            <div class="pencle"></div>
+                            <input type="number" min="0" max="9">
+                        </div>
+                    </li>
+                    <li>
+                        <div>십의 자리</div>
+                        <div>
+                            <div class="pencle"></div>
+                            <input type="number" min="0" max="9">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="answer"></div>
+        </main>
+        <footer>
+            <ul>
+                <li>학습목차</li>
+                <li>단원 열기</li>
+                <li>도입 문제</li>
+                <li>도입 활동</li>
+            </ul>
+        </footer>
+    </div>
+
+    <script>
+        const i = document.querySelector(".mouse");
+        let rends = document.querySelectorAll(".rendom");
+        /*let numSt = document.querySelector(".st");
+        let numNd = document.querySelector(".nd");
+        let numRd = document.querySelector(".rd");    없어도된다*/
+        let numbers = [0, 0, 0]
+        let re = true;
+        const put = document.querySelectorAll("input");
+        let puts = [0, 1]
+
+        // 랜덤숫자 부여
+        i.addEventListener("click", function () {
+            if (re) {
+                numbers[0] = Math.floor(Math.random() * 10);
+                numbers[1] = Math.floor(Math.random() * 10);
+                numbers[2] = Math.floor(Math.random() * 10);
+                //console.log(numbers)
+                //rends.forEach(e => e.innerHTML = " ")
+
+                /* numSt.innerHTML = numbers[0]
+                 numNd.innerHTML = numbers[1]
+                 numRd.innerHTML = numbers[2]        없어도된다 아래 방법으로 하기*/
+                rends[0].innerHTML = numbers[0]
+                rends[1].innerHTML = numbers[1]
+                rends[2].innerHTML = numbers[2]
+
+                // input 활성
+                puts.forEach(idx => {
+                    put[idx].style.zIndex = 999;
+                })
+
+                re = false;
+            } else {
+                rends[0].innerHTML = " ";
+                rends[1].innerHTML = " ";
+                rends[2].innerHTML = " ";
+
+                // input 비활성
+                puts.forEach(idx => {
+                    put[idx].style.zIndex = -999;
+                })
+
+                re = true;
+            }
+
+            // 예시버튼 토글
+            let p = document.querySelectorAll(".pencle");
+            let pens = [0, 1]
+            //i.classList.toggle("mouseOn");
+            if (i.classList.contains("mouse")) {
+                i.classList.remove("mouse");
+                i.classList.add("on_2");
+            } else {
+                i.classList.remove("on_2");
+                i.classList.add("mouse");
+            }
+
+            // 확인버튼 토글
+            let an = document.querySelector(".answer");
+            an.classList.toggle("answer_icon");
+
+            // 연필
+            //console.log(pens)
+            pens.forEach(idx => {
+                p[idx].classList.toggle("on");
+            });
+        })
+        const an = document.querySelector(".answer");
+        an.addEventListener("click", function () {
+            const put = document.querySelectorAll("input");
+            let puts = [0, 1]
+            put[0].value = `8${numbers[0]}00`
+            put[1].value = `8${numbers[0]}${numbers[1]}0`
+            console.log(put);
+        })
+        i.addEventListener("click", function () {
+            put[0].value = " "
+            put[1].value = " "
+        })
+    </script>
+</body>
+
+</html>

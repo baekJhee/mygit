@@ -1,6 +1,12 @@
+@font-face {
+    font-family: pretendard;
+    src: url(../font/PretendardVariable.ttf);
+}
+
 * {
     margin: 0;
     padding: 0;
+    font-family: 'pretendard';
 }
 
 ul,
@@ -157,9 +163,8 @@ main>h2:first-child {
     background-color: #ebf3f3;
 }
 
-.counsel>.flexBox>div:first-child span {
+.counsel>.flexBox>div:first-child b {
     font-size: 28px;
-    font-weight: bold;
     display: block;
 }
 
@@ -176,23 +181,20 @@ main>h2:first-child {
     border-radius: 10px;
 }
 
-.counsel>.flexBox>div:last-child span {
-    font-weight: bold;
-}
 
 .counsel>.flexBox>div:last-child li::before {
     margin-right: 5px;
     content: "·";
 }
 
-section::after {
+section::before {
     z-index: -1;
     top: 70%;
     left: 0;
     position: absolute;
     background-color: #ebf3f3;
     width: 100%;
-    height: 72vh;
+    height: 50vh;
     content: "";
 }
 
@@ -200,7 +202,7 @@ section {
     margin: 50px;
 }
 
-section dl dd::before {
+section .listDot li::before {
     margin-right: 5px;
     content: "·";
 }
@@ -209,7 +211,7 @@ section .contain .flexBox {
     gap: 65px;
 }
 
-section .contain .flexBox>div {
+section .contain .flexBox>li {
     padding: 5px 0;
     margin: 10px 0;
     text-align: center;
@@ -220,8 +222,7 @@ section .contain .flexBox>div {
     box-sizing: border-box;
 }
 
-section .contain .flexBox>div span {
-    font-weight: bold;
+section .contain .flexBox>li b {
     font-size: 20px;
 }
 

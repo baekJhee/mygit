@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="ct">
+            <div>
+                <ul class="contentsBox">
+                    <li class="stroke"></li>
+                    <li class="stroke"></li>
+                    <li class="stroke"></li>
+                    <li class="stroke"></li>
+                    <li class="stroke"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="script/jquery.min.js"></script> -->
+    <script>
+        // var: 전역함수 변수범위내에서 업데이트와 재선언가능  let:지역함수 변수내에서 업데이트가능 재선언불가   const: 지역함수 업데이트, 재선언불가    let을 많이쓴다.
+
+        //  strokes = 배열  stroke = 배열안에 요소 하나
+
+
+        const strokes = document.querySelectorAll(".stroke");
+
+        strokes.forEach(function (stroke, idx) {
+            stroke.addEventListener("click", function () {
+                // strokes.forEach(function (e) {
+                //     e.classList.remove("on")
+                // })
+                strokes.forEach((stroke) => stroke.classList.remove("on"))
+
+                console.log(idx);
+                for (let i = 0; i <= idx; i++) {
+                    setTimeout(() => {
+                        strokes[i].classList.add("on")
+                    }, 100 * i);
+                }
+
+            })
+        })
+
+    </script>
+</body>
+
+</html>
