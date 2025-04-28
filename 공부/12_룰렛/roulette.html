@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>룰렛 돌리기</title>
+    <link rel="stylesheet" href="./css/roulette.css">
+</head>
+
+<body>
+    <div id="wrap">
+        <h1></h1>
+        <section>
+            <div class="roulette">
+                <div class="circle_bottom">
+                    <ul>
+                        <li>우주</li>
+                        <li><input type="text" maxlength="6"></li>
+                        <li>길거리</li>
+                        <li>바다</li>
+                        <li><input type="text" maxlength="6"></li>
+                        </li>
+                        <li><input type="text" maxlength="6"></li>
+                        </li>
+                        <li>운동장</li>
+                        <li><input type="text" maxlength="6"></li>
+                        </li>
+                        <li>놀이터</li>
+                        <li><input type="text" maxlength="6"></li>
+                        </li>
+                    </ul>
+                </div>
+                <div class="circle_middle">
+                    <ul>
+                        <li>가위</li>
+                        <li><input type="text" maxlength="6"></li>
+                        <li>우산</li>
+                        <li>줄자</li>
+                        <li><input type="text" maxlength="6"></li>
+                        <li>시계</li>
+                        <li>신발</li>
+                        <li><input type="text" maxlength="6"></li>
+                        <li>컵</li>
+                        <li><input type="text" maxlength="6"></li>
+                    </ul>
+                </div>
+                <div class="circle_top">
+                    <ul>
+                        <li>확대<br>축소</li>
+                        <li>용돈<br>바꾸기</li>
+                        <li>재료<br>바꾸기</li>
+                        <li>더하기</li>
+                        <li>빼기</li>
+                    </ul>
+                </div>
+                <div class="stopzone on">
+                    <div class="arrow_stop"></div>
+                    <div class="arrow"></div>
+                </div>
+            </div>
+            <div class="btns">
+                <div class="start"></div>
+                <div class="stop"></div>
+                <div class="reset"><span>모두 지우기</span></div>
+            </div>
+        </section>
+    </div>
+
+    <!--스크립트-->
+    <script>
+        const inputs = document.querySelectorAll("input");
+        const circleBottom = document.querySelector(".circle_bottom");
+        const circleMidlle = document.querySelector(".circle_middle");
+        const circleTop = document.querySelector(".circle_top");
+
+        const btnStart = document.querySelector(".start");
+        const btnStop = document.querySelector(".stop");
+        const btnReset = document.querySelector(".reset");
+        //animation 말고 transform rotate로 던데.. 다 따로 가능한가???
+        // 멈추는게 랜덤--> 회전속도 차이로 가능
+        // 값을 주고 이것에 대한 배수 에서만 멈춰라+근접한 값에 멈춰라
+
+        let spinning = false;
+        const animationIds = {};
+        const currentDegs = {
+            bottom: 0,
+            middle: 0,
+            top: 0
+        };
+
+        // 시작 버튼
+        btnStart.addEventListener("click", () => {
+            if (spinning) return;
+            spinning = true;
+
+            spinLoop(circleBottom, "bottom", 15);
+            spinLoop(circleMidlle, "middle", 10);
+            spinLoop(circleTop, "top", 10);
+        });
+
+        // 무한 회전 함수
+        function spinLoop(target, key, speed) {
+            if (!spinning) return;
+
+            currentDegs[key] += speed;
+            target.style.transform = `rotate(${currentDegs[key]}deg)`;
+
+            animationIds[key] = requestAnimationFrame(() => spinLoop(target, key, speed));
+        }
+
+        // 멈춤 버튼
+        btnStop.addEventListener("click", () => {
+            if (!spinning) return;
+            spinning = false;
+
+            cancelAnimationFrame(animationIds.bottom);
+            cancelAnimationFrame(animationIds.middle);
+            cancelAnimationFrame(animationIds.top);
+
+            stopAtMultiple(circleBottom, "bottom", 36);
+            stopAtMultiple(circleMidlle, "middle", 36);
+            stopAtMultiple(circleTop, "top", 72);
+        });
+
+        function stopAtMultiple(element, key, stepDeg) {
+            const nowDeg = currentDegs[key] % 360;
+            const remainder = nowDeg % stepDeg;
+            const extraDeg = remainder === 0 ? 0 : stepDeg - remainder;
+            const targetDeg = currentDegs[key] + extraDeg;
+
+            //element.style.transition = 'transform 1s ease-out';
+            element.style.transform = `rotate(${targetDeg}deg)`;
+            currentDegs[key] = targetDeg;
+
+            element.addEventListener('transitionend', function handler() {
+                element.style.transition = '';
+                element.removeEventListener('transitionend', handler);
+            });
+
+            console.log(` ${key} 멈춤각: ${targetDeg}° (배수: ${stepDeg})`);
+        }
+
+        //입력란
+        inputs.forEach(function (input) {
+            // 내용이 있을경우만 지워라
+            input.addEventListener("input", function () {
+                if (input.value.trim() === "") {
+                    input.parentElement.classList.remove("on");
+                }
+            });
+
+            input.addEventListener("keydown", function () {
+                //   console.log(input.parentElement);
+                input.parentElement.classList.add("on")
+            });
+        });
+
+        btnReset.addEventListener("click", function () {
+            inputs.forEach(function (input) {
+                input.value = "";
+                input.parentElement.classList.remove("on")
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>목록만들기_백지희</title>
+  <link rel="stylesheet" href="./css/inventory_array.css" />
+</head>
+
+<body>
+  <div id="wrap">
+    <header>
+      <div class="flex-box">
+        <div class="pointColor">테스트</div>
+        <div>백지희</div>
+      </div>
+      <h1>목록 연습입니다.</h1>
+    </header>
+    <main>
+      <div class="title fs30 defortColor colorBox">목록</div>
+      <div class="contain flex-box">
+        <div class="left">
+          <ul class="pageContainer lineBox">
+            <li class="containerList page1 on">
+              <ul class="">
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="1">
+                    <p class="fs30 text">그림책으로 만나는 계절</p>
+                    <p class="colorBox white">18쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="2">
+                    <p class="fs30 text">이 계절이 좋은 이유</p>
+                    <p class="colorBox white">30쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="3">
+                    <p class="fs30 text">사계절 친구들</p>
+                    <p class="colorBox white">32쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="4">
+                    <p class="fs30 text">계절이 속닥속닥</p>
+                    <p class="colorBox white">34쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="5">
+                    <p class="fs30 text">계절을 입어요</p>
+                    <p class="colorBox white">36쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="6">
+                    <p class="fs30 text">계절은 무슨 색</p>
+                    <p class="colorBox white">38쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+              </ul>
+            </li>
+            <li class="containerList page2">
+              <ul class="">
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="7">
+                    <p class="fs30 text">내가 좋아하는 계절</p>
+                    <p class="colorBox white">40쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="8">
+                    <p class="fs30 text">꼼지락꼼지락</p>
+                    <p class="colorBox white">42쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="9">
+                    <p class="fs30 text">잠자리 꽁꽁</p>
+                    <p class="colorBox white">44쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="10">
+                    <p class="fs30 text">24절기 여행을 떠나요</p>
+                    <p class="colorBox white">46쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="11">
+                    <p class="fs30 text">계절 상차림</p>
+                    <p class="colorBox white">48쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="12">
+                    <p class="fs30 text">계절을 주웠어</p>
+                    <p class="colorBox white">50쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+              </ul>
+            </li>
+            <li class="containerList page3">
+              <ul class="">
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="13">
+                    <p class="fs30 text">그림에서 만난 계절</p>
+                    <p class="colorBox white">52쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="14">
+                    <p class="fs30 text">학교에서 만난 계절</p>
+                    <p class="colorBox white">54쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="15">
+                    <p class="fs30 text">랄랄라 사계절</p>
+                    <p class="colorBox white">56쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="16">
+                    <p class="fs30 text">오늘 그곳에 간다면</p>
+                    <p class="colorBox white">58쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="17">
+                    <p class="fs30 text">여름은 가고 겨울이 올 거야</p>
+                    <p class="colorBox white">60쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="18">
+                    <p class="fs30 text">나들이를 가요</p>
+                    <p class="colorBox white">62쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+              </ul>
+            </li>
+            <li class="containerList page4">
+              <ul class="">
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="19">
+                    <p class="fs30 text">날씨를 알려 드립니다</p>
+                    <p class="colorBox white">64쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="20">
+                    <p class="fs30 text">계절을 담은 교실</p>
+                    <p class="colorBox white">66쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="moveBtnContainer flex-box">
+            <button class="prev off"></button>
+            <div class="circle_tabs">
+              <button class="on"></button>
+              <button></button>
+              <button></button>
+              <button></button>
+            </div>
+            <button class="next"></button>
+          </div>
+        </div>
+        <div class="right lineBox flex-box">
+          <div class="imgBox">
+          </div>
+          <div class="text"></div>
+        </div>
+        <!-- <div class="right lineBox flex-box">
+          <div class="imgBox">
+            <div class="icon icon01"></div>
+            <div class="icon icon02"></div>
+            <div class="icon speaker"></div>
+          </div>
+          <div class="text"></div>
+        </div> -->
+      </div>
+    </main>
+  </div>
+
+  <script>
+
+    const prev = document.querySelector("button.prev");
+    const next = document.querySelector("button.next");
+    const circle_tabs = document.querySelectorAll(".circle_tabs>button");
+    const pageContainer = document.querySelector(".pageContainer");
+    const page = document.querySelectorAll(".pageContainer>li");
+
+    let idx = 0;
+    //슬라이드
+    //다음버튼
+    next.addEventListener("click", () => {
+      if (idx < page.length - 1) {
+        idx++
+        pageMove();
+      }
+    });
+
+    prev.addEventListener("click", () => {
+      if (idx > 0) {
+        idx--;
+        pageMove();
+      }
+    });
+
+    function pageMove() {
+      page.forEach(e => e.classList.remove("on"));
+      circle_tabs.forEach(e => e.classList.remove("on"));
+
+      page[idx].classList.add("on");
+      circle_tabs[idx].classList.add("on");
+
+      prev.classList.toggle("off", idx === 0);
+      next.classList.toggle("off", idx === page.length - 1);
+      console.log("페이지", idx);
+    }
+
+    circle_tabs.forEach((e, pageIdx) => {
+
+      e.addEventListener("click", () => {
+        console.log(pageIdx);
+        idx = pageIdx
+        pageMove();
+      })
+    })
+
+    //right 박스를 배열로만들어서 내용만 바꿀 수 있도록!
+    //data-click-obj 클릭시 imgBox 에 data-img-num 번호에 맞게 부여
+    // li.flex-box .flex-box 에 .on 더하기
+    //외 다른 .flex-box .on 제거
+
+
+    const data = [
+      {
+        src: "./img/1.png",
+        icon: "book",
+        text: " 그림책을 읽고, ‘계절’에 대해 이야기해요.",
+      },
+      {
+        src: "./img/2.png",
+        icon: "book",
+        text: " 그림책을 읽고, ‘계절’에 대해 이야기해요.",
+      },
+    ];
+
+
+
+    // 모든 항목 클릭 이벤트 설정
+    const items = document.querySelectorAll(".containerList li div.flex-box");
+    items.forEach((item, idx) => {
+      item.addEventListener("click", function () {
+        items.forEach((el) => el.classList.remove("on"));
+        item.classList.add("on");
+
+        dataSet(data, idx);
+      });
+    });
+
+    const rightBox = document.querySelectorAll(".right.lineBox");
+
+    function dataSet(data, idx) {
+
+    }
+
+    //좋아요버튼 토글 .on
+    const goodBtn = document.querySelectorAll(".good")
+    goodBtn.forEach(function (good) {
+      good.addEventListener("click", function () {
+        good.classList.toggle("on")
+      })
+    });
+  </script>
+</body>
+
+</html>

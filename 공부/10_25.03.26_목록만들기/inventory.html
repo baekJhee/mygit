@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>목록만들기_백지희</title>
+  <link rel="stylesheet" href="./css/inventory.css" />
+</head>
+
+<body>
+  <!-- 레이아웃 검수 6건 -->
+  <!-- 1. 수업명을 입력하세요. 위치 틀어짐 V-->
+  <!-- 2. 슬라이드 도트 강조컬러 누락 V-->
+  <!-- 3. 슬라이드 도트 눌렀을 때 이동 안됨.V -->
+  <!-- 4. 이미지 모퉁이 45px 누락 V-->
+  <!-- 5. 스피커 위치 값 틀어짐 V-->
+  <!-- 6. 아이콘 위치, 크기 값 V-->
+  <div id="wrap">
+    <header>
+      <div class="flex-box">
+        <div class="pointColor">테스트</div>
+        <div>백지희</div>
+      </div>
+      <h1>목록 연습입니다.</h1>
+    </header>
+    <main>
+      <div class="title fs30 defaultColor colorBox">목록</div>
+      <div class="contain flex-box">
+        <div class="left">
+          <ul class="pageContainer lineBox">
+            <li class="containerList page1 on">
+              <ul class="">
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="1">
+                    <p class="fs30 text">그림책으로 만나는 계절</p>
+                    <p class="colorBox white">18쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="2">
+                    <p class="fs30 text">이 계절이 좋은 이유</p>
+                    <p class="colorBox white">30쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="3">
+                    <p class="fs30 text">사계절 친구들</p>
+                    <p class="colorBox white">32쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="4">
+                    <p class="fs30 text">계절이 속닥속닥</p>
+                    <p class="colorBox white">34쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="5">
+                    <p class="fs30 text">계절을 입어요</p>
+                    <p class="colorBox white">36쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="6">
+                    <p class="fs30 text">계절은 무슨 색</p>
+                    <p class="colorBox white">38쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+              </ul>
+            </li>
+            <li class="containerList page2">
+              <ul class="">
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="7">
+                    <p class="fs30 text">내가 좋아하는 계절</p>
+                    <p class="colorBox white">40쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="8">
+                    <p class="fs30 text">꼼지락꼼지락</p>
+                    <p class="colorBox white">42쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="9">
+                    <p class="fs30 text">잠자리 꽁꽁</p>
+                    <p class="colorBox white">44쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="10">
+                    <p class="fs30 text">24절기 여행을 떠나요</p>
+                    <p class="colorBox white">46쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="11">
+                    <p class="fs30 text">계절 상차림</p>
+                    <p class="colorBox white">48쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="12">
+                    <p class="fs30 text">계절을 주웠어</p>
+                    <p class="colorBox white">50쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+              </ul>
+            </li>
+            <li class="containerList page3">
+              <ul class="">
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="13">
+                    <p class="fs30 text">그림에서 만난 계절</p>
+                    <p class="colorBox white">52쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="14">
+                    <p class="fs30 text">학교에서 만난 계절</p>
+                    <p class="colorBox white">54쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="15">
+                    <p class="fs30 text">랄랄라 사계절</p>
+                    <p class="colorBox white">56쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="16">
+                    <p class="fs30 text">오늘 그곳에 간다면</p>
+                    <p class="colorBox white">58쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="17">
+                    <p class="fs30 text">여름은 가고 겨울이 올 거야</p>
+                    <p class="colorBox white">60쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="18">
+                    <p class="fs30 text">나들이를 가요</p>
+                    <p class="colorBox white">62쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+              </ul>
+            </li>
+            <li class="containerList page4">
+              <ul class="">
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="19">
+                    <p class="fs30 text">날씨를 알려 드립니다</p>
+                    <p class="colorBox white">64쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+                <li class="flex-box">
+                  <div class="flex-box colorBox defaultColor" data-click-obj="20">
+                    <p class="fs30 text">계절을 담은 교실</p>
+                    <p class="colorBox white">66쪽</p>
+                  </div>
+                  <div class="good"></div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="moveBtnContainer flex-box">
+            <button class="prev off"></button>
+            <div class="circle_tabs">
+              <button class="on"></button>
+              <button></button>
+              <button></button>
+              <button></button>
+            </div>
+            <button class="next"></button>
+          </div>
+        </div>
+
+        <ul class="right lineBox flex-box">
+          <li class="on">
+
+          </li>
+          <li data-page-num="1">
+            <div class="imgBox">
+              <div class="icon icon01 book"></div>
+            </div>
+            <div class="text">
+              그림책을 읽고, ‘계절’에 대해 이야기해요.
+            </div>
+          </li>
+          <li data-page-num="2">
+            <div class="imgBox">
+              <div class="icon icon01 song"></div>
+              <div class="icon speaker"></div>
+              <audio src="./media/mp3/sea0202_b_b3_04_1.mp3"></audio>
+            </div>
+            <div class="text">
+              좋아하는 계절과 그 까닭을 찾아보고, ‘봄이 가고 여름 오면‘ 노래를 불러 봐요.
+            </div>
+          </li>
+          <li data-page-num="3">
+            <div class="imgBox">
+              <div class="icon icon01 inside_play"></div>
+            </div>
+            <div class="text">
+              계절을 대표하는 동식물을 관찰하며 계절의 변화를 느껴 봐요.
+            </div>
+          </li>
+          <li data-page-num="4">
+            <div class="imgBox">
+              <div class="icon icon01 song"></div>
+              <div class="icon icon02 make"></div>
+              <div class="icon speaker"></div>
+              <audio src="./media/mp3/sea0204_b_b3_03_1.mp3"></audio>
+            </div>
+            <div class="text">
+              ‘가을이 오는 소리’ 노래를 부르며, 자연의 소리를 느껴 봐요.
+            </div>
+          </li>
+          <li data-page-num="5">
+            <div class="imgBox">
+            </div>
+            <div class="text">
+              계절과 날씨에 어울리는 옷차림을 알아봐요.
+            </div>
+          </li>
+          <li data-page-num="6">
+            <div class="imgBox">
+              <div class="icon icon01 drowing"></div>
+            </div>
+            <div class="text">
+              계절에 어울리는 색을 골라 사계절을 표현해요.
+            </div>
+          </li>
+          <li data-page-num="7">
+            <div class="imgBox">
+              <div class="icon icon01 drowing"></div>
+            </div>
+            <div class="text">
+              좋아하는 계절의 풍경을 다양한 방법으로 나타내 봐요.
+            </div>
+          </li>
+          <li data-page-num="8">
+            <div class="imgBox">
+              <div class="icon icon01 outside_play"></div>
+              <div class="icon speaker"></div>
+              <audio src="./media/mp3/sea0209_b_b3_04_1.mp3"></audio>
+            </div>
+            <div class="text">
+              우리 주변의 자연물을 이용해 다양한 놀이를 해 봐요.
+            </div>
+          </li>
+          <li data-page-num="9">
+            <div class="imgBox">
+              <div class="icon icon01 song"></div>
+            </div>
+            <div class="text">
+              ‘잠자리 꽁꽁’ 노래를 부르며 가을의 시작을 맞이해요.
+            </div>
+          </li>
+          <li data-page-num="10">
+            <div class="imgBox">
+            </div>
+            <div class="text">
+              24절기를 조사하며 계절의 변화를 알아봐요.
+            </div>
+          </li>
+          <li data-page-num="11">
+            <div class="imgBox">
+            </div>
+            <div class="text">
+              계절별 식재료와 음식을 알아봐요.
+            </div>
+          </li>
+          <li data-page-num="12">
+            <div class="imgBox">
+              <div class="icon icon01 drowing"></div>
+              <div class="icon icon02 make"></div>
+            </div>
+            <div class="text">
+              다양한 열매를 관찰하고, 열매의 모습을 그려 봐요.
+            </div>
+          </li>
+          <li data-page-num="13">
+            <div class="imgBox">
+            </div>
+            <div class="text">
+              계절이 담긴 그림을 보며 아름다움을 느껴 보고, 열매 얼굴을 꾸며 직접 표현해 봐요.
+            </div>
+          </li>
+          <li data-page-num="14">
+            <div class="imgBox">
+            </div>
+            <div class="text">
+              계절마다 학교에서는 어떤 활동을 하는지 떠올려 봐요.
+            </div>
+          </li>
+          <li data-page-num="15">
+            <div class="imgBox">
+              <div class="icon icon01 song"></div>
+              <div class="icon speaker"></div>
+              <audio src="./media/mp3/sea0215_b_b3_03_1.mp3"></audio>
+            </div>
+            <div class="text">
+              ‘가을 길’ 노래를 부르고, 노랫말에 어울리는 동작을 만들어 표현해 봐요.
+            </div>
+          </li>
+          <li data-page-num="16">
+            <div class="imgBox">
+              <div class="icon icon01 drowing"></div>
+            </div>
+            <div class="text">
+              계절과 장소에 따라 사람들이 하는 일을 알아보고,내가 사는 곳의 모습을 그림으로 표현해 봐요.
+            </div>
+          </li>
+          <li data-page-num="17">
+            <div class="imgBox">
+              <div class="icon icon01 inside_play"></div>
+            </div>
+            <div class="text">
+              계절에 따라 사용하는 물건이 어떻게 달라지는지 알아봐요.
+            </div>
+          </li>
+          <li data-page-num="18">
+            <div class="imgBox">
+            </div>
+            <div class="text">
+              나들이 계획을 세우고, 나들이를 하며 계절의 소중함을 느껴 봐요.
+            </div>
+          </li>
+          <li data-page-num="19">
+            <div class="imgBox">
+              <div class="icon icon01 inside_play"></div>
+            </div>
+            <div class="text">
+              우리나라 사계절 날씨의 특징을 알아보고, 일기 예보 놀이를 해요.
+            </div>
+          </li>
+          <li data-page-num="20">
+            <div class="imgBox">
+              <div class="icon icon01 make"></div>
+            </div>
+            <div class="text">
+              계절을 담아 교실을 꾸미며 계절의 아름다움을 느껴 봐요.
+            </div>
+          </li>
+        </ul>
+      </div>
+    </main>
+  </div>
+  <script type="text/javascript" src="./js/inventory.js"></script>
+  <script type="text/javascript">
+
+  </script>
+</body>
+
+</html>

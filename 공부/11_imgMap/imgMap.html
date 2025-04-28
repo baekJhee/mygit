@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지맵</title>
+    <link rel="stylesheet" href="./css/imgMap.css">
+</head>
+
+<body>
+    <div id="wrap">
+        <main>
+            <div class="title">
+                <p>획순 보기</p>
+            </div>
+            <h1>획순에 맞게 마우스로 따라 써 봅시다.</h1>
+            <section>
+                <img class="text_bg" src="./img/text_bg.svg" alt="" usemap="#chinese">
+                <div class="answerImg">
+                    <div class="path on" data-answer="1"></div>
+                    <div class="path" data-answer="2"></div>
+                    <div class="path" data-answer="3"></div>
+                    <div class="path" data-answer="4"></div>
+                    <div class="path" data-answer="5"></div>
+                    <div class="path" data-answer="6"></div>
+                    <div class="path" data-answer="7"></div>
+                </div>
+
+                <div class="flex-box">
+                    <div class="word">fàn</div>
+                    <div class="rebtn_wrap">
+                        <div class="rebtn"></div>
+                        <div class="rebtn_text"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        const clickPaths = document.querySelectorAll(".answerImg .path");
+        const rebtn = document.querySelector(".rebtn");
+        //data-answer 클릭 후 다음 data-answer on 추가
+
+        // 각 path에 클릭 이벤트 추가
+        clickPaths.forEach(function (clickPath, i) {
+            clickPath.addEventListener("click", function () {
+                if (this.classList.contains("on")) {
+                    this.classList.add("complete");
+                    this.classList.remove("on");
+
+                    //const next = this.nextElementSibling;
+                    this.nextElementSibling.classList.add("on");
+                }
+            });
+        });
+
+
+        // 다시하기 버튼
+        rebtn.addEventListener("click", function () {
+            clickPaths.forEach(function (clickPath) {
+                clickPath.classList.remove("complete", "on");
+                clickPaths[0].classList.add("on");
+            });
+        });
+
+        rebtn.addEventListener("mouseover", (function () {
+            rebtn.classList.add("on")
+        }));
+        rebtn.addEventListener("mouseout", (function () {
+            rebtn.classList.remove("on")
+        }));
+
+    </script>
+</body>
+
+</html>
