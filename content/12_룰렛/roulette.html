@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>룰렛 돌리기</title>
+    <link rel="icon" href="./img/favicon.svg">
     <link rel="stylesheet" href="./css/roulette.css">
 </head>
 
@@ -89,6 +90,15 @@
             top: 0
         };
 
+        function spinLoop(target, key, speed) {
+            if (!spinning) return;
+
+            currentDegs[key] += speed;
+            target.style.transform = `rotate(${currentDegs[key]}deg)`;
+
+            animationIds[key] = requestAnimationFrame(() => spinLoop(target, key, speed));
+        }
+
         // 시작 버튼
         btnStart.addEventListener("click", () => {
             if (spinning) return;
@@ -100,14 +110,7 @@
         });
 
         // 무한 회전 함수
-        function spinLoop(target, key, speed) {
-            if (!spinning) return;
 
-            currentDegs[key] += speed;
-            target.style.transform = `rotate(${currentDegs[key]}deg)`;
-
-            animationIds[key] = requestAnimationFrame(() => spinLoop(target, key, speed));
-        }
 
         // 멈춤 버튼
         btnStop.addEventListener("click", () => {
@@ -126,9 +129,16 @@
         function stopAtMultiple(element, key, stepDeg) {
             const nowDeg = currentDegs[key] % 360;
             const remainder = nowDeg % stepDeg;
-            const extraDeg = remainder === 0 ? 0 : stepDeg - remainder;
-            const targetDeg = currentDegs[key] + extraDeg;
+            //const extraDeg = remainder === 0 ? 0 : stepDeg - remainder;
+            //ㄴ삼항연산자로 단순한 조건문에서 간결허게 쓰기 좋다. 아래 if 와 동일
+            let extraDeg;
+            if (remainder === 0) {
+                extraDeg = 0;
+            } else {
+                extraDeg = stepDeg - remainder;
+            }
 
+            const targetDeg = currentDegs[key] + extraDeg;
             //element.style.transition = 'transform 1s ease-out';
             element.style.transform = `rotate(${targetDeg}deg)`;
             currentDegs[key] = targetDeg;

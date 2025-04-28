@@ -360,6 +360,7 @@ h1 {
     transform-origin: center center;
 }
 
+/*미디어쿼리*/
 @media all and (max-width:740px) {
 
     h1,
