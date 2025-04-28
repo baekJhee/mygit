@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>룰렛 돌리기</title>
     <link rel="icon" href="./img/favicon.svg">
+    <title>룰렛 돌리기</title>
     <link rel="stylesheet" href="./css/roulette.css">
 </head>
 
@@ -86,8 +86,9 @@
             top: 0
         };
 
+        // 무한 회전 함수
         function spinLoop(target, key, speed) {
-            if (!spinning) return;
+            !spinning.return;
 
             currentDegs[key] += speed;
             target.style.transform = `rotate(${currentDegs[key]}deg)`;
@@ -99,22 +100,22 @@
         btnStart.addEventListener("click", () => {
             btnReset.classList.add("pointN");
             btnStart.classList.add("pointN");
-            if (spinning) return;
+
+            spinning.return;
             spinning = true;
 
-            spinLoop(circleBottom, "bottom", 15);
-            spinLoop(circleMidlle, "middle", 10);
-            spinLoop(circleTop, "top", 10);
+            spinLoop(circleBottom, "bottom", 20);
+            spinLoop(circleMidlle, "middle", 15);
+            spinLoop(circleTop, "top", 15);
         });
-
-        // 무한 회전 함수
 
 
         // 멈춤 버튼
         btnStop.addEventListener("click", () => {
             btnReset.classList.remove("pointN");
             btnStart.classList.remove("pointN");
-            if (!spinning) return;
+
+            !spinning.return;
             spinning = false;
 
             cancelAnimationFrame(animationIds.bottom);
@@ -126,19 +127,21 @@
             stopAtMultiple(circleTop, "top", 72);
         });
 
+        // 
         function stopAtMultiple(element, key, stepDeg) {
             const nowDeg = currentDegs[key] % 360;
             const remainder = nowDeg % stepDeg;
-            //const extraDeg = remainder === 0 ? 0 : stepDeg - remainder;
-            //ㄴ삼항연산자로 단순한 조건문에서 간결허게 쓰기 좋다. 아래 if 와 동일
-            let extraDeg;
-            if (remainder === 0) {
-                extraDeg = 0;
-            } else {
-                extraDeg = stepDeg - remainder;
-            }
-
+            const extraDeg = remainder === 0 ? 0 : stepDeg - remainder;
             const targetDeg = currentDegs[key] + extraDeg;
+            //ㄴ삼항연산자로 단순한 조건문에서 간결허게 쓰기 좋다. 아래 if 와 동일
+
+            // let extraDeg;
+            // if (remainder === 0) {
+            //     extraDeg = 0;
+            // } else {
+            //     extraDeg = stepDeg - remainder;
+            // }
+
             //element.style.transition = 'transform 1s ease-out';
             element.style.transform = `rotate(${targetDeg}deg)`;
             currentDegs[key] = targetDeg;
