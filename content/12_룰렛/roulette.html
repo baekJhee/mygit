@@ -97,6 +97,8 @@
 
         // 시작 버튼
         btnStart.addEventListener("click", () => {
+            btnReset.classList.add("pointN");
+            btnStart.classList.add("pointN");
             if (spinning) return;
             spinning = true;
 
@@ -110,6 +112,8 @@
 
         // 멈춤 버튼
         btnStop.addEventListener("click", () => {
+            btnReset.classList.remove("pointN");
+            btnStart.classList.remove("pointN");
             if (!spinning) return;
             spinning = false;
 
