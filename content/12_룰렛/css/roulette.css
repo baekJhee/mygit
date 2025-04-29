@@ -333,18 +333,21 @@ h1 {
         position: absolute;
         right: 150px;
         top: -150px;
+        height: 90px;
         background: url(../img/btn_reset.svg)no-repeat center / contain;
 
         >span {
             position: absolute;
             transform: translateX(-50%);
-            bottom: -40px;
+            bottom: -35px;
             left: 50%;
-            width: 100px;
+            width: 90px;
             padding: 0 5px;
             border-radius: 5px;
             background-color: #FFEBBF;
             color: brown;
+            text-align: center;
+            font-size: 18px;
         }
     }
 }

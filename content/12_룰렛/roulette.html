@@ -78,7 +78,6 @@
         // 멈추는게 랜덤--> 회전속도 차이로 가능
         // 값을 주고 이것에 대한 배수 에서만 멈춰라+근접한 값에 멈춰라
 
-        let spinning = false;
         const animationIds = {};
         const currentDegs = {
             bottom: 0,
@@ -86,23 +85,18 @@
             top: 0
         };
 
-        // 무한 회전 함수
-        function spinLoop(target, key, speed) {
-            !spinning.return;
+        //회전 함수
+        function spinLoop(target, circle, speed) {
+            currentDegs[circle] += speed;
+            target.style.transform = `rotate(${currentDegs[circle]}deg)`;
 
-            currentDegs[key] += speed;
-            target.style.transform = `rotate(${currentDegs[key]}deg)`;
-
-            animationIds[key] = requestAnimationFrame(() => spinLoop(target, key, speed));
+            animationIds[circle] = requestAnimationFrame(() => spinLoop(target, circle, speed));
         }
 
         // 시작 버튼
         btnStart.addEventListener("click", () => {
             btnReset.classList.add("pointN");
             btnStart.classList.add("pointN");
-
-            spinning.return;
-            spinning = true;
 
             spinLoop(circleBottom, "bottom", 20);
             spinLoop(circleMidlle, "middle", 15);
@@ -115,9 +109,6 @@
             btnReset.classList.remove("pointN");
             btnStart.classList.remove("pointN");
 
-            !spinning.return;
-            spinning = false;
-
             cancelAnimationFrame(animationIds.bottom);
             cancelAnimationFrame(animationIds.middle);
             cancelAnimationFrame(animationIds.top);
@@ -127,12 +118,12 @@
             stopAtMultiple(circleTop, "top", 72);
         });
 
-        // 
-        function stopAtMultiple(element, key, stepDeg) {
-            const nowDeg = currentDegs[key] % 360;
+
+        function stopAtMultiple(element, circle, stepDeg) {
+            const nowDeg = currentDegs[circle] % 360;
             const remainder = nowDeg % stepDeg;
             const extraDeg = remainder === 0 ? 0 : stepDeg - remainder;
-            const targetDeg = currentDegs[key] + extraDeg;
+            const targetDeg = currentDegs[circle] + extraDeg;
             //ㄴ삼항연산자로 단순한 조건문에서 간결허게 쓰기 좋다. 아래 if 와 동일
 
             // let extraDeg;
@@ -144,14 +135,14 @@
 
             //element.style.transition = 'transform 1s ease-out';
             element.style.transform = `rotate(${targetDeg}deg)`;
-            currentDegs[key] = targetDeg;
+            currentDegs[circle] = targetDeg;
 
             element.addEventListener('transitionend', function handler() {
                 element.style.transition = '';
                 element.removeEventListener('transitionend', handler);
             });
 
-            console.log(` ${key} 멈춤각: ${targetDeg}° (배수: ${stepDeg})`);
+            console.log(`${circle}(${targetDeg}deg)`);
         }
 
         //입력란
