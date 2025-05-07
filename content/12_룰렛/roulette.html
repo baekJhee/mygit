@@ -86,13 +86,37 @@
             top: 0
         };
 
-        //회전 함수
-        function spinLoop(target, circle, speed) {
-            currentDegs[circle] += speed;
-            target.style.transform = `rotate(${currentDegs[circle]}deg)`;
+        const circles = {
+            bottom: {
+                el: document.querySelector(".circle_bottom"),
+                speed: 20,
+                step: 36,
+                degree: 0,
+            },
+            middle: {
+                el: document.querySelector(".circle_middle"),
+                speed: 15,
+                step: 36,
+                degree: 0,
+            },
+            top: {
+                el: document.querySelector(".circle_top"),
+                speed: 15,
+                step: 72,
+                degree: 0,
+            }
+        };
 
-            animationIds[circle] = requestAnimationFrame(() => spinLoop(target, circle, speed));
+
+        //회전 함수
+        function spinLoop(circleKey) {
+            currentDegs[circleKey] += circles[circleKey].speed;
+            circles[circleKey].el.style.transform = `rotate(${currentDegs[circleKey]}deg)`;
+
+            animationIds[circleKey] = requestAnimationFrame(() => spinLoop(circleKey));
         }
+
+
 
         // 시작 버튼
         btnStart.addEventListener("click", () => {
@@ -102,9 +126,9 @@
             btnReset.classList.add("pointN");
             btnStart.classList.add("pointN");
 
-            spinLoop(circleBottom, "bottom", 20);
-            spinLoop(circleMidlle, "middle", 15);
-            spinLoop(circleTop, "top", 15);
+            spinLoop("bottom");
+            spinLoop("middle");
+            spinLoop("top");
         });
 
 
@@ -120,17 +144,20 @@
             cancelAnimationFrame(animationIds.middle);
             cancelAnimationFrame(animationIds.top);
 
-            stopAtMultiple(circleBottom, "bottom", 36);
-            stopAtMultiple(circleMidlle, "middle", 36);
-            stopAtMultiple(circleTop, "top", 72);
+            stopAtMultiple("bottom");
+            stopAtMultiple("middle");
+            stopAtMultiple("top");
+            // stopAtMultiple(circleBottom, "bottom", 36);
+            // stopAtMultiple(circleMidlle, "middle", 36);
+            // stopAtMultiple(circleTop, "top", 72);
         });
 
 
-        function stopAtMultiple(element, circle, stepDeg) {
-            const nowDeg = currentDegs[circle] % 360;
-            const remainder = nowDeg % stepDeg;
-            const extraDeg = remainder === 0 ? 0 : stepDeg - remainder;
-            const targetDeg = currentDegs[circle] + extraDeg;
+        function stopAtMultiple(circleKey) {
+            const nowDeg = currentDegs[circleKey] % 360;
+            const remainder = nowDeg % circles[circleKey].step;
+            const extraDeg = remainder === 0 ? 0 : circles[circleKey].step - remainder;
+            const targetDeg = currentDegs[circleKey] + extraDeg;
             //ㄴ삼항연산자로 단순한 조건문에서 간결허게 쓰기 좋다. 아래 if 와 동일
 
             // let extraDeg;
@@ -141,15 +168,16 @@
             // }
 
             //element.style.transition = 'transform 1s ease-out';
-            element.style.transform = `rotate(${targetDeg}deg)`;
-            currentDegs[circle] = targetDeg;
+            circles[circleKey].el.style.transform = `rotate(${targetDeg[circleKey]}deg)`;
+            //element.style.transform = `rotate(${targetDeg}deg)`;
+            currentDegs[circles] = targetDeg;
 
-            element.addEventListener('transitionend', function handler() {
-                element.style.transition = '';
-                element.removeEventListener('transitionend', handler);
-            });
+            // element.addEventListener('transitionend', function handler() {
+            //     element.style.transition = '';
+            //     element.removeEventListener('transitionend', handler);
+            // });
 
-            console.log(`${circle}(${targetDeg}deg)`);
+            console.log(`${circles}(${targetDeg}deg)`);
         }
 
         //입력란
@@ -158,12 +186,9 @@
             input.addEventListener("input", function () {
                 if (input.value.trim() === "") {
                     input.parentElement.classList.remove("on");
+                } else {
+                    input.parentElement.classList.add("on")
                 }
-            });
-
-            input.addEventListener("keydown", function () {
-                //   console.log(input.parentElement);
-                input.parentElement.classList.add("on")
             });
         });
 
@@ -175,6 +200,32 @@
         });
 
 
+        // spinLoop(circleBottom, "bottom", 20);
+        // spinLoop(circleMidlle, "middle", 15);
+        // spinLoop(circleTop, "top", 15);
+        //잘 활용되면 이런 애들 중첩으로 쓸 필요없을 거 같아요!
+
+        //예를들어
+        // const circles = {
+        //     bottom: {
+        //         el: document.querySelector(".circle_bottom"),
+        //         speed: 20,
+        //         step: 36,
+        //         degree: 0,
+        //     },
+        //     middle: {
+        //         el: document.querySelector(".circle_middle"),
+        //         speed: 15,
+        //         step: 36,
+        //         degree: 0,
+        //     },
+        //     top: {
+        //         el: document.querySelector(".circle_top"),
+        //         speed: 15,
+        //         step: 72,
+        //         degree: 0,
+        //     }
+        // };
     </script>
 </body>
 

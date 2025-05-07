@@ -6,6 +6,7 @@
 ul,
 li {
     list-style: none;
+    /* outline: 1px solid; */
 }
 
 input {
@@ -14,6 +15,7 @@ input {
     background-color: transparent;
     font-size: 20px;
     text-align: center;
+    pointer-events: auto;
 }
 
 
@@ -51,6 +53,7 @@ h1 {
     position: relative;
     height: 550px;
     margin: auto;
+    pointer-events: none;
 
     >div {
         position: absolute;
@@ -369,7 +372,7 @@ h1 {
 }
 
 /*미디어쿼리*/
-/* @media all and (max-width:740px) {
+@media all and (max-width:740px) {
 
     h1,
     section {
@@ -384,4 +387,4 @@ h1 {
         top: -140px;
         right: -120px;
     }
-} */
+}
