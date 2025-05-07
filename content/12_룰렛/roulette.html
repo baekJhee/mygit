@@ -78,6 +78,7 @@
         // 멈추는게 랜덤--> 회전속도 차이로 가능
         // 값을 주고 이것에 대한 배수 에서만 멈춰라+근접한 값에 멈춰라
 
+        let spinning = false
         const animationIds = {};
         const currentDegs = {
             bottom: 0,
@@ -95,6 +96,9 @@
 
         // 시작 버튼
         btnStart.addEventListener("click", () => {
+            if (spinning) return;
+            spinning = true;
+
             btnReset.classList.add("pointN");
             btnStart.classList.add("pointN");
 
@@ -106,6 +110,9 @@
 
         // 멈춤 버튼
         btnStop.addEventListener("click", () => {
+            if (!spinning) return;
+            spinning = false;
+
             btnReset.classList.remove("pointN");
             btnStart.classList.remove("pointN");
 
