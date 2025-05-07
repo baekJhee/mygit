@@ -29,8 +29,13 @@ input {
     overflow: hidden;
 }
 
+h1,
+.roulette,
+.btns {
+    width: 550px;
+}
+
 h1 {
-    width: 100%;
     height: 75px;
     margin: 50px auto;
     background: url(../img/title.svg) no-repeat center / contain;
@@ -44,8 +49,8 @@ h1 {
 
 .roulette {
     position: relative;
-    width: 100%;
     height: 550px;
+    margin: auto;
 
     >div {
         position: absolute;
@@ -312,7 +317,7 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 50px;
-    margin-top: 50px;
+    margin: 50px auto 0;
 
     >div {
         width: 200px;
@@ -331,8 +336,8 @@ h1 {
 
     .reset {
         position: absolute;
-        right: 150px;
-        top: -150px;
+        right: -100px;
+        top: -130px;
         height: 90px;
         background: url(../img/btn_reset.svg)no-repeat center / contain;
 
@@ -364,7 +369,7 @@ h1 {
 }
 
 /*미디어쿼리*/
-@media all and (max-width:740px) {
+/* @media all and (max-width:740px) {
 
     h1,
     section {
@@ -379,4 +384,4 @@ h1 {
         top: -140px;
         right: -120px;
     }
-}
+} */
