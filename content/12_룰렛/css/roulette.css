@@ -377,7 +377,7 @@ h1 {
     h1,
     .roulette,
     .btns {
-        width: 100%;
+        width: 350px;
     }
 
     h1,
@@ -391,6 +391,7 @@ h1 {
 
     .btns>.reset {
         top: -140px;
-        right: -150px;
+        right: -200px;
+        height: 70px;
     }
 }
