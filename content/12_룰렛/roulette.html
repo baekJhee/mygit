@@ -109,14 +109,14 @@
 
 
         //회전 함수
+        //function spinLoop(target, circle, speed){}  --> circles 키벨류 활용 전
         function spinLoop(circleKey) {
-            currentDegs[circleKey] += circles[circleKey].speed;
-            circles[circleKey].el.style.transform = `rotate(${currentDegs[circleKey]}deg)`;
+            const circle = circles[circleKey];
+            currentDegs[circleKey] += circle.speed;
+            circle.el.style.transform = `rotate(${currentDegs[circleKey]}deg)`;
 
             animationIds[circleKey] = requestAnimationFrame(() => spinLoop(circleKey));
         }
-
-
 
         // 시작 버튼
         btnStart.addEventListener("click", () => {
@@ -130,7 +130,6 @@
             spinLoop("middle");
             spinLoop("top");
         });
-
 
         // 멈춤 버튼
         btnStop.addEventListener("click", () => {
@@ -152,8 +151,9 @@
             // stopAtMultiple(circleTop, "top", 72);
         });
 
-
+        //function stopAtMultiple(element, circle, stepDeg){} 
         function stopAtMultiple(circleKey) {
+            const circle = circles[circleKey]
             const nowDeg = currentDegs[circleKey] % 360;
             const remainder = nowDeg % circles[circleKey].step;
             const extraDeg = remainder === 0 ? 0 : circles[circleKey].step - remainder;
@@ -167,15 +167,14 @@
             //     extraDeg = stepDeg - remainder;
             // }
 
-            //element.style.transition = 'transform 1s ease-out';
-            circles[circleKey].el.style.transform = `rotate(${targetDeg[circleKey]}deg)`;
-            //element.style.transform = `rotate(${targetDeg}deg)`;
-            currentDegs[circles] = targetDeg;
+            //circle.el.style.transition = 'transform 1s ease-out';  --> 스르륵 멈추기
+            circle.el.style.transform = `rotate(${targetDeg}deg)`;
+            currentDegs[circleKey] = targetDeg;
 
-            // element.addEventListener('transitionend', function handler() {
-            //     element.style.transition = '';
-            //     element.removeEventListener('transitionend', handler);
-            // });
+            circle.el.addEventListener('transitionend', function handler() {
+                circle.el.style.transition = '';
+                circle.el.removeEventListener('transitionend', handler);
+            });
 
             console.log(`${circles}(${targetDeg}deg)`);
         }
@@ -198,34 +197,6 @@
                 input.parentElement.classList.remove("on")
             });
         });
-
-
-        // spinLoop(circleBottom, "bottom", 20);
-        // spinLoop(circleMidlle, "middle", 15);
-        // spinLoop(circleTop, "top", 15);
-        //잘 활용되면 이런 애들 중첩으로 쓸 필요없을 거 같아요!
-
-        //예를들어
-        // const circles = {
-        //     bottom: {
-        //         el: document.querySelector(".circle_bottom"),
-        //         speed: 20,
-        //         step: 36,
-        //         degree: 0,
-        //     },
-        //     middle: {
-        //         el: document.querySelector(".circle_middle"),
-        //         speed: 15,
-        //         step: 36,
-        //         degree: 0,
-        //     },
-        //     top: {
-        //         el: document.querySelector(".circle_top"),
-        //         speed: 15,
-        //         step: 72,
-        //         degree: 0,
-        //     }
-        // };
     </script>
 </body>
 
