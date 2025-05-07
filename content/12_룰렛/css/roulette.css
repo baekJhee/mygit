@@ -375,16 +375,22 @@ h1 {
 @media all and (max-width:740px) {
 
     h1,
+    .roulette,
+    .btns {
+        width: 400px;
+    }
+
+    h1,
     section {
-        scale: .6;
+        scale: .7;
     }
 
     h1 {
-        margin: 50px auto -100px;
+        margin: 50px auto -50px;
     }
 
     .btns>.reset {
         top: -140px;
-        /* right: -120px; */
+        right: -150px;
     }
 }
