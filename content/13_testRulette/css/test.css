@@ -325,6 +325,10 @@ h1 {
     .btns {
         flex-wrap: wrap;
         margin: 85px auto 0;
+
+        >div {
+            width: 150px;
+        }
     }
 
     .btns>.reset {
