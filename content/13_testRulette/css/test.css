@@ -16,6 +16,7 @@ input {
     background-color: transparent;
     font-size: 20px;
     text-align: center;
+    color: #E8EBEE;
     pointer-events: auto;
 }
 
@@ -114,7 +115,7 @@ h1 {
         }
 
         input {
-            width: 120px;
+            width: 100px;
             height: 60px;
         }
 
@@ -322,6 +323,7 @@ h1 {
     }
 
     .btns {
+        flex-wrap: wrap;
         margin: 85px auto 0;
     }
 
