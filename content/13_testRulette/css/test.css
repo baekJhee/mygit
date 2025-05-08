@@ -1,6 +1,7 @@
 * {
     padding: 0;
     margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 ul,
@@ -24,7 +25,7 @@ input {
     height: 100vh;
     max-width: 1200px;
     margin: 0 auto;
-    background: url(../img/bg.png) center / contain;
+    background-color: #E8EBEE;
     box-shadow: 0px 0px 5px #999;
     font-size: 20px;
     font-weight: bolder;
@@ -39,8 +40,10 @@ h1,
 }
 
 h1 {
-    height: 75px;
+    padding: 5px 0;
     margin: 50px auto;
+    text-align: center;
+    color: #A6221D;
 }
 
 .circle_bottom {
@@ -54,14 +57,16 @@ h1 {
     margin: auto;
     pointer-events: none;
 
+
     .circle {
         position: absolute;
         aspect-ratio: 1/1;
         top: 0;
         left: calc(50% - 275px);
         width: 550px;
-        background: url(../img/circle_Y.svg) no-repeat center / contain;
-        /* filter: drop-shadow(0px 0px 6px #888); */
+        background-color: #2D3F71;
+        border-radius: 50%;
+        filter: drop-shadow(0px 0px 6px #888);
 
 
 
@@ -74,6 +79,22 @@ h1 {
 
         li {
             position: absolute;
+            width: 100px;
+            height: 50px;
+            color: #E8EBEE;
+            text-align: center;
+        }
+
+        /* #C8D4E5 */
+        li::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            /* width: 1px; */
+            height: 277px;
+            border-right: 3px dashed #e8ebee4d;
+            rotate: -20deg;
         }
 
         li:has(input)::after {
@@ -85,7 +106,11 @@ h1 {
             left: 50%;
             width: 100%;
             text-align: center;
-            color: #97979797;
+            color: #e8ebee81;
+        }
+
+        li.on:has(input)::after {
+            content: "";
         }
 
         input {
@@ -94,132 +119,127 @@ h1 {
         }
 
         li:first-child {
-            left: 255px;
-            top: 20px;
+            left: 218px;
+            top: 19px;
         }
 
         li:nth-child(2) {
             left: 355px;
-            top: 57px;
+            top: 59px;
             rotate: 36deg;
         }
 
         li:nth-child(3) {
-            left: 475px;
-            top: 188px;
+            left: 443px;
+            top: 171px;
             rotate: 72deg;
         }
 
         li:nth-child(4) {
-            left: 485px;
-            top: 335px;
+            left: 448px;
+            top: 315px;
             rotate: 108deg;
         }
 
         li:nth-child(5) {
-            left: 352px;
-            bottom: 56px;
+            left: 368px;
+            bottom: 67px;
             rotate: 144deg;
         }
 
         li:nth-child(6) {
-            left: 215px;
-            bottom: 11px;
+            left: 234px;
+            bottom: 18px;
             rotate: 180deg;
         }
 
         li:nth-child(7) {
-            left: 104px;
-            bottom: 70px;
+            left: 96px;
+            bottom: 57px;
             rotate: -144deg;
         }
 
         li:nth-child(8) {
-            left: -7px;
-            top: 315px;
+            left: 8px;
+            top: 330px;
             rotate: -108deg;
         }
 
         li:nth-child(9) {
-            left: 25px;
-            top: 185px;
+            left: 2px;
+            top: 187px;
             rotate: -72deg;
         }
 
         li:last-child {
-            left: 80px;
-            top: 55px;
+            left: 82px;
+            top: 69px;
             rotate: -36deg;
         }
-
     }
 
     .stopzone {
-        top: calc(50% - 120px);
-        left: calc(50% - 120px);
-        width: 240px;
-        background: url(../img/circle_B.svg) no-repeat center / contain;
-        text-align: center;
-        color: #fff;
-
-
-        ul {
-            width: 240px;
-        }
-
-        li:first-child {
-            left: 105px;
-            top: 20px;
-        }
-
-        li:nth-child(2) {
-            left: 164px;
-            top: 71px;
-            rotate: 72deg;
-        }
-
-        li:nth-child(3) {
-            left: 138px;
-            top: 153px;
-            rotate: 144deg;
-        }
-
-        li:nth-child(4) {
-            left: 43px;
-            top: 167px;
-            rotate: -144deg;
-        }
-
-        li:last-child {
-            left: 25px;
-            top: 80px;
-            rotate: -72deg;
-        }
-    }
-
-    div.stopzone {
-        background: none;
-        animation: none;
-        pointer-events: none;
-    }
-
-    .arrow_stop {
         position: absolute;
-        top: -40px;
-        left: 120px;
-        width: 278px;
-        aspect-ratio: 145 / 104;
-        background: url(../img/stopLine.svg) no-repeat center / contain;
-    }
-
-    .arrow {
-        position: absolute;
-        transform: translate(-40%, -65%);
-        left: 50%;
+        transform: translate(-50%, -50%);
         top: 50%;
-        width: 110px;
-        height: 60px;
-        background: url(../img/arrow.svg)no-repeat center / contain;
+        left: 50%;
+        width: 100px;
+        height: 100px;
+        pointer-events: none;
+
+        .arrow_stop {
+            position: absolute;
+            right: -61px;
+            bottom: -3px;
+            height: 275px;
+            border-left: 5px solid #FF72BE;
+            rotate: 52deg;
+        }
+
+        .arrow_stop::after {
+            content: "";
+            position: absolute;
+            right: -82px;
+            bottom: -27px;
+            height: 275px;
+            border-left: 5px solid #FF72BE;
+            rotate: 36deg;
+        }
+
+        .center {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 50%;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #E8EBEE;
+        }
+
+        .center::after {
+            content: "";
+            position: absolute;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 50%;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: #8189D2;
+        }
+
+        .arrow {
+            position: absolute;
+            left: 50px;
+            top: 16px;
+            width: 80px;
+            height: 40px;
+            background-color: #E8EBEE;
+            clip-path: polygon(0% 35%, 75% 35%, 75% 10%, 100% 50%, 75% 90%, 75% 65%, 0% 65%);
+            rotate: -20deg;
+        }
+
     }
 }
 
@@ -232,25 +252,31 @@ h1 {
 
     >div {
         width: 200px;
-        height: 100px;
+        padding: 10px 0;
+        background-color: #C8D3E5;
+        border-radius: 50px;
+        outline: 4px solid #2D3F71;
+        text-align: center;
+        color: #8189D2;
         cursor: pointer;
         filter: drop-shadow(0px 0px 2px #888);
+        transition: transform .35s ease, box-shadow .35s ease;
     }
 
-    .start {
-        background: url(../img/btn_start.svg)no-repeat center / contain;
-    }
-
-    .stop {
-        background: url(../img/btn_stop.svg)no-repeat center / contain;
+    >div:hover {
+        transform: translateY(-3px);
+        box-shadow: 1px 5px 10px rgba(0, 0, 0, 0.08);
+        color: #A6221D;
     }
 
     .reset {
         position: absolute;
         right: -100px;
         top: -130px;
-        height: 90px;
-        background: url(../img/btn_reset.svg)no-repeat center / contain;
+        width: 70px;
+        padding: 23px 0;
+        border-radius: 50%;
+        outline-color: #A6221D;
 
         >span {
             position: absolute;
@@ -260,8 +286,8 @@ h1 {
             width: 90px;
             padding: 0 5px;
             border-radius: 5px;
-            background-color: #FFEBBF;
-            color: brown;
+            background-color: #2D3F71;
+            color: #E8EBEE;
             text-align: center;
             font-size: 18px;
         }
@@ -272,9 +298,7 @@ h1 {
     pointer-events: none;
 }
 
-.circle_bottom,
-.circle_middle,
-.circle_top {
+.circle {
     /* transition: transform 2s ease-out; */
     transform-origin: center center;
 }
@@ -298,8 +322,7 @@ h1 {
     }
 
     .btns>.reset {
-        top: -110px;
-        right: -25%;
-        height: 70px;
+        top: -130px;
+        right: -10%;
     }
 }
