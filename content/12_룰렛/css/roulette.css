@@ -34,7 +34,8 @@ input {
 h1,
 .roulette,
 .btns {
-    width: 550px;
+    width: 100%;
+    max-width: 550px;
 }
 
 h1 {
@@ -377,7 +378,7 @@ h1 {
     h1,
     .roulette,
     .btns {
-        width: 350px;
+        width: 100%;
     }
 
     h1,
@@ -390,8 +391,8 @@ h1 {
     }
 
     .btns>.reset {
-        top: -140px;
-        right: -200px;
+        top: -110px;
+        right: -25%;
         height: 70px;
     }
 }
