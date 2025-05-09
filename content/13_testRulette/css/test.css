@@ -58,6 +58,13 @@ h1 {
     margin: auto;
     pointer-events: none;
 
+    .circle::before {
+        content: "Ο";
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+    }
 
     .circle {
         position: absolute;
@@ -80,10 +87,14 @@ h1 {
 
         li {
             position: absolute;
-            width: 100px;
-            height: 50px;
+            transform: translate(-100%, -50%);
+            top: 146px;
+            left: 255px;
+            width: 40px;
+            height: 257px;
             color: #E8EBEE;
             text-align: center;
+            /* outline: 1px solid; */
         }
 
         /* #C8D4E5 */
@@ -102,12 +113,13 @@ h1 {
             content: "직접 입력";
             display: block;
             position: absolute;
-            transform: translate(-50%, -50%);
-            top: 50%;
-            left: 50%;
-            width: 100%;
+            /* transform: translate(-50%, -50%); */
+            top: 15px;
+            left: 0;
+            width: 100px;
             text-align: center;
             color: #e8ebee81;
+
         }
 
         li.on:has(input)::after {
@@ -115,67 +127,50 @@ h1 {
         }
 
         input {
+            outline: 1px solid;
             width: 100px;
             height: 60px;
         }
 
+
         li:first-child {
-            left: 218px;
-            top: 19px;
+            rotate: 0deg;
         }
 
         li:nth-child(2) {
-            left: 355px;
-            top: 59px;
             rotate: 36deg;
         }
 
         li:nth-child(3) {
-            left: 443px;
-            top: 171px;
             rotate: 72deg;
         }
 
         li:nth-child(4) {
-            left: 448px;
-            top: 315px;
             rotate: 108deg;
         }
 
         li:nth-child(5) {
-            left: 368px;
-            bottom: 67px;
             rotate: 144deg;
         }
 
         li:nth-child(6) {
-            left: 234px;
-            bottom: 18px;
             rotate: 180deg;
         }
 
         li:nth-child(7) {
-            left: 96px;
-            bottom: 57px;
-            rotate: -144deg;
+            rotate: 216deg;
         }
 
         li:nth-child(8) {
-            left: 8px;
-            top: 330px;
-            rotate: -108deg;
+            rotate: 252deg;
         }
 
         li:nth-child(9) {
-            left: 2px;
-            top: 187px;
-            rotate: -72deg;
+            rotate: 288deg;
         }
 
         li:last-child {
-            left: 82px;
-            top: 69px;
-            rotate: -36deg;
+            rotate: 324deg;
         }
     }
 
@@ -232,8 +227,9 @@ h1 {
 
         .arrow {
             position: absolute;
-            left: 50px;
-            top: 16px;
+            transform: translate(50%, 0%);
+            top: 30px;
+            left: 10px;
             width: 80px;
             height: 40px;
             background-color: #E8EBEE;

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>리스트 +- 룰렛</title>
     <link rel="stylesheet" href="./css/test.css">
 </head>
 
@@ -38,144 +38,90 @@
             <div class="btns">
                 <div class="start">돌리기</div>
                 <div class="stop">멈추기</div>
-                <div class="prus">추가</div>
+                <div class="plus">추가</div>
                 <div class="minus">빼기</div>
                 <div class="reset">R<span>모두 지우기</span></div>
             </div>
         </section>
     </div>
+    <script src="./js/test.js"></script>
 
     <script>
-        const inputs = document.querySelectorAll("input");
-        const circle = document.querySelector(".circle");
-
-        const btnStart = document.querySelector(".start");
-        const btnStop = document.querySelector(".stop");
-        const btnReset = document.querySelector(".reset");
-        //animation 말고 transform rotate로 던데.. 다 따로 가능한가???
-        // 멈추는게 랜덤--> 회전속도 차이로 가능
-        // 값을 주고 이것에 대한 배수 에서만 멈춰라+근접한 값에 멈춰라
-
-        let spinning = false
-        const animationIds = {};
-        const currentDegs = {
-            bottom: 0,
-            // middle: 0,
-            // top: 0
-        };
-
-        const circles = {
-            bottom: {
-                el: document.querySelector(".circle"),
-                speed: 20,
-                step: 36,
-                degree: 0,
-            },
-            // middle: {
-            //     el: document.querySelector(".circle_middle"),
-            //     speed: 15,
-            //     step: 36,
-            //     degree: 0,
-            // },
-            // top: {
-            //     el: document.querySelector(".circle_top"),
-            //     speed: 15,
-            //     step: 72,
-            //     degree: 0,
-            // }
-        };
+        const list_ul = document.querySelector(".circle ul");
+        const plus = document.querySelector(".plus");
+        const minus = document.querySelector(".minus");
 
 
-        //회전 함수
-        //function spinLoop(target, circle, speed){}  --> circles 키벨류 활용 전
-        function spinLoop(circleKey) {
-            const circle = circles[circleKey];
-            currentDegs[circleKey] += circle.speed;
-            circle.el.style.transform = `rotate(${currentDegs[circleKey]}deg)`;
+        minus.addEventListener("click", () => {
+            const list_li = list_ul.querySelectorAll("li");
+            const total = list_li.length;
 
-            animationIds[circleKey] = requestAnimationFrame(() => spinLoop(circleKey));
-        }
+            if (total <= 2) return
+            list_ul.removeChild(list_li[total - 1]);
 
-        // 시작 버튼
-        btnStart.addEventListener("click", () => {
-            if (spinning) return;
-            spinning = true;
 
-            btnReset.classList.add("pointN");
-            btnStart.classList.add("pointN");
+            const newLiList = list_ul.querySelectorAll('li');
+            const newTotal = newLiList.length;
+            // 반지름 계산
+            const radius = 225; // li의 중심점 기준 반지름
+            newLiList.forEach((li, index) => {
+                const angle = (360 / newTotal) * index;
 
-            spinLoop("bottom");
-            // spinLoop("middle");
-            // spinLoop("top");
-        });
+                li.style.rotate = `${angle}deg`;
 
-        // 멈춤 버튼
-        btnStop.addEventListener("click", () => {
-            if (!spinning) return;
-            spinning = false;
+                //두 번째 li 45도 배수 일 경우 화살표 각도 조절
+                function arrowDeg() {
+                    const angleOfSecondLi = (360 / newTotal) * 1;
+                    const arrow = document.querySelector(".arrow");
 
-            btnReset.classList.remove("pointN");
-            btnStart.classList.remove("pointN");
-
-            cancelAnimationFrame(animationIds.bottom);
-            // cancelAnimationFrame(animationIds.middle);
-            // cancelAnimationFrame(animationIds.top);
-
-            stopAtMultiple("bottom");
-            // stopAtMultiple("middle");
-            // stopAtMultiple("top");
-            // stopAtMultiple(circleBottom, "bottom", 36);
-            // stopAtMultiple(circleMidlle, "middle", 36);
-            // stopAtMultiple(circleTop, "top", 72);
-        });
-
-        //function stopAtMultiple(element, circle, stepDeg){} 
-        function stopAtMultiple(circleKey) {
-            const circle = circles[circleKey]
-            const nowDeg = currentDegs[circleKey] % 360;
-            const remainder = nowDeg % circles[circleKey].step;
-            const extraDeg = remainder === 0 ? 0 : circles[circleKey].step - remainder;
-            const targetDeg = currentDegs[circleKey] + extraDeg;
-            //ㄴ삼항연산자로 단순한 조건문에서 간결허게 쓰기 좋다. 아래 if 와 동일
-
-            // let extraDeg;
-            // if (remainder === 0) {
-            //     extraDeg = 0;
-            // } else {
-            //     extraDeg = stepDeg - remainder;
-            // }
-
-            circle.el.style.transition = 'transform 2s ease-out';  // 스르륵 멈추기
-            circle.el.style.transform = `rotate(${targetDeg}deg)`;
-            currentDegs[circleKey] = targetDeg;
-
-            circle.el.addEventListener('transitionend', function handler() {
-                circle.el.style.transition = '';
-                circle.el.removeEventListener('transitionend', handler);
-            });
-
-            console.log(`${circles}(${targetDeg}deg)`);
-        }
-
-        //입력란
-        inputs.forEach(function (input) {
-            // 내용이 있을경우만 지워라
-            input.addEventListener("input", function () {
-                if (input.value.trim() === "") {
-                    input.parentElement.classList.remove("on");
-                } else {
-                    input.parentElement.classList.add("on")
+                    if (angleOfSecondLi % 45 === 0) {
+                        console.log("화살표 각도 변경");
+                        arrow.style.rotate = ("-45deg");
+                    } else {
+                        arrow.style.rotate - ("-20deg");
+                    }
                 }
+                arrowDeg()
             });
         });
 
-        btnReset.addEventListener("click", function () {
-            inputs.forEach(function (input) {
-                input.value = "";
-                input.parentElement.classList.remove("on")
+        plus.addEventListener("click", () => {
+            const list_li = list_ul.querySelectorAll("li");
+            const total = list_li.length;
+
+            if (total >= 10) return
+            const newLi = document.createElement("li");
+            list_ul.appendChild(newLi);
+
+            // input 요소 생성 및 추가
+            const input = document.createElement("input");
+            input.type = "text";
+            input.maxlength = "6";
+            // input.placeholder = `Item ${list_ul.children.length + 1}`;
+
+            newLi.appendChild(input);
+            list_ul.appendChild(newLi);
+
+
+            const newLiList = list_ul.querySelectorAll('li');
+            const newTotal = newLiList.length;
+            // 반지름 계산
+            const radius = 225; // li의 중심점 기준 반지름
+            newLiList.forEach((li, index) => {
+                const angle = (360 / newTotal) * index;
+
+                li.style.rotate = `${angle}deg`;
+
+                //두 번째 li 45도 배수 일 경우 화살표 각도 조절
+                const angleOfSecondLi = (360 / newTotal) * 1;
+                const arrow = document.querySelector(".arrow");
+
             });
+            arrowDeg()
         });
     </script>
+
 </body>
+
 
 </html>
