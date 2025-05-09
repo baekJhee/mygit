@@ -127,7 +127,7 @@ h1 {
         }
 
         input {
-            outline: 1px solid;
+            /* outline: 1px solid; */
             width: 100px;
             height: 60px;
         }

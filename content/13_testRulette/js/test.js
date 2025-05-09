@@ -5,6 +5,8 @@ const circle = document.querySelector(".circle");
 const btnStart = document.querySelector(".start");
 const btnStop = document.querySelector(".stop");
 const btnReset = document.querySelector(".reset");
+const btnMinus = document.querySelector(".minus");
+const btnPlus = document.querySelector(".plus");
 //animation 말고 transform rotate로 던데.. 다 따로 가능한가???
 // 멈추는게 랜덤--> 회전속도 차이로 가능
 // 값을 주고 이것에 대한 배수 에서만 멈춰라+근접한 값에 멈춰라
@@ -20,7 +22,7 @@ const currentDegs = {
 const circles = {
     bottom: {
         el: document.querySelector(".circle"),
-        speed: 20,
+        speed: 25,
         step: 36,
         degree: 0,
     },
@@ -56,6 +58,8 @@ btnStart.addEventListener("click", () => {
 
     btnReset.classList.add("pointN");
     btnStart.classList.add("pointN");
+    btnMinus.classList.add("pointN");
+    btnPlus.classList.add("pointN");
 
     spinLoop("bottom");
     // spinLoop("middle");
@@ -69,6 +73,8 @@ btnStop.addEventListener("click", () => {
 
     btnReset.classList.remove("pointN");
     btnStart.classList.remove("pointN");
+    btnMinus.classList.remove("pointN");
+    btnPlus.classList.remove("pointN");
 
     cancelAnimationFrame(animationIds.bottom);
     // cancelAnimationFrame(animationIds.middle);
@@ -98,7 +104,7 @@ function stopAtMultiple(circleKey) {
     //     extraDeg = stepDeg - remainder;
     // }
 
-    circle.el.style.transition = 'transform 2s ease-out';  // 스르륵 멈추기
+    //  circle.el.style.transition = 'transform 2s ease-out';  // 스르륵 멈추기
     circle.el.style.transform = `rotate(${targetDeg}deg)`;
     currentDegs[circleKey] = targetDeg;
 
