@@ -1,0 +1,118 @@
+*{margin: 0;padding: 0;}
+ul, ol, li{list-style: none;}
+a{text-decoration: none;}
+header{width:calc(100% - 32px); background-color:rgba(0, 0, 0, .5);position:absolute;top: 0;left: 0;z-index: 1;display: flex;justify-content: space-between;align-items: center;padding: 6px 16px;}
+header h1{width: 10%;}
+header h1 img{width: 100%;}
+header>div>div{float: left;width: 40px;text-align: center;}
+header>div>div>span{display: block; width: 27px;height: 3px; background-color: white; margin: 6px auto;}
+div#subWrap{width:50%;background-color: #5a5c4c;height: 100%;position: fixed;right: -100%;z-index: 99;padding: 10px 35px;}
+div#subWrap>div#out{width: 30px;height: 30px;color: white; font-size: 30px;text-align: center;line-height: 50px;margin-left: -20px;}
+div#subWrap>div#subm{margin-top: 20px;}
+div#subWrap>div#subm>ul>li{line-height: 25px;border-bottom: 2px solid #999; margin: 15px 0;}
+div#subWrap>div#subm>ul>li>a{display: block; font-weight: bold;color: white;}
+div#subWrap>div#subm>ul>li li a{display: block; font-size: 12px;line-height: 27px;color: white;}
+
+main{position: relative; overflow: hidden;width: 100%;height: 120vw;}
+main img{width: 100%;}
+main .rel{position: relative;}
+main .abs{position: absolute;}
+main>ul>li>img:last-child{top: 27%; left: 7%;width: 35%;}
+main ul li{opacity: 0;transition: all 1s;width: 100%;}
+main ul li.on{opacity: 1;}
+main #btns{width: 100%;bottom: 20px;z-index: 11;text-align: center;}
+main #btns a{text-indent: -999px;display: inline-block;width: 10px;height: 10px;border: 2px solid white;border-radius: 50%;margin: 0 5px;}
+main #btns a.on{background-color: white;}
+
+section{margin-top: 15%;}
+section>div{float: left;width: 26%;text-align: right;margin: 5% 7%;color: #5a5c4c;}
+section>div>p{margin-top: 20px;line-height: 2px;font-size: 11px;line-height: 25px;}
+section>div>p>span{display: block;}
+section>img{float: right;width: 60%;}
+section>span{display: block; clear: both;text-align: right;padding: 15px 15px 0 0;color: #5a5c4c;font-weight: bold;}
+
+article{overflow: hidden; clear: both;margin-top: 15%;}
+article img{width: 100%;}
+article>div:first-child{background-image: url(../img/brand00.jpg);height: 54vw;background-size: cover;background-repeat: no-repeat; overflow: hidden; position: relative;}
+article>div:first-child>div{position: absolute;top: 10%;left: 5%;color: white;}
+article>div:first-child>div>h4{margin: 10px 0;}
+article>div:first-child>div>p{font-size: 12px;}
+article div#brand>div:first-child{background-image: url(../img/brand01.jpg);}
+article div#brand>div:nth-child(2){background-image: url(../img/brand02.jpg);}
+article div#brand>div:nth-child(3){background-image: url(../img/brand03.jpg);}
+article div#brand>div:last-child{background-image: url(../img/brand04.jpg);}
+article div#brand>div{float: left; width: 50%; height: 45vw;background-size: cover;background-repeat: no-repeat; overflow: hidden; position: relative;}
+article div#brand div:nth-child(3){clear: both;}
+#brand>div>div{background-color: rgba(0, 0, 0, .7);width: 100%; height: 100%; padding-top: 25%; overflow: hidden;opacity: 0;}
+article div#brand a{display: block;width: 60%; padding: 2px; margin: 10px auto;text-align: center;border: 2px solid white;color: white;border-radius: 20px;}
+#brand .op1{opacity: 1;transition: all 1s;}
+
+
+div#slide{clear: both;margin: 10% auto;position: relative;width: 270px;text-align: center;}
+div#slide img{width: 100%;}
+div#slide>h3{text-align: center;margin: 5% 0;color: #5a5c4c;}
+div#slide>div span{display: block;margin: 10px 0;color: #5a5c4c;font-size: 11px;}
+div#be_prev,div#be_next{position: absolute;top: 100px;width: 15px;height: 15px;}
+div#be_prev{left: -25px;}
+div#be_next{right: -25px;}
+div#slide>div:last-child{width: 100%;height: 100%; overflow: hidden;}
+div#slide>div:last-child li{float: left;width: 270px;}
+
+div#bgBaner{background-image: url(../img/backBaner.jpg);height: 40vw;background-size: cover;background-repeat: no-repeat;position: relative;}
+div#bgBaner>div:first-child{width: 100%;height: 100%;background-color: rgba(0, 0, 0, .2);position: absolute;top: 0;}
+div#bgBaner>div:last-child{text-align: center;color: white;position: absolute;width: 100%; padding-top: 15%;line-height: 35px;}
+div#bgBaner p{font-size: 12px;}
+div#bgBaner span{color: rgb(255, 166, 0);}
+
+div#resorve{width: 80%;margin: auto;margin-top: 10%;}
+div#resorve figure img{width: 100%;}
+div#resorve figcaption{text-align: left;border-bottom: 2px solid #999;padding: 4% 0;color: #5a5c4c;font-size: 12px;}
+div#resorve figcaption span{display: block;margin-bottom: 2%;font-weight: bold;font-size: 15px;}
+div#resorve>div{margin-bottom: 10%;}
+div#resorve>div>div{margin-top: 5%;}
+div#resorve>div>div>div{width: 50px;height: 50px; background-color: #dadada;overflow: hidden;float: left;}
+div#resorve>div>div img{display: block; width: 70%; margin: 8px auto;}
+div#resorve>div>div p{display: inline-block;margin-left: 10px;color: #5a5c4c;font-size: 12px;}
+div#resorve>div>div span{display: block;padding: 10px 0;}
+div#resorve>div:last-child{width: 30%; padding: 10px 5px; border: 2px solid #999; margin: auto; text-align: center;font-size: 10px;color: #666;}
+
+div#bgPoster{background-image: url(../img/back_trand.jpg);height: 115vw;background-size: cover;background-repeat: no-repeat;position: relative;margin: 10% 0;}
+div#bgPoster img{position: absolute;top: 10%;left: -500px;width: 45%;transition: all 1s;}
+div#bgPoster img.on{left: 5%;}
+
+div#content{width: 90%;margin: auto;}
+div#content>div{border-top: 2px solid #999;border-bottom: 2px solid #999; margin: 3% 0;overflow: hidden;}
+div#content>div img{width:21%; float: left;}
+div#content>h2{color: #5a5c4c;}
+div#content>div p{width: 70%; float: left;padding-left: 10px;color: #5a5c4c;font-size: 12px;}
+div#content>div span{display: block;padding-bottom: 10px;font-weight: bold;}
+div#content>div:nth-child(2){clear: both;}
+
+div#bgBaner_lo{background-image: url(../img/back_kocaf.jpg);height: 35vw;background-size: cover;background-repeat: no-repeat;position: relative;margin-top: 10%;}
+div#bgBaner_lo div{position: absolute;width: 100%;text-align: center;padding-top: 14%;}
+
+div#icon{background-color: #dadada;overflow: hidden;}
+div#icon ul{width: 70%;margin: 22px auto;text-align: center;overflow: hidden;}
+div#icon li{float: left;width: 25%;}
+div#icon span{color: #666;font-size: 9px;display: block;}
+
+div#history{clear: both;width: 90%;margin: 10% auto; overflow: hidden;}
+div#history img{width: 100%;}
+div#history h2,
+div#history p{margin: auto; text-align: center;color:#0087ff;}
+div#history p{font-size: 11px;margin: 5px 0 25px;}
+div#history>div>img{height: 100%;}
+div#history div{float: left;width: 65%;height: 65vw;border-radius: 20px;overflow: hidden;}
+div#history ul{width: 35%;float: right;padding: 17px 0;}
+div#history li{width: 65%; height: 12vw; margin: 8% auto;overflow: hidden;}
+
+div#footerBg{clear: both;background-image: url(../img/back_footer.jpg);height: 55vw;background-size: cover;background-repeat: no-repeat;position: relative;}
+div#footerBg::before{content: ""; display: block;position: absolute;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0, 0, 0, .3);}
+div#footerBg h3{position: absolute;top: 0;left: 0; width: 100%;text-align: center; padding-top: 25%;color: white;}
+
+footer{ background-color: #828474; padding: 5%;color: white;position: relative;}
+footer dl{margin: 5% 0;}
+footer dt{margin-bottom: 10px;font-weight: bold;font-size: 12px;}
+footer dd{font-size: 10px;line-height: 20px;}
+footer>h3{width: 15%;position: absolute;bottom: 40px;right: 30px;}
+footer>h3>img{width: 100%;}

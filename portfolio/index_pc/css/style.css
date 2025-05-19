@@ -1,0 +1,258 @@
+*{margin: 0;padding: 0;}
+ol, ul, li{list-style: none;}
+a{text-decoration: none;}
+.w70{width: 70%;margin: auto;}
+
+div#topBtn{width: 50px;height: 50px;position: fixed;right: 20px;bottom: 20px;z-index: 999;}
+div#quick{position: absolute;right: 0;top: 1100px;}
+div#quick span{font-size: 10px;text-align: center;display: inline-block;margin-top: 12px;}
+div#quick>ul>li{width: 80px;height: 80px; border:1px solid gray;border-radius: 50%;
+margin: 10px 0;text-align: center;color: gray;position: relative;}
+div#quick>ul>li>img{position: absolute;left: 17px;bottom: 5px;}
+div#quick>ul>li>img+img{opacity: 0;transition: all 1s;}
+div#quick>ul>li:hover>img+img{opacity: 1;}
+header>#gnb{overflow: hidden;}
+header>#gnb>ul{float: right;}
+header>#gnb>ul>li{float: left;/*width: 100px;*/text-align: center;}
+header>#gnb>ul>li::after{content: "|";color: gray; font-size: 10px;}
+header>#gnb>ul>li:last-child::after{display: none;}
+header>#gnb>ul>li>a{color: gray;font-size: 10px;padding: 0 10px;}/*인라인요소지만 좌우의 경우 패딩값 가능 but 위아래는 블럭 적용 후 패딩*/
+header>#gnb>ul>li>a{transition: 0.5s;}
+header>#gnb>ul>li:hover>a{color: rgb(255, 0, 0);}
+header>h1{width: 10%; margin: auto; text-align: center; overflow: hidden;}
+header>h1 img{width: 100%;}
+
+nav{border-top: 1px solid gray; position: relative; z-index: 888;}/*z-index 태어난 순서 바꿔주는*/
+nav>ul>li{width: 20%;text-align: center;float: left; position: relative;}
+nav>ul>li>a{color: #555;font-size: 15px;font-weight: bold;}
+/* nav>ul>li{float: left;width: 300px;text-align: center;} 잘못 만든거 */
+nav>ul>li>a{transition: 0.5s; display: block; padding: 10px 0;}
+nav>ul>li:hover>a{background-color: gray;color: white;}
+nav>ul>li:hover>ul{height: 120px;}
+nav>ul>li li>a{color: white;}
+nav>ul>li li:hover>a{color: rgb(255, 166, 0);}
+nav>ul>li li{height: 30px;background-color: rgba(0, 0, 0, 0.3);}
+nav>ul ul{height: 0; overflow: hidden; transition: all 1s; position: absolute; left: 0; top: 40px; width: 100%;} /*앱솔은 설정한 사이즈 터뜨려 버림 앱솔 적용한 요소에 width: 100% 적용하기!*/
+main{position: relative; clear: both;width: 100%;overflow: hidden;height: 37vw;}
+main ul.slides li{position: relative;}
+main>img{width: 100%;}
+
+main div.box{position: absolute;right: 20px;bottom: 20px;background-color: rgba(255, 166, 0, .8); width: 150px; text-align: center;display: block;}
+main div.box a{display: block;padding: 10px 0;color: white;font-weight: bold;}
+
+.actionBtn4:after {
+    position:absolute;
+    left: 0;
+    top:0;
+    display:block;
+    content:"";
+    width:100%;
+    height:3px;
+    background-color:white;
+    transform:scale3d(0,1,1);
+    transform-origin:left;
+    transition:transform .5s;
+}
+.actionBtn4:hover:after {
+    transform:scale3d(1,1,1);
+}
+
+div#bestItem{margin: 70px auto;width: 1160px;height: 570px;position: relative;}
+div#bestItem>h2{text-align: center;margin-bottom: 5%;color: #555;font-size: 2em;}
+#prevBtn,#nextBtn{position: absolute;top: 55%;cursor: pointer;}
+#prevBtn{left: -40px;}
+#nextBtn{right: -40px;}
+div#bestItem>div{width: 100%;height: 100%; overflow: hidden;}
+div#bestItem div#item>ul>li{float: left;width: 1220px;height: 460px;}
+div#bestItem div#item>ul>li>img{float: left;border-radius: 10%;height: 100%;}
+div#bestItem div#item>ul>li>div{float: left;width: 500px;margin: 20px 70px;color: #555;line-height: 30px;}
+div#bestItem div#item>ul>li>div>span{font-weight: bold;margin-bottom: 20px;display: block;}
+
+section{overflow: hidden; margin-bottom: 100px;
+}
+
+section.hover>div:last-child>ul>li{
+    position: relative;overflow: hidden;
+}
+section.hover>div:last-child>ul>li>div.hover_line{
+    background-color:rgba(0,0,0,.5);width: 100%;height: calc(100% - 40%);position: absolute;z-index: 90;left: 0;top: 0;color: white;text-align: center;padding-top: 40%;opacity: 0;
+    transition:opacity .3s ease-out;
+}
+section.hover>div:last-child>ul>li>div.hover_line>.line1{
+    position: absolute;top: 5%;left: 5%;width: 90%;height: 90%;border-top: 1px solid white;border-bottom: 1px solid white;opacity: 0;
+    transform:scale(0,1);
+	 transition:transform.4s ease-out .2s,opacity .4s ease-out;
+	box-sizing:border-box
+}
+section.hover>div:last-child>ul>li>div.hover_line>.line2{
+    position: absolute;top: 5%;left: 5%;width: 90%;height: 90%;border-left: 1px solid white;border-right: 1px solid white;opacity: 0;
+    transform:scale(1,0);
+   transition:transform.4s ease-out .2s,opacity .4s ease-out;
+   box-sizing:border-box;
+}
+section.hover>div:last-child>ul>li>div.hover_line>.sub_tit{
+    font-size:20px;
+    transform:translate3d(0,-10px,0);opacity:0;
+    transition:transform .5s ease-out .2s,opacity .5s ease-out .3s;
+}
+section.hover>div:last-child>ul>li>div.hover_line:hover{opacity: 1;}
+section.hover>div:last-child>ul>li>div.hover_line:hover>.line1{opacity: 1;transform:scale(1,1);}
+section.hover>div:last-child>ul>li>div.hover_line:hover>.line2{opacity: 1;transform:scale(1,1);}
+section.hover>div:last-child>ul>li>div.hover_line:hover>.sub_tit{opacity: 1;transform:translate3d(0,0,0);}
+
+section.resorve>div:last-child>ul>li{position: relative;overflow: hidden;}
+section.resorve>div:last-child>ul>li>div.hover_2{position: absolute;z-index: 80;left: 0;top: 0;width: 100%;height: 100%;background-color:rgba(0,0,0,.5);color: white;text-align: center;padding-top: 45%;opacity: 0;transition: opacity .5s ease-out;}
+section.resorve>div:last-child>ul>li>div.hover_2>div.sub{
+    position: relative;font-size: 20px;transition:animation 1s ease .2s,opacity .5s ease-out .3s;
+}
+section.resorve>div:last-child>ul>li>div.hover_2:hover{opacity: 1;}
+section.resorve>div:last-child>ul>li>div.hover_2:hover>div.sub{opacity: 1;animation:translateHover .8s .2s ;}
+
+@keyframes translateHover{
+    0%{
+         opacity:0;
+         transform:translate3d(0,-20px,0);
+    }
+    20%{
+         opacity:1;
+         transform:translate3d(0,20px,0);
+    }
+    50%{
+         transform:translate3d(0,-10px,0);
+    }
+    80%{
+         transform:translate3d(0,0px,0);
+    }
+    85%,100%{
+         opacity:1;
+         transform:none;
+    }}
+
+section>div>span{color: rgb(255, 166, 0);;margin-left: 10px;}
+section>div>h3{float: left;color: #555;}
+section>div>h3::before{content: "|";font-weight: bold;margin-right: 10px;color: #333;}
+div>dl>dt>span{border-bottom: 3px solid  rgb(255, 166, 0);}
+section>div+div{clear: both;}
+section.hover>div>input[type=image]{position: absolute;top: 100px;z-index: 99;}
+section.hover>div>input[type=image]#left{left: 20px;}
+section.hover>div>input[type=image]#right{right: 20px;}
+section>div:last-child{width: 1250px;margin:2% auto 0;overflow: hidden;position: relative;}
+section>div>ul>li{width: 245px;height: 235px; float: left;margin-right: 5px;}
+section>div>ul>li>img{width: 100%;height: 100%;}
+
+article{margin: 90px auto;width: 1340px;position: relative;clear: both;}
+div#prev,div#next{position: absolute;width: 30px;height: 30px;cursor: pointer;bottom: 30%;}
+div#prev{left: -30px;}
+div#next{right: -30px;}
+article>div#content{width: 100%;height: 100%;overflow: hidden;}
+article>div#content>div#allpage{width: 10000px;height: 210px;float: left;}
+article>div#content>div#allpage ul li{float: left;margin-right: 11px;}
+article>div:first-child{margin-bottom: 35px;margin-left: -30px;}
+article h3{color: #555;}
+article>div>span{margin-left: 10px;}
+article>div>h3::before{content: "|";font-weight: bold;margin-right: 10px;color: #333;}
+
+div#form{overflow: hidden;margin-top: -200px;position: relative;}
+div#form>img{position: relative;z-index: -1;width: 100%;opacity: .8;}
+div#form>div{position: absolute; top: 45%;width: 60%;padding: 0 20%;}
+div#form>div>form{float: left;width: 80%;}
+div#form div ul{margin: auto;overflow: hidden;}
+div#form div ul li{float: left;width: calc(25% - 2px);height: 105px;background-color: rgb(240, 240, 240);border: 1px solid #d5d5d5;text-align: center;line-height: 45px;}
+div#form div ul li:last-child input{width: 60px;margin-right: 10px;}
+div#form div ul li span{display: block;text-align: left;margin-left: 10px;color: #555;font-weight: bold;}
+div#form div ul li select{border: none; background-color: rgba(255, 255, 255, 0);cursor: pointer;padding: 10px;font-weight: bold;color: #555;}
+div#form div ul li img{width: 20%;margin: -15px 0;}
+div#form div div:last-child{background-color:  rgba(255, 166, 0, .8);line-height: 120px;float: left;width: calc(20% - 2px);height: 105px;border: 1px solid #d5d5d5;text-align: center;}
+div#form div div:last-child input{border: none;cursor: pointer;padding: 17%;}
+
+div#review{overflow: hidden;margin: 3% auto 7%;}
+div#review>h2{text-align: center;margin-bottom: 5%;color: #555;font-size: 2em;}
+div#review>div{width: calc(50% - 2%);height: 22vw; margin: 0 1%;float: left;text-align: center;line-height: 35px;color: #555}
+div#review>h2+div>img{width: 100%;}
+
+div#bgBaner{clear: both; background-image: url(../img/bg01.jpg);height: 35vw;background-size:cover;margin: 20px 0;background-repeat: no-repeat;position: relative;overflow: hidden;}
+div#bgBaner>div{position: absolute;transition: all 1.5s;top: 25%;}
+div#bgBaner>div:first-child{left: -700px;}
+div#bgBaner>div:first-child.on{left: 400px;width: 20%;}
+div#bgBaner>div:last-child{right: -700px;}
+div#bgBaner>div:last-child.on{right: 140px;}
+div#bgBaner>div:last-child.on img{width: 65%;}
+
+div#story>h2{text-align: center;margin: 90px 0 50px 0;color: #555;font-size: 2em;}
+div#story>div{overflow: hidden;margin-bottom:8%;}
+div#story>div>figure{width: 31%;float: left;margin: 0 9px;position: relative;}
+div#story>div>figure>img{width: 100%;height: 385px; border-radius: 5%;}
+div#story>div figcaption{width: 95%;margin: auto;color: #555;font-size: 13px;}
+div#story>div span{display: block;font-weight: bold;padding: 10px 5px;font-size: 16px;}
+.actionImg8 .back {
+    display:table;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:385px;
+    padding:15px;
+    border-radius: 5%;
+    background-color:rgba(0,0,0,0.5);
+    color:#fff;
+    text-align:center;
+    box-sizing:border-box;
+    transform:rotateY(180deg);
+    opacity:0;
+}
+.actionImg8 .back .back_inner {
+    display:table-cell;
+    border:1px solid #fff;
+    vertical-align:middle;
+}
+div#story figure.box .back .back_inner .sub_tit {
+    color:#fff;
+}
+.actionImg8:hover .back {
+    transform:rotateY(0deg);
+    opacity:1;
+    transition:opacity .3s, transform .6s;
+}
+
+div#campigBaner{background-image: url(../img/bg02.jpg);height: 30vw;background-size: cover;background-position: bottom; margin-top: 30px; background-repeat: no-repeat;background-attachment: fixed;}
+div#campigBaner img{display: block;margin:auto;padding-top: 12%;width: 20%;}
+
+div#icon{background-color: #f0f0f0;padding: 20px 0;}
+div#icon>div{width: 60%; margin: auto; overflow: hidden;}
+div#icon a{color: #555;}
+div#icon>div>ul>li{float: left;width: 25%;text-align: center;color: gray;}
+div#icon img{width: 35%;}
+
+div#history{clear: both;margin: 5% auto;overflow: hidden;}
+div#history>h2{text-align: center;color: #555;font-size: 2em;margin-bottom: 2%;}
+div#history img{width: 100%;}
+div#history div{overflow: hidden;}
+div#history>div>div:first-child{width: 20%;float: left;}
+div#history>div>div:first-child>div{height: 150px;margin: 5px 0;}
+div#history>div>div:nth-child(2){width: calc(60% - 10px);float: left;height: 460px;margin: 5px;}
+div#history>div>div:last-child{width: 20%;float: left;}
+div#history>div>div:last-child>div{height: 150px;margin: 5px 0;}
+
+div#info{clear: both;overflow: hidden;}
+div#info>h3{color: #555;margin-bottom: 30px;}
+div#info>h3::before{content: "|";font-weight: bold;margin-right: 10px;color: #333;}
+div#info>div{width: 35%;border: 1px solid #999;box-sizing: border-box;float: left;padding: 2%;margin: 0 1%;}
+div#info>div:last-child{width: calc(24% - 2px);text-align: center;background-color: rgb(255, 166, 0);border: none;}
+div#info>div:last-child img{margin: 0 35%;}
+div#info>div:last-child span{clear: both;padding: 3% 0;color: white;}
+div#info div img{float: left;width: 25%;}
+div#info div p{float: left;color: #555;margin: 5%;width: 65%;}
+div#info div span{display: block;font-weight: bold;}
+
+div#info+div{clear: both; overflow: hidden; margin: 5% auto 2%;}
+div>dl{width: 25%;float: left;}
+div>dl>dt{margin: 5px;font-weight: bold;color: #555;}
+div>dl>dt>span{padding-bottom: 5px;}
+div>dl>dd{padding: 10px 0;color:  #555;}
+footer{clear: both; overflow: hidden;background-color: #d6dccf;}
+footer>div>ul{display: flex; justify-content:space-around;}
+footer>div>ul>li{padding: 10px;}
+footer>div>ul>li a{color: #333;}
+footer>div>h2{ width: 15%; float: left;}
+footer>div>h2>img{width: 100%;}
+footer>div>p{width: 80%; float: right;margin-top: 2%;color: #999;}

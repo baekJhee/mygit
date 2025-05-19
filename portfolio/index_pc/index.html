@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOVEA_CAMPING</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/flexslider.css">
+    <script src="js/jquery-1.9.1.min.js"></script>   
+    <script src="js/jquery.flexslider.js"></script>
+    <script src="js/banerSlide.js"></script>
+    <script src="js/bestItem.js"></script>
+    <script src="js/sectionSlide.js"></script>  
+    <script src="js/articleSlide.js"></script>
+    <script src="js/topBtn.js"></script>
+    <script src="js/scroll.js"></script>
+    <script>
+        $(function(){
+            $("#history .smImg div").click(function(){
+                var bigImg  = $(this).find("img").attr("src");
+                $("#history>div>div:nth-child(2) img").attr("src",bigImg);
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="topBtn">
+        <a href="#">
+            <img src="img/topBtn.png" alt="탑버튼">
+        </a>
+    </div>
+    <div id="quick">
+        <ul>
+            <li>
+                <img src="img/icon01.png" alt="아이콘">
+                <img src="img/icon01-1.png" alt="아이콘">
+                <span>오시는길</span>
+            </li>
+            <li>
+                <img src="img/icon02.png" alt="아이콘">
+                <img src="img/icon02-1.png" alt="아이콘">
+                <span>이벤트</span>
+            </li>
+            <li>
+                <img src="img/icon03.png" alt="아이콘">
+                <img src="img/icon03-1.png" alt="아이콘">
+                <span>전시관</span>
+            </li>
+            <li>
+                <img src="img/icon04.png" alt="아이콘">
+                <img src="img/icon04-1.png" alt="아이콘">
+                <span>캠핑장예약</span>
+            </li>
+        </ul>
+    </div>
+    <header>
+        <div id="gnb">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Join</a></li>
+                <li><a href="#">Contect</a></li>
+                <li><a href="#">Sitemap</a></li>
+            </ul>
+        </div>
+        <h1><a href="index.html"><img src="img/logo.png" alt="로고이미지"></a></h1>
+    </header>
+    <nav>
+        <ul class="w70">
+            <li><a href="#">브랜드소개</a>
+                <ul>
+                    <li><a href="#">회사개요</a></li>
+                    <li><a href="#">비젼 코베아</a></li>
+                    <li><a href="#">제휴브랜드</a></li>
+                </ul>
+            </li>
+            <li><a href="#">스토어</a>
+                <ul>
+                    <li><a href="#">텐트/타프</a></li>
+                    <li><a href="#">캠핑장비</a></li>
+                    <li><a href="#">캠핑가전</a></li>
+                    <li><a href="#">가스용품</a></li>
+                </ul>
+            </li>
+            <li><a href="#">캠핑이야기</a>
+                <ul>
+                    <li><a href="#">캠핑즐기기</a></li>
+                    <li><a href="#">캠핑플러스</a></li>
+                    <li><a href="#">캠핑식탁</a></li>
+                    <li><a href="#">매거진코베아</a></li>
+                </ul>
+            </li>
+            <li><a href="#">기획전</a>
+                <ul>
+                    <li><a href="#">진행중인 기획전</a></li>
+                    <li><a href="#">지난 기획전</a></li>
+                    <li><a href="#">온라인 전시관</a></li>
+                </ul>
+            </li>
+            <li><a href="#">매장안내</a>
+                <ul>
+                    <li><a href="#">매장소식</a></li>
+                    <li><a href="#">직영점</a></li>
+                    <li><a href="#">대리점</a></li>
+                    <li><a href="#">문의하기</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <main class="flexslider">
+        <ul class="slides">
+            <li>
+                <img src="img/baner1-2.jpg" alt="배너이미지">
+                <div class="box">
+                <a href="#" class="actionBtn4">
+                    <span>KOVEA</span>
+                </a>
+                </div>
+            </li>
+            <li>
+                <img src="img/baner02-2.jpg" alt="배너이미지">
+            </li>
+            <li>
+                <img src="img/baner03.jpg" alt="배너이미지">
+                <div class="box">
+                <a href="#" class="actionBtn4">
+                    <span>STORE</span>
+                </a>
+                </div>
+            </li>
+            <li>
+                <img src="img/baner04.jpg" alt="배너이미지">
+                <div class="box">
+                <a href="#" class="actionBtn4">
+                    <span>KOVEA</span>
+                </a>
+                </div>
+            </li>
+        </ul>  
+    </main>
+    <div id="bestItem">
+        <h2>BEST ITEM</h2>
+        <input id="nextBtn" type="image" src="img/right_g.gif" alt="오른쪽">
+        <input id="prevBtn" type="image" src="img/left_g.gif" alt="왼쪽">
+        <div>
+            <div id="item">
+                <ul>
+                    <li>
+                        <img src="img/best1.jpg" alt="photoImg1">
+                        <div>
+                            <span>베론 카키</span>
+                            <p>뉴리티지	&#40;NEW-RITAGE&#41; &#58; 과거와 현대의 만남<br>
+                                1986년 출시된 &quot;BESTA&quot;를 현대적 디자인으로 복원해 재탄생 하였습니다
+                                캠퍼들에게 사랑받는 컬러 카키색을 입혀 트랜디함을 더 해 줍니다</p>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="img/best2.jpg" alt="photoImg1">
+                        <div>
+                            <span>위글위글 엑스온 가스레인지</span>
+                            <p>위글위글 스타일로 재해석된 코베아의 엑스온&#33;<br>
+                                귀여운 위글위글 만의 캐릭터 마그넷과 새로운 엑스온의 톡톡튀는 컬러가
+                                어디서든 행복과 웃음을 주는 즐거운 하루를 선사합니다
+                                간편한 사용성과 용이한세척 안정성까지 모두 놓치지 않는 세심한 제품
+                                코베아의 엑스온&#33;</p>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="img/best3.jpg" alt="photoImg1">
+                        <div>
+                            <span>엑스온&#40;X-ON&#41; 스카이블루 가스레인</span>
+                            <p>아기자기한 디자인과 컬러 실내&#44;실외 어디서든 오브제처럼 분위기를 연출하는 엑스온 4종 <br>간편한 사용성과 용이한세척 안정성까지 모두 놓치지 않는 세심한 코베아의 엑스온&#33;</p>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="img/best4-1.jpg" alt="photoImg1">
+                        <div>
+                            <span>KOKHAN 40th Edition</span>
+                            <p>당신의 밤을 따뜻하게 비춰 줄 KOKHAN<br>
+                                1986년 출시된  &quot;칸델라&quot; 를 복원하여 현대적인 디자인으로 재탄생 하였습니다<br>
+                                코베아 40주년을 기념하여 보다 특별한 가스랜턴  KOKHAN 을 선보입니다 </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <section class="hover">
+        <div class="w70">
+            <h3>스토어</h3>
+            <span>캠핑에 감성을 더해주는 KOVEA</span>
+        </div>
+        <div class="on">
+            <input id="right" type="image" src="img/right.gif" alt="오른쪽">
+            <input id="left" type="image" src="img/left.gif" alt="왼쪽">
+            <ul>
+                <li>
+                    <img src="img/s-1.jpg" alt="photoImg1">
+                    <div class="hover_line">
+                        <div class="line1"></div>
+                        <div class="line2"></div>
+                        <div class="sub_tit">
+                            FURNITURE
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img src="img/s-2.jpg" alt="photoImg2">
+                    <div class="hover_line">
+                        <div class="line1"></div>
+                        <div class="line2"></div>
+                        <div class="sub_tit">
+                            TENT
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img src="img/s-3.jpg" alt="photoImg3">
+                    <div class="hover_line">
+                        <div class="line1"></div>
+                        <div class="line2"></div>
+                        <div class="sub_tit">
+                            SHELTER
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img src="img/main05-1.jpg" alt="photoImg4">
+                    <div class="hover_line">
+                        <div class="line1"></div>
+                        <div class="line2"></div>
+                        <div class="sub_tit">
+                            COOKWARE
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img src="img/s-4.jpg" alt="photoImg4">
+                    <div class="hover_line">
+                        <div class="line1"></div>
+                        <div class="line2"></div>
+                        <div class="sub_tit">
+                            STOVE
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img src="img/s-6.jpg" alt="photoImg4">
+                    <div class="hover_line">
+                        <div class="line1"></div>
+                        <div class="line2"></div>
+                        <div class="sub_tit">
+                            GAS-LENTERN
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img src="img/s-5.jpg" alt="photoImg4">
+                    <div class="hover_line">
+                        <div class="line1"></div>
+                        <div class="line2"></div>
+                        <div class="sub_tit">
+                            LENTERN
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="resorve">
+        <div class="w70">
+            <h3>캠핑장예약</h3>
+            <span>편안한 캠핑을 위해 코베아에서 캠핑장을 보내드립니다</span>
+        </div>
+        <div class="on2">
+            <ul>
+                <li>
+                    <img src="img/camping3-1.jpg" alt="photoImg5">
+                    <div class="hover_2">
+                        <div class="sub">캠핑</div>
+                    </div>
+                </li>
+                <li>
+                    <img src="img/camping2-1.jpg" alt="photoImg6">
+                    <div class="hover_2">
+                        <div class="sub">글램핑</div>
+                    </div>
+                </li>
+                <li>
+                    <img src="img/camping1-1.jpg" alt="photoImg7">
+                    <div class="hover_2">
+                        <div class="sub">오토캠핑</div>
+                    </div>
+                </li>
+                <li>
+                    <img src="img/camping6-1.jpg" alt="photoImg8">
+                    <div class="hover_2">
+                        <div class="sub">카라반</div>
+                    </div>
+                </li>
+                <li>
+                    <img src="img/camping4-1.jpg" alt="photoImg8">
+                    <div class="hover_2">
+                        <div class="sub">지역별 캠핑장</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <div id="form">
+        <img src="img/mountin_1.jpg" alt="배경이미지">
+        <div>
+            <form action="ok.php" method="get">
+                <ul>
+                    <li><span>캠핑장 선택</span>
+                        <select>
+                            <option>캠핑</option>
+                            <option>글램핑</option>
+                            <option>방갈로</option>
+                            <option>펜션</option>
+                            <option>이지캠핑</option>
+                            <option>카라반</option>
+                            <option>전체</option>
+                            <option selected="selected">캠핑장유형</option>
+                        </select>
+                    </li>
+                    <li><span>가는날</span>
+                        <select>
+                            <option>1월</option>
+                            <option>2월</option>
+                            <option>3월</option>
+                            <option>4월</option>
+                            <option>5월</option>
+                            <option>6월</option>
+                            <option>7월</option>
+                            <option>8월</option>
+                            <option>9월</option>
+                            <option>10월</option>
+                            <option>11월</option>
+                            <option>12월</option>
+                            <option selected="selected">월</option>
+                        </select>
+                        <select>
+                            <option>1일</option>
+                            <option>2일</option>
+                            <option>3일</option>
+                            <option>4일</option>
+                            <option>5일</option>
+                            <option>6일</option>
+                            <option>7일</option>
+                            <option>8일</option>
+                            <option>9일</option>
+                            <option>10일</option>
+                            <option>11일</option>
+                            <option>12일</option>
+                            <option>13일</option>
+                            <option>14일</option>
+                            <option>15일</option>
+                            <option>16일</option>
+                            <option>17일</option>
+                            <option>18일</option>
+                            <option>19일</option>
+                            <option>20일</option>
+                            <option>21일</option>
+                            <option>22일</option>
+                            <option>23일</option>
+                            <option>24일</option>
+                            <option>25일</option>
+                            <option>26일</option>
+                            <option>27일</option>
+                            <option>28일</option>
+                            <option>29일</option>
+                            <option>30일</option>
+                            <option>31일</option>
+                            <option selected="selected">일</option>
+                        </select>
+                        <img src="img/icon_date.png" alt="달력아이콘">
+                    </li>
+                    <li><span>오는날</span>
+                        <select>
+                            <option>1월</option>
+                            <option>2월</option>
+                            <option>3월</option>
+                            <option>4월</option>
+                            <option>5월</option>
+                            <option>6월</option>
+                            <option>7월</option>
+                            <option>8월</option>
+                            <option>9월</option>
+                            <option>10월</option>
+                            <option>11월</option>
+                            <option>12월</option>
+                            <option selected="selected">월</option>
+                        </select>
+                        <select>
+                            <option>1일</option>
+                            <option>2일</option>
+                            <option>3일</option>
+                            <option>4일</option>
+                            <option>5일</option>
+                            <option>6일</option>
+                            <option>7일</option>
+                            <option>8일</option>
+                            <option>9일</option>
+                            <option>10일</option>
+                            <option>11일</option>
+                            <option>12일</option>
+                            <option>13일</option>
+                            <option>14일</option>
+                            <option>15일</option>
+                            <option>16일</option>
+                            <option>17일</option>
+                            <option>18일</option>
+                            <option>19일</option>
+                            <option>20일</option>
+                            <option>21일</option>
+                            <option>22일</option>
+                            <option>23일</option>
+                            <option>24일</option>
+                            <option>25일</option>
+                            <option>26일</option>
+                            <option>27일</option>
+                            <option>28일</option>
+                            <option>29일</option>
+                            <option>30일</option>
+                            <option>31일</option>
+                            <option selected="selected">일</option>
+                        </select>
+                        <img src="img/icon_date.png" alt="달력아이콘">
+                    </li>
+                    <li><span>인원</span>
+                        <input type="text" placeholder="성인">
+                        <input type="text" placeholder="어린이">
+                    </li>
+                    <!-- <li>
+                        <input type="image" src="img/icon_find.png" alt="검색아이콘">
+                    </li> -->
+                </ul>
+            </form>
+            <div>
+                <input type="image" src="img/icon_find.png" alt="검색아이콘">
+            </div>
+        </div>
+    </div>
+    <div id="review" class="w70">
+        <h2>VISITOR&#39;s Story</h2>
+        <div><img src="img/re02.jpg" alt="리뷰이미지"></div>
+        <div>
+            <img src="img/comma-01.png" alt="아이콘">
+            <p>조용하게 쉬면서 휴식 취하고 싶어 다녀왔는데 정말 좋았습니다<br>
+                이런곳이 있는줄 몰랐네요
+                그냥 가만히 앉아만 있어도 힐링되고 계곡물이 깨끗해서 물놀이 하기도 좋네요
+                한번만 가기에는 아쉬운 곳이라 시간될 때 자주 찾을 것 같아요</p>
+        </div>
+    </div>
+    <div id="bgBaner">
+        <div><img src="img/logo.png" alt="로고이미지"></div>
+        <div><img src="img/ment.png" alt="멘트"></div>
+    </div>
+    <div id="story" class="w70">
+        <h2>KOVEA&#39;s Story</h2>
+        <div>
+            <figure class="box actionImg8">
+                <img src="img/site.jpg" alt="tent">
+                <div class="back">
+                    <div class="back_inner">
+                        <span class="sub_tit">MORE VIEW</span>
+                    </div>
+                </div>
+                <figcaption><span>KOVEA 와 함께하는 캠핑</span> 더 미니멀하고 간편하지만	&#44; 안락함은 놓치지 않는 캠퍼들을 위한 제품들이 출시 되었습니다. 총 5종의 고스트 시리즈 라인업을 강화하는 상품이 출시가 되었으며 하나하나 살펴보겠습니다</figcaption>
+            </figure>
+            <figure class="box actionImg8">
+                <img src="img/fire.jpg" alt="fire">
+                <div class="back">
+                    <div class="back_inner">
+                        <span class="sub_tit">MORE VIEW</span>
+                    </div>
+                </div>
+                <figcaption><span>감성캠핑 꿀팁</span>좋은 화로대인 경우 더욱 관리가 필요합니다. 사용 후 더러워진 당신의 소중한 불멍 파트너 화로대	&#44; 여러분은 관리를 잘 하고 있으신가요&#63; 화로대의 관리와 깨끗이 청소하는 법에 대해 알려드리겠습니다.</figcaption>
+            </figure>
+            <figure class="box actionImg8">
+                <img src="img/bbq.jpg" alt="bbq">
+                <div class="back">
+                    <div class="back_inner">
+                        <span class="sub_tit">MORE VIEW</span>
+                    </div>
+                </div>
+                <figcaption><span>캠핑의 꽃 BBQ</span>화로대에 둘러앉아 마시멜로&#44; 가래떡&#44; 소시지 등 다양한 음식에 사용할 수 있는 BBQ 스큐어 세트를 소개해드릴게요. 당신의 캠핑에 꽃을 피워 보세요.</figcaption>
+            </figure>
+        </div>
+    </div>
+    <article>
+        <div>
+            <h3>제휴 브랜드</h3>
+        </div>
+        <div id="prev"><img src="img/left_g.gif" alt="왼쪽"></div>
+        <div id="next"><img src="img/right_g.gif" alt="오른쪽"></div>
+        <div id="content">
+            <div id="allpage">
+                <ul>
+                    <li>
+                        <img src="img/dLogo.jpg" alt="disney1">
+                    </li>
+                    <li>
+                        <img src="img/disney1.jpg" alt="disney1">
+                    </li>
+                    <li>
+                        <img src="img/disney2.jpg" alt="disney2">
+                    </li>
+                    <li>
+                        <img src="img/disney3.jpg" alt="disney3">
+                    </li>
+                    <li>
+                        <img src="img/disney4.jpg" alt="disney4">
+                    </li>
+                    <li>
+                        <img src="img/disney5.jpg" alt="disney5">
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <img src="img/nLogo.jpg" alt="nature1">
+                    </li>
+                    <li>
+                        <img src="img/nature1.jpg" alt="nature1">
+                    </li>
+                    <li>
+                        <img src="img/nature2.jpg" alt="nature2">
+                    </li>
+                    <li>
+                        <img src="img/nature3.jpg" alt="nature3">
+                    </li>
+                    <li>
+                        <img src="img/nature4.jpg" alt="nature4">
+                    </li>
+                    <li>
+                        <img src="img/nature5.jpg" alt="nature5">
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <img src="img/cLogo.jpg" alt="coleman1">
+                    </li>
+                    <li>
+                        <img src="img/coleman1.jpg" alt="coleman1">
+                    </li>
+                    <li>
+                        <img src="img/coleman2.jpg" alt="coleman2">
+                    </li>
+                    <li>
+                        <img src="img/coleman3.jpg" alt="coleman3">
+                    </li>
+                    <li>
+                        <img src="img/coleman4.jpg" alt="coleman4">
+                    </li>
+                    <li>
+                        <img src="img/coleman5.jpg" alt="coleman5">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </article>
+    <div id="campigBaner">
+        <img src="img/kocafLogo.png" alt="코카프로고">
+    </div>
+    <div id="icon">
+        <div>
+            <ul>
+                <li>
+                    <a href="#"><img src="img/kocafIcon01.png" alt="코카프아이콘1">
+                        <br>FESTIVAL
+                    </a>
+                </li>
+                <li>
+                    <a href="#"><img src="img/kocafIcon02.png" alt="코카프아이콘2">
+                        <br>SPECIAL
+                    </a>
+                </li>
+                <li>
+                    <a href="#"><img src="img/kocafIcon03.png" alt="코카프아이콘3">
+                        <br>CAMPING
+                    </a>
+                </li>
+                <li>
+                    <a href="#"><img src="img/kocafIcon04.png" alt="코카프아이콘4">
+                        <br>EXPERIENCE
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="history" class="w70">
+        <h2>KOCAF HISTORY</h2>
+        <div>
+            <div class="smImg">
+                <div><img src="img/kocaf2024.jpg" alt="히스토리이미지2"></div>
+                <div><img src="img/kocaf_img01.jpg" alt="히스토리이미지2"></div>
+                <div><img src="img/kocaf_img02.jpg" alt="히스토리이미지2"></div>
+            </div>                
+            <div><img src="img/kocaf2024.jpg" alt="히스토리이미지 메인"></div>
+            <div class="smImg">
+                <div><img src="img/kocaf2023.jpg" alt="히스토리이미지2"></div>
+                <div><img src="img/kocaf_img03.jpg" alt="히스토리이미지2"></div>
+                <div><img src="img/kocaf_img04.jpg" alt="히스토리이미지2"></div>
+            </div>
+        </div>
+    </div>
+    <div id="info" class="w70">
+        <h3>KOCAF 알림</h3>
+        <div>
+            <img src="img/kocafLogo2.png" alt="정보아이콘">
+            <p><span>코카프 정보</span>
+                대한민국 NO1 캠핑 페스티벌 KOCAF
+            </p>
+        </div>
+        <div>
+            <img src="img/fire-01.png" alt="라인업아이콘">
+            <p><span>코카프 라인업</span>
+                스타와 함께하는 KOCAF
+                스페셜한 라인업을 확인해 보세요 
+            </p>
+        </div>
+        <div>
+            <img src="img/icon_camping_3.png" alt="신청아이콘">
+            <span>코카프 신청결과</span>
+        </div>
+    </div>
+    <div class="w70">
+        <dl>
+            <dt><span>E&#95;ga</span>llery</dt>
+            <dd>카탈로그</dd>
+            <dd>히스토리</dd>
+            <dd>텐트전시관</dd>
+        </dl>
+        <dl>
+            <dt><span>News</span></dt>
+            <dd>코베아 뉴스</dd>
+            <dd>공지사항</dd>
+        </dl>
+        <dl>
+            <dt><span>ASce</span>nter</dt>
+            <dd>1&#58;1 문의</dd>
+            <dd>A&#47;S 문의</dd>
+        </dl>
+        <dl>
+            <dt><span>Stor</span>e</dt>
+            <dd>코베아직영점</dd>
+            <dd>코베아대리점</dd>
+            <dd>온라인스토어</dd>
+        </dl>
+    </div>
+    <footer>
+        <div>
+            <ul class="w70">
+                <li><a href="#">회사소개</a></li>
+                <li><a href="#">개인정보취급방침</a></li>
+                <li><a href="#">이용약관</a></li>
+                <li><a href="#">고객센터</a></li>
+            </ul>
+        </div>
+        <div class="w70">
+            <h2><img src="img/footerLogo.png" alt="푸터로고"></h2>
+            <P>
+             주&#41;비젼코베아대표 &#58; 강혜근<br>
+             주소 &#58; 인천 계양구 서운산단로1길 87  통신판매업신고번호 &#58; 2010인천 미추홀구0171  사업자 등록번호 &#58; 1308177468  대표전화 &#58; 1588-5515  이메일 &#58; sales45@kovea.co.kr  Copyright 코베아 쇼핑몰 All rights reserved.
+            </P>
+        </div>
+    </footer>
+</body>
+</html>
