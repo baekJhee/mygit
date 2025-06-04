@@ -273,7 +273,9 @@ h1 {
         width: 70px;
         padding: 23px 0;
         border-radius: 50%;
+        background-color: #E8EBEE;
         outline-color: #A6221D;
+        color: #2D3F71;
 
         >span {
             position: absolute;
@@ -283,8 +285,7 @@ h1 {
             width: 90px;
             padding: 0 5px;
             border-radius: 5px;
-            background-color: #2D3F71;
-            color: #E8EBEE;
+            background-color: #E8EBEE;
             text-align: center;
             font-size: 18px;
         }
