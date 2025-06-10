@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600&display=swap");
+//변수
+$all-size: 300px;
+
+@mixin bdrs($type) {
+  border-radius: $type;
+}
+
+body {
+  padding: 0;
+}
+.figma {
+  width: $all-size;
+  margin: 0 auto;
+  outline: 1px solid #000;
+
+  & > span {
+    display: block;
+    font-family: "Hind", sans-serif;
+    text-align: center;
+
+    font: {
+      size: $all-size / 3;
+    }
+  }
+
+  .shape {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    & > span {
+      width: $all-size / 2;
+      height: $all-size / 2;
+
+      &:nth-child(1) {
+        background-color: #f24e1e;
+        @include bdrs(50% 0 0 50%);
+      }
+      &:nth-child(2) {
+        background-color: #ff7262;
+        @include bdrs(0 50% 50% 0);
+      }
+      &:nth-child(3) {
+        background-color: #a259ff;
+        @include bdrs(50% 0 0 50%);
+      }
+      &:nth-child(4) {
+        background-color: #1abcfe;
+        @include bdrs(50%);
+      }
+      &:nth-child(5) {
+        background-color: #0acf83;
+        @include bdrs(50% 0 50% 50%);
+      }
+    }
+  }
+}

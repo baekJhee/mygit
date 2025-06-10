@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600&display=swap");
+body {
+  padding: 0;
+}
+
+.figma {
+  width: 300px;
+  margin: 0 auto;
+  outline: 1px solid #000;
+}
+.figma > span {
+  display: block;
+  font-family: "Hind", sans-serif;
+  text-align: center;
+  font-size: 100px;
+}
+.figma .shape {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.figma .shape > span {
+  width: 150px;
+  height: 150px;
+}
+.figma .shape > span:nth-child(1) {
+  background-color: #f24e1e;
+  border-radius: 50% 0 0 50%;
+}
+.figma .shape > span:nth-child(2) {
+  background-color: #ff7262;
+  border-radius: 0 50% 50% 0;
+}
+.figma .shape > span:nth-child(3) {
+  background-color: #a259ff;
+  border-radius: 50% 0 0 50%;
+}
+.figma .shape > span:nth-child(4) {
+  background-color: #1abcfe;
+  border-radius: 50%;
+}
+.figma .shape > span:nth-child(5) {
+  background-color: #0acf83;
+  border-radius: 50% 0 50% 50%;
+}
