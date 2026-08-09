@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId" version="3.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+        <dc:title>EPUB 웹 뷰어 샘플 북</dc:title>
+        <dc:creator>Google DeepMind Agent</dc:creator>
+        <dc:language>ko</dc:language>
+    </metadata>
+    <manifest>
+        <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>
+        <item id="chapter1" href="chapter1.xhtml" media-type="application/xhtml+xml"/>
+        <item id="chapter2" href="chapter2.xhtml" media-type="application/xhtml+xml"/>
+        <item id="style" href="style.css" media-type="text/css"/>
+    </manifest>
+    <spine>
+        <itemref idref="cover"/>
+        <itemref idref="chapter1"/>
+        <itemref idref="chapter2"/>
+    </spine>
+</package>
