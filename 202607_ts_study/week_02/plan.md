@@ -1,58 +1,57 @@
-# 웹 기반 EPUB 뷰어 기획 및 구현 플랜 (Web-based EPUB Viewer Plan)
+# 웹 앨범 전용 반응형 EPUB 뷰어 기획 및 플랜 (Web Album EPUB Viewer Plan)
 
-이 문서는 웹 서비스에 연동 가능한 압축 해제(Uncompressed) EPUB 뷰어의 제품 기획, 기능 명세 및 기술 구현 플랜을 정의합니다.
+이 문서는 압축 해제된 EPUB 전자책을 웹 앨범 용도로 활용하며, 첫 페이지는 앨범 커버로 로드하고 다음 페이지부터 이미지/사진을 손쉽게 등록 및 관리할 수 있는 반응형 웹 서비스의 기획 및 개발 플랜을 정의합니다.
 
 ---
 
 ## 1. 제품 핵심 목표 (Core Goal)
 
-- 사용자가 별도의 앱 설치 없이 웹 브라우저만으로 EPUB 책(압축 해제된 디렉터리 포맷)을 즉시 열람할 수 있는 웹 뷰어 제공.
-- URL 파라미터(`?url=`, `?path=`, `?epub=`)를 통해 EPUB 폴더 위치를 동적으로 전달받아 **첫 번째 페이지(Spine Item)**를 자동으로 분석 및 로드.
+- **첫 페이지 앨범 커버 자동 로드**: URL 파라미터(`?url=`, `?path=`, `?epub=`)로 지정된 EPUB 디렉터리의 첫 번째 Spine 항목(앨범 표지)을 자동으로 분석하여 렌더링.
+- **다음 페이지부터 손쉬운 이미지 등록**: 2페이지 이후 갤러리 페이지부터 사용자가 드래그 앤 드롭 또는 파일 선택을 통해 앨범 사진을 직관적으로 등록하고 캡션 메모를 추가할 수 있는 기능 제공.
+- **반응형 앨범 UI**: 모바일, 태블릿, PC 등 디바이스 화면 크기에 유연하게 대응하는 갤러리 뷰어 구축.
 
 ---
 
 ## 2. 사용자 경험 시나리오 (User Flow)
 
-1. **진입 (URL Entry)**:
-   - 사용자가 `viewer.html?url=./sample-book` 과 같은 파라미터를 포함한 링크에 접속합니다.
-2. **로딩 & 파싱 (Loading & Parsing)**:
-   - 화면에 심플하고 세련된 로딩 스피너가 표시됩니다.
-   - 백그라운드 엔진이 `META-INF/container.xml` → OPF 파일(`content.opf`) → `<spine>` 읽기 순서를 순차적으로 탐색합니다.
-3. **첫 페이지 자동 렌더링 (First Page Load)**:
-   - 분석된 첫 번째 챕터(또는 표지) XHTML 문서를 `iframe` 내부에 안전하게 렌더링합니다.
-4. **독서 및 조작 (Reading & Navigation)**:
-   - 이전/다음 버튼, 키보드 화살표 키, 목차(TOC) 사이드바 드로어, 테마(Light/Sepia/Dark) 변경 기능을 활용해 자유롭게 도서를 감상합니다.
+1. **진입 (Entry)**:
+   - 사용자가 `http://서비스주소/index.html?url=앨범EPUB경로` 형식의 URL로 접속합니다.
+2. **첫 페이지 (앨범 커버) 로드**:
+   - 백그라운드에서 `container.xml` → OPF 파일 → `<spine>`의 첫 번째 항목을 구문 분석하여 **앨범 커버(Cover Page)**를 화면 중앙에 보여줍니다.
+3. **다음 페이지 이동 및 이미지 등록 (Page 2+ Photo Registration)**:
+   - 이전/다음 버튼을 통해 2페이지(갤러리 페이지)로 이동합니다.
+   - 2페이지부터 활성화되는 **[사진 등록]** 버튼을 클릭하여 로컬 이미지 파일을 업로드(Drag & Drop 지원)하고 캡션을 입력합니다.
+   - 등록된 사진은 앨범 카드로 추가되며 `localStorage`에 자동 보관되어 페이지 재방문 시에도 유지됩니다.
 
 ---
 
-## 3. 핵심 기능 명세 (Feature Specifications)
+## 3. 기능 명세 (Feature Specifications)
 
 | 구분 | 기능 명 | 상세 설명 |
 |---|---|---|
-| **URL 파라미터 연동** | Dynamic EPUB Path | `?url=`, `?path=`, `?epub=` 파라미터를 통해 대상 EPUB 폴더 위치 수신 |
-| **자동 구조 분석** | EPUB Standard Parser | `container.xml` 파싱 후 OPF 위치 추적, Manifest 및 Spine 파싱하여 첫 페이지 자동 도출 |
-| **독립 렌더링** | Isolated `iframe` | 본문 XHTML과 CSS를 `iframe` 내부에 격리하여 메인 UI 스타일과의 충돌 방지 |
-| **페이지 네비게이션** | Page & Progress Control | 이전/다음 챕터 이동, 진행률 퍼센트 바 표시, 전체 챕터 카운터 출력 |
-| **목차 사이드바** | TOC Drawer | 좌측 슬라이딩 목차 메뉴로 원하는 챕터로 직관적 이동 |
-| **다중 테마 지원** | Multi-Theme Switcher | Light, Sepia, Dark 모드를 제공하여 읽기 편의성 제공 |
-| **예외 처리 UI** | Error Handler Overlay | 유효하지 않은 경로 접속 시 친절한 안내 문구 및 경로 재입력 창 제공 |
+| **URL 파라미터 연동** | Dynamic EPUB Path | `?url=`, `?path=`, `?epub=` 파라미터를 통해 웹 앨범 EPUB 경로 수신 |
+| **앨범 커버 자동 탐색** | XML Standard Parser | `container.xml` 및 OPF 파싱으로 첫 페이지(앨범 커버) 자동 렌더링 |
+| **사진/이미지 손쉬운 등록** | Easy Photo Uploader | 2페이지부터 활성화. 이미지 파일 드래그&드롭, Base64 변환, 캡션 등록 지원 |
+| **앨범 데이터 보존** | LocalStorage Persistence | 챕터/페이지별 등록된 앨범 사진 및 메모 데이터를 영구 보관 |
+| **독립 렌더링** | Isolated `iframe` | 앨범 페이지 본문과 뷰어 UI 스타일 간 독립적인 격리 유지 |
+| **반응형 앨범 Layout** | Mobile Responsive UI | 모바일 및 대화면 PC에 맞춘 가변 포토 갤러리 레이아웃 |
+| **테마 모드** | Theme Switcher | Dark, Gallery, Light 모드를 제공하여 사진 감상 최적화 |
 
 ---
 
-## 4. 기술 아키텍처 (Technical Architecture)
+## 4. 디렉터리 구성 (`Jihui/week_02/`)
 
-- **프론트엔드 스택**: HTML5, CSS3, Vanilla JavaScript (ES6+)
-- **디렉터리 구조 (`Jihui/week_02/`)**:
-  - `viewer.html` / `viwer.html`: 뷰어 레이아웃 마크업
-  - `style.css`: 테마, 반응형 뷰어 UI 디자인
-  - `app.js`: EPUB DOMParser 엔진, URL 파라미터 제어, iframe 렌더링
-  - `sample-book/`: 검증용 샘플 EPUB 디렉터리 (`container.xml`, `content.opf`, `cover.xhtml`, `chapter1.xhtml`, `chapter2.xhtml`, `style.css`)
+- `index.html`: 메인 웹 앨범 뷰어 및 사진 등록 패널 마크업
+- `style.css`: 포토 앨범 테마, 반응형 갤러리 레이아웃, 이미지 등록 드래그존 스타일
+- `app.js`: EPUB XML 파서, 앨범 커버 로더, 2페이지 이후 이미지 등록 `localStorage` 관리자
+- `sample-book/`: 검증용 웹 앨범 샘플 EPUB 디렉터리 (`container.xml`, `content.opf`, `cover.xhtml` [앨범 커버], `page1.xhtml` [갤러리], `style.css`)
+- `plan.md`: 웹 앨범 기획 및 개발 플랜 문서 (본 파일)
+- `prompt.md`: 히스토리 프롬프트 기록 문서
 
 ---
 
 ## 5. 검증 계획 (Verification Plan)
 
-- **정상 경로 접속 검증**: `viewer.html?url=./sample-book` 접속 시 로딩 오버레이 후 `cover.xhtml`이 첫 페이지로 정상 로드되는지 확인
-- **페이지 이동 검증**: 다음 버튼(`>`) 및 키보드 우측 화살표(`→`) 클릭 시 `chapter1.xhtml`로 부드럽게 전환되는지 확인
-- **목차 선택 검증**: 목차 사이드바에서 특정 챕터 클릭 시 해당 위치로 즉시 이동하는지 확인
-- **예외 처리 검증**: `viewer.html?url=invalid-path` 로 접속 시 오류 안내 카드 및 경로 재입력 폼이 노출되는지 확인
+- **첫 페이지 커버 로드 검증**: `index.html?url=./sample-book` 접속 시 첫 표지(`cover.xhtml`)가 깨짐 없이 로드되는지 확인
+- **이미지 등록 동작 검증**: 2페이지 이동 후 사진 등록 버튼 클릭, 로컬 이미지 업로드 시 앨범 카드가 생성되고 새로고침 후에도 유지되는지 확인
+- **반응형 동작 검증**: 모바일 화면 크기(375px)에서도 앨범 뷰어 및 이미지 등록 창이 매끄럽게 동작하는지 확인

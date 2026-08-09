@@ -4,37 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EPUB Web Viewer</title>
+    <title>웹 포토 앨범 EPUB 뷰어</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <!-- Top Header Toolbar -->
+    <!-- Responsive Header Navigation Bar -->
     <header class="viewer-header">
         <div class="header-left">
-            <button id="toc-btn" class="btn-icon" title="목차 열기" aria-label="목차 열기">
+            <button id="toc-btn" class="btn-icon" title="앨범 목차" aria-label="앨범 목차">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
             </button>
-            <h1 id="book-title" class="book-title">EPUB 뷰어 로딩 중...</h1>
+            <span id="album-badge" class="album-badge">COVER</span>
+            <h1 id="book-title" class="book-title">웹 앨범 로딩 중...</h1>
         </div>
 
         <div class="header-right">
+            <button id="photo-btn" class="btn-action" title="이 페이지에 사진 등록">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+                <span>사진 등록</span>
+            </button>
+
             <div class="theme-selector">
-                <button class="theme-btn active" data-theme="light">Light</button>
-                <button class="theme-btn" data-theme="sepia">Sepia</button>
-                <button class="theme-btn" data-theme="dark">Dark</button>
+                <button class="theme-btn active" data-theme="dark">Dark</button>
+                <button class="theme-btn" data-theme="gallery">Gallery</button>
+                <button class="theme-btn" data-theme="light">Light</button>
             </div>
         </div>
     </header>
 
-    <!-- TOC Sidebar Drawer -->
+    <!-- Table of Contents Sidebar Drawer -->
     <aside id="sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h3>목차 (Table of Contents)</h3>
+            <h3>앨범 목차 (Album Pages)</h3>
             <button id="close-toc-btn" class="btn-icon" title="닫기" aria-label="닫기">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -43,11 +52,62 @@
             </button>
         </div>
         <ul id="toc-list" class="toc-list">
-            <!-- Dynamic TOC Items -->
+            <!-- Dynamic TOC items -->
         </ul>
     </aside>
 
-    <!-- Main Content Reader Area -->
+    <!-- Photo Registration Drawer Panel -->
+    <aside id="photo-panel" class="photo-panel">
+        <div class="photo-header">
+            <h3>📷 앨범 사진 및 메모 등록</h3>
+            <button id="close-photo-btn" class="btn-icon" title="닫기" aria-label="닫기">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="photo-body">
+            <!-- Photo Upload Dropzone -->
+            <div class="form-group">
+                <label>🖼️ 이미지 파일 선택 및 업로드</label>
+                <div id="image-dropzone" class="dropzone">
+                    <div class="dropzone-icon">📥</div>
+                    <p class="dropzone-text">이미지 파일 드래그 &amp; 드롭 또는 클릭하여 업로드</p>
+                    <input type="file" id="image-file-input" accept="image/*" class="hidden">
+                </div>
+                <input type="text" id="image-url-input" class="form-input" placeholder="또는 이미지 웹 URL 입력 (http://...)"
+                    style="margin-top: 6px;">
+                <img id="image-preview" class="preview-img hidden" alt="선택한 이미지 미리보기">
+            </div>
+
+            <!-- Title & Description Input -->
+            <div class="form-group">
+                <label for="photo-title">📌 사진 제목</label>
+                <input type="text" id="photo-title" class="form-input" placeholder="예: 즐거웠던 제주도 바다 여행">
+            </div>
+
+            <div class="form-group">
+                <label for="photo-desc">📝 추억 메모 / 설명</label>
+                <textarea id="photo-desc" class="form-textarea" placeholder="사진에 남길 특별한 이야기를 작성해보세요..."></textarea>
+            </div>
+
+            <button id="save-photo-btn" class="btn-action" style="justify-content: center; width: 100%; padding: 11px;">
+                앨범에 사진 추가하기
+            </button>
+
+            <!-- List of Saved Photos for Current Page -->
+            <div class="photo-list-section">
+                <h4 class="photo-list-title">현재 페이지 앨범 갤러리</h4>
+                <div id="photo-card-grid" class="photo-card-grid">
+                    <!-- Dynamic Photo Cards -->
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Reader Container -->
     <main class="main-wrapper">
         <button id="prev-btn" class="nav-btn nav-prev" title="이전 페이지 (←)" aria-label="이전 페이지">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -56,7 +116,7 @@
         </button>
 
         <section class="iframe-container">
-            <iframe id="content-iframe" class="content-iframe" title="EPUB 콘텐츠 본문"></iframe>
+            <iframe id="content-iframe" class="content-iframe" title="EPUB 앨범 본문"></iframe>
         </section>
 
         <button id="next-btn" class="nav-btn nav-next" title="다음 페이지 (→)" aria-label="다음 페이지">
@@ -66,30 +126,38 @@
         </button>
     </main>
 
+    <!-- Fullscreen Lightbox Modal -->
+    <div id="lightbox-modal" class="lightbox-modal hidden">
+        <button id="lightbox-close" class="lightbox-close" title="닫기">&times;</button>
+        <img id="lightbox-img" class="lightbox-img" alt="사진 확대보기">
+        <p id="lightbox-caption" class="lightbox-caption"></p>
+    </div>
+
     <!-- Bottom Status Bar -->
     <footer class="bottom-bar">
-        <span id="page-indicator">0 / 0</span>
+        <span id="page-indicator">Page 1 (앨범 커버) / 0</span>
         <div class="progress-bar-container">
             <div id="progress-fill" class="progress-fill"></div>
         </div>
-        <span>EPUB Uncompressed Viewer</span>
+        <span>EPUB Web Album Viewer</span>
     </footer>
 
     <!-- Loading Overlay -->
     <div id="loading-overlay" class="overlay">
         <div class="spinner"></div>
-        <p style="font-weight: 500;">EPUB 도서를 분석하는 중입니다...</p>
+        <p style="font-weight: 500;">웹 앨범 EPUB 도서를 탐색하고 있습니다...</p>
     </div>
 
     <!-- Error State Overlay -->
     <div id="error-overlay" class="overlay hidden">
         <div class="error-card">
-            <h4>EPUB 도서를 불러올 수 없습니다</h4>
+            <h4>웹 앨범 도서를 불러올 수 없습니다</h4>
             <p id="error-message">지정된 경로에 유효한 EPUB 디렉터리가 존재하지 않습니다.</p>
-            
+
             <div class="url-input-group">
-                <input type="text" id="custom-url-input" class="url-input" placeholder="예: ./sample-book" value="./sample-book">
-                <button id="reload-btn" class="btn-primary">불러오기</button>
+                <input type="text" id="custom-url-input" class="url-input" placeholder="예: ./sample-book"
+                    value="./sample-book">
+                <button id="reload-btn" class="btn-action">불러오기</button>
             </div>
         </div>
     </div>

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId" version="3.0">
     <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
-        <dc:title>EPUB 웹 뷰어 샘플 북</dc:title>
-        <dc:creator>Google DeepMind Agent</dc:creator>
+        <dc:title>소중한 순간들 - 웹 포토 앨범</dc:title>
+        <dc:creator>Jihui Album</dc:creator>
         <dc:language>ko</dc:language>
     </metadata>
     <manifest>
         <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>
-        <item id="chapter1" href="chapter1.xhtml" media-type="application/xhtml+xml"/>
-        <item id="chapter2" href="chapter2.xhtml" media-type="application/xhtml+xml"/>
+        <item id="page1" href="page1.xhtml" media-type="application/xhtml+xml"/>
+        <item id="page2" href="page2.xhtml" media-type="application/xhtml+xml"/>
         <item id="style" href="style.css" media-type="text/css"/>
     </manifest>
     <spine>
         <itemref idref="cover"/>
-        <itemref idref="chapter1"/>
-        <itemref idref="chapter2"/>
+        <itemref idref="page1"/>
+        <itemref idref="page2"/>
     </spine>
 </package>
