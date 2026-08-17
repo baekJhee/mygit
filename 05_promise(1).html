@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>프로미스 연습</title>
+  <style>
+    body {
+      background-color: #000;
+    }
+
+    .examBox {
+      width: 100px;
+      height: 100px;
+      background-color: #444;
+      margin: 40px;
+      transition: all 1s ease;
+    }
+
+    .examBox.on {
+      background-color: red;
+    }
+
+    .examBox.ani.on {
+      animation: pulse 1.2s ease-in-out forwards;
+    }
+
+    .examBox.transition.on {
+      transform: scale(1.2);
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(255, 0, 0, 0);
+      }
+
+      50% {
+        transform: scale(1.2);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+      }
+
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(255, 0, 0, 0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="examBox ani"></div>
+  <div class="examBox transition"></div>
+  <script>
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function waitForAnimationEnd(element) {
+      return new Promise(resolve => {
+        element.addEventListener("transitionend", resolve, { once: true });
+      });
+    }
+
+    async function runAnimation() {
+      const box = document.querySelector(".examBox.ani");
+
+      await delay(2000);
+      console.log("1초 후 실행");
+
+      box.classList.add("on");
+      await waitForAnimationEnd(box);
+      console.log("애니매이션 끝~");
+
+    }
+
+    async function run() {
+      const box = document.querySelector(".examBox.transition");
+
+      await delay(2000);
+      console.log("2초 후 실행");
+      box.classList.add("on");
+      await waitForAnimationEnd(box);
+
+      await delay(1000);
+      box.classList.remove("on");
+
+      console.log("트랜지션 끝!");
+    }
+
+    runAnimation()
+    run();
+  </script>
+</body>
+
+</html>
