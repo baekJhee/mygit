@@ -1,0 +1,58 @@
+body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    line-height: 1.7;
+    color: #333;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    background-color: #ffffff;
+}
+
+h1 {
+    font-size: 1.8rem;
+    border-bottom: 2px solid #eaeaea;
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+    color: #111;
+}
+
+h2 {
+    font-size: 1.3rem;
+    margin-top: 24px;
+    color: #444;
+}
+
+p {
+    margin-bottom: 1.2rem;
+    font-size: 1.05rem;
+    word-break: keep-all;
+}
+
+ul {
+    padding-left: 20px;
+    margin-bottom: 1.2rem;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+.cover-container {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.cover-container h1 {
+    color: white;
+    border-bottom: none;
+    font-size: 2.2rem;
+}
+
+.cover-author {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}

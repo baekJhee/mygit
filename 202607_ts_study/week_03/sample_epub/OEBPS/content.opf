@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookID" version="3.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+        <dc:title>샘플 EPUB 전자책 (Sample EPUB)</dc:title>
+        <dc:language>ko</dc:language>
+        <dc:creator>Jihui</dc:creator>
+    </metadata>
+    <manifest>
+        <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+        <item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>
+        <item id="chap1" href="chapter1.xhtml" media-type="application/xhtml+xml"/>
+        <item id="chap2" href="chapter2.xhtml" media-type="application/xhtml+xml"/>
+        <item id="chap3" href="chapter3.xhtml" media-type="application/xhtml+xml"/>
+        <item id="style" href="css/epub.css" media-type="text/css"/>
+    </manifest>
+    <spine>
+        <itemref idref="cover"/>
+        <itemref idref="chap1"/>
+        <itemref idref="chap2"/>
+        <itemref idref="chap3"/>
+    </spine>
+</package>
