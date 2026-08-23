@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "lib-drawing-board": "github:tovsoft/lib-drawing-board"
+  }
+}
