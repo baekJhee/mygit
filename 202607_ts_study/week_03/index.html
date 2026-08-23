@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EPUB 웹 뷰어</title>
     <link rel="stylesheet" href="css/style.css">
+    <!-- lib-drawing-board UMD Bundle -->
+    <script src="js/lib-drawing-board.umd.js"></script>
 </head>
 
 <body>
@@ -18,7 +20,58 @@
             </button>
             <h1 id="book-title" class="book-title">EPUB 뷰어</h1>
         </div>
+        <div class="header-right">
+            <button id="btn-drawing-toggle" class="icon-btn toggle-drawing-btn">
+                <span>🎨</span> 드로잉
+            </button>
+        </div>
     </header>
+
+    <!-- Simple Drawing Toolbar -->
+    <div id="drawing-toolbar" class="drawing-toolbar" style="display: none;">
+        <!-- Tool Selection (Pen / Highlighter / Eraser) -->
+        <div class="toolbar-group">
+            <button class="tool-btn active" data-drawing-tool="pen" title="펜 쓰기">
+                <span>✏️</span> 펜
+            </button>
+            <button class="tool-btn" data-drawing-tool="highlighter" title="형광펜">
+                <span>🖌️</span> 형광펜
+            </button>
+            <button class="tool-btn" data-drawing-tool="eraser" title="지우기">
+                <span>🧹</span> 지우개
+            </button>
+        </div>
+
+        <div class="toolbar-divider"></div>
+
+        <!-- Color Selection -->
+        <div class="toolbar-group color-group">
+            <span class="chip-label">색상:</span>
+            <button class="color-chip active" data-color="#2563eb" style="background-color: #2563eb;"
+                title="파랑"></button>
+            <button class="color-chip" data-color="#000000" style="background-color: #000000;" title="검정"></button>
+            <button class="color-chip" data-color="#dc2626" style="background-color: #dc2626;" title="빨강"></button>
+            <button class="color-chip" data-color="#16a34a" style="background-color: #16a34a;" title="초록"></button>
+            <button class="color-chip" data-color="#eab308" style="background-color: #eab308;" title="노랑"></button>
+            <input type="color" id="drawing-color-picker" class="color-picker-input" value="#2563eb" title="직접 선택">
+        </div>
+
+        <!-- Line Width Selection -->
+        <div class="toolbar-group width-group">
+            <span class="chip-label">두께:</span>
+            <input type="range" id="drawing-width-slider" min="1" max="50" value="4" class="width-slider">
+            <span id="drawing-width-val" class="width-val">4px</span>
+        </div>
+
+        <div class="toolbar-divider"></div>
+
+        <!-- Clear All -->
+        <div class="toolbar-group">
+            <button id="btn-drawing-clear" class="action-btn danger" title="모두 지우기">
+                <span>🗑️</span> 모두 지우기
+            </button>
+        </div>
+    </div>
 
     <!-- 2. Main Body Area -->
     <main class="app-main">
@@ -40,6 +93,11 @@
                 <span>EPUB 데이터 로딩 중...</span>
             </div>
             <iframe id="epub-frame" title="EPUB Content Viewer"></iframe>
+
+            <!-- Drawing Board Transparent Overlay Layer -->
+            <div id="drawing-overlay" class="drawing-overlay">
+                <lib-drawing-board id="drawing-board"></lib-drawing-board>
+            </div>
         </section>
     </main>
 

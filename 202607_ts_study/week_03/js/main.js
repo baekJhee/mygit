@@ -6,6 +6,7 @@
 import { EpubParser } from './epub-parser.js';
 import { TocManager } from './toc.js';
 import { NavigationManager } from './navigation.js';
+import { DrawingManager } from './drawing.js';
 
 class EpubApp {
     constructor() {
@@ -17,6 +18,8 @@ class EpubApp {
         this.spineData = [];
         this.basePath = './sample_epub';
         this.currentIndex = 0;
+
+        this.drawingManager = null;
 
         this.init();
     }
@@ -34,6 +37,11 @@ class EpubApp {
         this.showLoading(true);
 
         try {
+            // 0. 드로잉 매니저 초기화 (JS 모듈 분리)
+            this.drawingManager = new DrawingManager({
+                bookId: this.basePath.replace(/[^a-zA-Z0-9_-]/g, '_')
+            });
+
             // 1. 파서 초기화 및 로드
             this.parser = new EpubParser(this.basePath);
             const epubData = await this.parser.load();
@@ -94,9 +102,17 @@ class EpubApp {
         this.navManager.setIndex(index);
         this.tocManager.updateActive(item.href);
 
+        // 페이지별 드로잉 데이터 저장 및 새로고침/복원 연동
+        if (this.drawingManager) {
+            this.drawingManager.setPageKey(`page_${index}_${item.href.replace(/[^a-zA-Z0-9_-]/g, '_')}`);
+        }
+
         // iframe 내부 클릭/키보드 이벤트 연동
         this.frameEl.onload = () => {
             this.bindIframeKeyboardEvent();
+            if (this.drawingManager) {
+                this.drawingManager.bindIframe(this.frameEl);
+            }
         };
     }
 
@@ -112,6 +128,9 @@ class EpubApp {
         } else {
             this.frameEl.src = `${this.basePath}/${targetHref}`;
             this.tocManager.updateActive(targetHref);
+            if (this.drawingManager) {
+                this.drawingManager.setPageKey(`page_${targetHref.replace(/[^a-zA-Z0-9_-]/g, '_')}`);
+            }
         }
     }
 
@@ -163,3 +182,4 @@ class EpubApp {
 document.addEventListener('DOMContentLoaded', () => {
     new EpubApp();
 });
+
