@@ -11,6 +11,7 @@
         <item id="chap1" href="chapter1.xhtml" media-type="application/xhtml+xml"/>
         <item id="chap2" href="chapter2.xhtml" media-type="application/xhtml+xml"/>
         <item id="chap3" href="chapter3.xhtml" media-type="application/xhtml+xml"/>
+        <item id="chap4" href="chapter4.xhtml" media-type="application/xhtml+xml"/>
         <item id="style" href="css/epub.css" media-type="text/css"/>
     </manifest>
     <spine>
@@ -18,5 +19,6 @@
         <itemref idref="chap1"/>
         <itemref idref="chap2"/>
         <itemref idref="chap3"/>
+        <itemref idref="chap4"/>
     </spine>
 </package>

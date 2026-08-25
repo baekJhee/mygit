@@ -9,11 +9,11 @@ export class DrawingManager {
         this.overlayEl = options.overlayEl || document.getElementById('drawing-overlay');
         this.toolbarEl = options.toolbarEl || document.getElementById('drawing-toolbar');
         this.toggleBtnEl = options.toggleBtnEl || document.getElementById('btn-drawing-toggle');
-        
+
         this.currentPageKey = 'page_0';
         this.bookId = options.bookId || 'default_epub';
         this.isActive = false;
-        
+
         this.currentIframe = null;
         this.iframeWin = null;
         this.iframeDoc = null;
@@ -29,7 +29,7 @@ export class DrawingManager {
         this.boardEl.tool = 'pen';
         this.boardEl.color = '#2563eb';
         this.boardEl.lineWidth = 4;
-        
+
         // 크기 업데이트
         this.updateBoardSize();
     }
@@ -56,14 +56,14 @@ export class DrawingManager {
             if (!this.iframeDoc || !this.iframeDoc.documentElement || !this.overlayEl) return;
             const scrollTop = this.iframeWin.scrollY || this.iframeDoc.documentElement.scrollTop || 0;
             const scrollLeft = this.iframeWin.scrollX || this.iframeDoc.documentElement.scrollLeft || 0;
-            
+
             this.overlayEl.style.transform = `translate3d(-${scrollLeft}px, -${scrollTop}px, 0)`;
         };
 
         // 2. 문서 크기 동기화 함수
         const syncDimensions = () => {
             if (!this.iframeDoc || !this.iframeDoc.documentElement || !this.boardEl || !this.overlayEl) return;
-            
+
             const docWidth = Math.max(
                 this.iframeDoc.documentElement.scrollWidth,
                 this.iframeDoc.body ? this.iframeDoc.body.scrollWidth : 0,
@@ -138,7 +138,7 @@ export class DrawingManager {
                 toolBtns.forEach(b => b.classList.remove('active'));
                 const target = e.currentTarget;
                 target.classList.add('active');
-                
+
                 const tool = target.getAttribute('data-drawing-tool');
                 this.setTool(tool);
             });
@@ -147,13 +147,13 @@ export class DrawingManager {
         // 3. 색상 선택 (색상 칩 & 컬러 피커)
         const colorSwatches = document.querySelectorAll('.color-chip');
         const customColorPicker = document.getElementById('drawing-color-picker');
-        
+
         colorSwatches.forEach(chip => {
             chip.addEventListener('click', (e) => {
                 colorSwatches.forEach(c => c.classList.remove('active'));
                 const target = e.currentTarget;
                 target.classList.add('active');
-                
+
                 const color = target.getAttribute('data-color');
                 this.setColor(color);
                 if (customColorPicker) customColorPicker.value = color;
@@ -229,12 +229,22 @@ export class DrawingManager {
     setTool(tool) {
         if (!this.boardEl) return;
         this.boardEl.tool = tool;
-        
+
         let targetWidth = 4;
         if (tool === 'eraser') {
             targetWidth = 24;
         } else if (tool === 'highlighter') {
             targetWidth = 20;
+            // 형광펜 선택 시 노란색(#eab308) 칩 활성화 및 색상 변경
+            const colorSwatches = document.querySelectorAll('.color-chip');
+            const yellowChip = document.querySelector('.color-chip[data-color="#eab308"]');
+            if (yellowChip) {
+                colorSwatches.forEach(c => c.classList.remove('active'));
+                yellowChip.classList.add('active');
+            }
+            this.setColor('#eab308');
+            const customColorPicker = document.getElementById('drawing-color-picker');
+            if (customColorPicker) customColorPicker.value = '#eab308';
         } else if (tool === 'pen') {
             targetWidth = 4;
         }

@@ -22,6 +22,27 @@ export class TocManager {
         if (this.closeBtnEl) {
             this.closeBtnEl.addEventListener('click', () => this.close());
         }
+
+        // 탭 토글 (목차 vs 북마크)
+        const tabBtns = document.querySelectorAll('.sidebar-tab');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const targetTab = e.currentTarget.getAttribute('data-tab');
+                tabBtns.forEach(b => b.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+
+                const tocContent = document.getElementById('toc-container');
+                const bookmarkContent = document.getElementById('bookmark-container');
+
+                if (targetTab === 'toc') {
+                    if (tocContent) tocContent.style.display = 'block';
+                    if (bookmarkContent) bookmarkContent.style.display = 'none';
+                } else if (targetTab === 'bookmark') {
+                    if (tocContent) tocContent.style.display = 'none';
+                    if (bookmarkContent) bookmarkContent.style.display = 'block';
+                }
+            });
+        });
     }
 
     toggle() {

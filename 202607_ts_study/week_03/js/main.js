@@ -7,6 +7,7 @@ import { EpubParser } from './epub-parser.js';
 import { TocManager } from './toc.js';
 import { NavigationManager } from './navigation.js';
 import { DrawingManager } from './drawing.js';
+import { BookmarkManager } from './bookmark.js';
 
 class EpubApp {
     constructor() {
@@ -20,6 +21,7 @@ class EpubApp {
         this.currentIndex = 0;
 
         this.drawingManager = null;
+        this.bookmarkManager = null;
 
         this.init();
     }
@@ -37,9 +39,23 @@ class EpubApp {
         this.showLoading(true);
 
         try {
-            // 0. 드로잉 매니저 초기화 (JS 모듈 분리)
-            this.drawingManager = new DrawingManager({
-                bookId: this.basePath.replace(/[^a-zA-Z0-9_-]/g, '_')
+            // 0. 드로잉 매니저 및 북마크 매니저 초기화
+            const bookId = this.basePath.replace(/[^a-zA-Z0-9_-]/g, '_');
+            this.drawingManager = new DrawingManager({ bookId });
+
+            this.bookmarkManager = new BookmarkManager({
+                bookId,
+                toggleBtnEl: document.getElementById('btn-bookmark-toggle'),
+                containerEl: document.getElementById('bookmark-container'),
+                countEl: document.getElementById('bookmark-count'),
+                onSelect: (bm) => {
+                    if (bm.index !== undefined && bm.index >= 0) {
+                        this.loadSpineIndex(bm.index);
+                    } else if (bm.href) {
+                        this.loadHref(bm.href);
+                    }
+                    this.tocManager.close();
+                }
             });
 
             // 1. 파서 초기화 및 로드
@@ -101,6 +117,17 @@ class EpubApp {
         this.frameEl.src = pageUrl;
         this.navManager.setIndex(index);
         this.tocManager.updateActive(item.href);
+
+        // 현재 페이지 정보 북마크 매니저에 알림
+        if (this.bookmarkManager) {
+            const tocBtn = this.tocManager?.containerEl?.querySelector(`.toc-btn[data-href="${item.href}"]`);
+            const title = tocBtn ? tocBtn.textContent : `페이지 ${index + 1}`;
+            this.bookmarkManager.setCurrentPage({
+                index: index,
+                href: item.href,
+                title: title
+            });
+        }
 
         // 페이지별 드로잉 데이터 저장 및 새로고침/복원 연동
         if (this.drawingManager) {
