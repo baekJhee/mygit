@@ -25,6 +25,7 @@ const state = {
   diceCount: 1, // 1 or 2
   isRolling: false,
   soundEnabled: true,
+  themeMode: 'system', // 'system' | 'light' | 'dark'
   rotations: [
     { x: 0, y: 0 }, // 주사위 1 누적 회전 각도
     { x: 0, y: 0 }  // 주사위 2 누적 회전 각도
@@ -34,6 +35,11 @@ const state = {
 
 // DOM 요소 캐싱
 const elements = {
+  // Theme selectors
+  themeSystemBtn: document.getElementById('theme-system-btn'),
+  themeLightBtn: document.getElementById('theme-light-btn'),
+  themeDarkBtn: document.getElementById('theme-dark-btn'),
+
   // Mode selectors
   modeBtn1: document.getElementById('mode-1'),
   modeBtn2: document.getElementById('mode-2'),
@@ -360,9 +366,66 @@ function toggleSound() {
 }
 
 // ==========================================
+// 테마 관리 (시스템 설정 기본 + 다크 / 라이트 모드)
+// ==========================================
+function getSystemTheme() {
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function applyTheme(mode, save = true) {
+  state.themeMode = mode;
+
+  if (mode === 'system') {
+    // data-theme 속성을 제거하여 CSS @media (prefers-color-scheme: light) 네이티브 규칙이 우선 적용되도록 함
+    document.documentElement.removeAttribute('data-theme');
+  } else if (mode === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else if (mode === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+
+  // 버튼 active 상태 업데이트
+  if (elements.themeSystemBtn) elements.themeSystemBtn.classList.toggle('active', mode === 'system');
+  if (elements.themeLightBtn) elements.themeLightBtn.classList.toggle('active', mode === 'light');
+  if (elements.themeDarkBtn) elements.themeDarkBtn.classList.toggle('active', mode === 'dark');
+
+  if (save) {
+    try {
+      localStorage.setItem('dice-theme', mode);
+    } catch (e) {
+      // localStorage 불가 환경 대응
+    }
+  }
+}
+
+function initTheme() {
+  let saved = 'system';
+  try {
+    saved = localStorage.getItem('dice-theme') || 'system';
+  } catch (e) {
+    saved = 'system';
+  }
+  applyTheme(saved, false);
+
+  // 시스템 테마 변경 실시간 감지
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      if (state.themeMode === 'system') {
+        applyTheme('system', false);
+      }
+    });
+  }
+}
+
+// ==========================================
 // 이벤트 리스너 등록
 // ==========================================
 function initEvents() {
+  // 테마 모드 전환 (시스템 / 라이트 / 다크)
+  if (elements.themeSystemBtn) elements.themeSystemBtn.addEventListener('click', () => applyTheme('system'));
+  if (elements.themeLightBtn) elements.themeLightBtn.addEventListener('click', () => applyTheme('light'));
+  if (elements.themeDarkBtn) elements.themeDarkBtn.addEventListener('click', () => applyTheme('dark'));
+
   // 모드 전환
   elements.modeBtn1.addEventListener('click', () => setDiceCount(1));
   elements.modeBtn2.addEventListener('click', () => setDiceCount(2));
@@ -390,6 +453,7 @@ function initEvents() {
 
 // 앱 초기화
 function init() {
+  initTheme();
   initEvents();
   renderHistory();
 }

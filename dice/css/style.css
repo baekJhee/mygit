@@ -1,30 +1,248 @@
 /* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
 
+/* ============================================================
+   1. COLOR PALETTES & THEME VARIABLES
+   기본(Default): 다크 테마 기반 시스템 컬러
+   @media (prefers-color-scheme: light) 및 [data-theme="light"]: 라이트 테마
+   [data-theme="dark"]: 명시적 다크 테마
+   ============================================================ */
+
 :root {
+  --color-scheme: dark;
+
+  /* Background & Ambient Lighting */
   --bg-gradient: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #0f172a 50%, #030712 100%);
+  --ambient-glow-1: #6366f1;
+  --ambient-glow-2: #ec4899;
+  --ambient-opacity: 0.35;
+
+  /* Card Surfaces */
   --card-bg: rgba(255, 255, 255, 0.05);
   --card-border: rgba(255, 255, 255, 0.12);
+  --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   --card-glow: rgba(99, 102, 241, 0.15);
 
+  /* Primary Brand Colors */
   --primary: #6366f1;
   --primary-hover: #4f46e5;
   --primary-glow: rgba(99, 102, 241, 0.4);
   --secondary: #ec4899;
   --accent-gold: #f59e0b;
 
+  /* Typography */
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
+  --badge-bg: rgba(99, 102, 241, 0.15);
+  --badge-border: rgba(99, 102, 241, 0.3);
+  --badge-text: #a5b4fc;
 
+  /* Controls & Switches */
+  --tab-bg: rgba(15, 23, 42, 0.6);
+  --tab-border: rgba(255, 255, 255, 0.08);
+  --btn-subtle-bg: rgba(255, 255, 255, 0.06);
+  --btn-subtle-hover: rgba(255, 255, 255, 0.12);
+  --btn-subtle-border: var(--card-border);
+
+  /* 3D Dice styling */
   --dice-size: 100px;
-  --dice-bg: #ffffff;
+  --dice-face-bg: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+  --dice-face-border: rgba(255, 255, 255, 0.85);
+  --dice-shadow: rgba(0, 0, 0, 0.35);
+  --dice-floor-shadow: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
   --dice-pip-color: #1e293b;
   --dice-pip-red: #ef4444;
-  --dice-shadow: rgba(0, 0, 0, 0.4);
+
+  /* Side Result Panel */
+  --result-box-bg: linear-gradient(145deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
+  --result-box-border: rgba(255, 255, 255, 0.08);
+  --result-number-color: #ffffff;
+  --result-number-glow: rgba(99, 102, 241, 0.6);
+  --breakdown-bg: rgba(255, 255, 255, 0.04);
+  --breakdown-border: rgba(255, 255, 255, 0.06);
+  --breakdown-val: #cbd5e1;
+
+  /* History Chips */
+  --chip-bg: rgba(255, 255, 255, 0.05);
+  --chip-border: rgba(255, 255, 255, 0.08);
+  --chip-text: #cbd5e1;
+  --chip-scrollbar: rgba(255, 255, 255, 0.15);
+
+  /* Miscellaneous */
+  --kbd-bg: rgba(255, 255, 255, 0.1);
+  --kbd-border: rgba(255, 255, 255, 0.2);
 
   --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
+
+/* 시스템이 라이트 모드일 때 자동 적용 (명시적 data-theme="dark"가 없을 때) */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --color-scheme: light;
+
+    --bg-gradient: radial-gradient(circle at 50% 15%, #eef2ff 0%, #f8fafc 55%, #e2e8f0 100%);
+    --ambient-glow-1: #818cf8;
+    --ambient-glow-2: #f472b6;
+    --ambient-opacity: 0.22;
+
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --card-border: rgba(255, 255, 255, 0.95);
+    --card-shadow: 0 20px 40px rgba(99, 102, 241, 0.09), 0 2px 10px rgba(0, 0, 0, 0.04);
+    --card-glow: rgba(99, 102, 241, 0.08);
+
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --primary-glow: rgba(79, 70, 229, 0.3);
+
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --badge-bg: rgba(79, 70, 229, 0.1);
+    --badge-border: rgba(79, 70, 229, 0.25);
+    --badge-text: #4338ca;
+
+    --tab-bg: rgba(226, 232, 240, 0.75);
+    --tab-border: rgba(203, 213, 225, 0.8);
+    --btn-subtle-bg: rgba(255, 255, 255, 0.9);
+    --btn-subtle-hover: #f1f5f9;
+    --btn-subtle-border: rgba(203, 213, 225, 0.85);
+
+    --dice-face-bg: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    --dice-face-border: rgba(203, 213, 225, 0.85);
+    --dice-shadow: rgba(15, 23, 42, 0.16);
+    --dice-floor-shadow: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+    --dice-pip-color: #0f172a;
+    --dice-pip-red: #dc2626;
+
+    --result-box-bg: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    --result-box-border: rgba(226, 232, 240, 0.9);
+    --result-number-color: #1e1b4b;
+    --result-number-glow: rgba(79, 70, 229, 0.25);
+    --breakdown-bg: rgba(241, 245, 249, 0.9);
+    --breakdown-border: rgba(226, 232, 240, 0.95);
+    --breakdown-val: #0f172a;
+
+    --chip-bg: rgba(255, 255, 255, 0.95);
+    --chip-border: rgba(203, 213, 225, 0.8);
+    --chip-text: #1e293b;
+    --chip-scrollbar: rgba(15, 23, 42, 0.15);
+
+    --kbd-bg: rgba(15, 23, 42, 0.06);
+    --kbd-border: rgba(15, 23, 42, 0.12);
+  }
+}
+
+/* 수동 설정: 라이트 모드 ([data-theme="light"]) */
+[data-theme="light"] {
+  --color-scheme: light;
+
+  --bg-gradient: radial-gradient(circle at 50% 15%, #eef2ff 0%, #f8fafc 55%, #e2e8f0 100%);
+  --ambient-glow-1: #818cf8;
+  --ambient-glow-2: #f472b6;
+  --ambient-opacity: 0.22;
+
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --card-border: rgba(255, 255, 255, 0.95);
+  --card-shadow: 0 20px 40px rgba(99, 102, 241, 0.09), 0 2px 10px rgba(0, 0, 0, 0.04);
+  --card-glow: rgba(99, 102, 241, 0.08);
+
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-glow: rgba(79, 70, 229, 0.3);
+
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --badge-bg: rgba(79, 70, 229, 0.1);
+  --badge-border: rgba(79, 70, 229, 0.25);
+  --badge-text: #4338ca;
+
+  --tab-bg: rgba(226, 232, 240, 0.75);
+  --tab-border: rgba(203, 213, 225, 0.8);
+  --btn-subtle-bg: rgba(255, 255, 255, 0.9);
+  --btn-subtle-hover: #f1f5f9;
+  --btn-subtle-border: rgba(203, 213, 225, 0.85);
+
+  --dice-face-bg: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  --dice-face-border: rgba(203, 213, 225, 0.85);
+  --dice-shadow: rgba(15, 23, 42, 0.16);
+  --dice-floor-shadow: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+  --dice-pip-color: #0f172a;
+  --dice-pip-red: #dc2626;
+
+  --result-box-bg: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  --result-box-border: rgba(226, 232, 240, 0.9);
+  --result-number-color: #1e1b4b;
+  --result-number-glow: rgba(79, 70, 229, 0.25);
+  --breakdown-bg: rgba(241, 245, 249, 0.9);
+  --breakdown-border: rgba(226, 232, 240, 0.95);
+  --breakdown-val: #0f172a;
+
+  --chip-bg: rgba(255, 255, 255, 0.95);
+  --chip-border: rgba(203, 213, 225, 0.8);
+  --chip-text: #1e293b;
+  --chip-scrollbar: rgba(15, 23, 42, 0.15);
+
+  --kbd-bg: rgba(15, 23, 42, 0.06);
+  --kbd-border: rgba(15, 23, 42, 0.12);
+}
+
+/* 수동 설정: 다크 모드 ([data-theme="dark"]) */
+[data-theme="dark"] {
+  --color-scheme: dark;
+
+  --bg-gradient: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #0f172a 50%, #030712 100%);
+  --ambient-glow-1: #6366f1;
+  --ambient-glow-2: #ec4899;
+  --ambient-opacity: 0.35;
+
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.12);
+  --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --card-glow: rgba(99, 102, 241, 0.15);
+
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-glow: rgba(99, 102, 241, 0.4);
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --badge-bg: rgba(99, 102, 241, 0.15);
+  --badge-border: rgba(99, 102, 241, 0.3);
+  --badge-text: #a5b4fc;
+
+  --tab-bg: rgba(15, 23, 42, 0.6);
+  --tab-border: rgba(255, 255, 255, 0.08);
+  --btn-subtle-bg: rgba(255, 255, 255, 0.06);
+  --btn-subtle-hover: rgba(255, 255, 255, 0.12);
+  --btn-subtle-border: var(--card-border);
+
+  --dice-face-bg: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+  --dice-face-border: rgba(255, 255, 255, 0.85);
+  --dice-shadow: rgba(0, 0, 0, 0.35);
+  --dice-floor-shadow: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
+  --dice-pip-color: #1e293b;
+  --dice-pip-red: #ef4444;
+
+  --result-box-bg: linear-gradient(145deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
+  --result-box-border: rgba(255, 255, 255, 0.08);
+  --result-number-color: #ffffff;
+  --result-number-glow: rgba(99, 102, 241, 0.6);
+  --breakdown-bg: rgba(255, 255, 255, 0.04);
+  --breakdown-border: rgba(255, 255, 255, 0.06);
+  --breakdown-val: #cbd5e1;
+
+  --chip-bg: rgba(255, 255, 255, 0.05);
+  --chip-border: rgba(255, 255, 255, 0.08);
+  --chip-text: #cbd5e1;
+  --chip-scrollbar: rgba(255, 255, 255, 0.15);
+
+  --kbd-bg: rgba(255, 255, 255, 0.1);
+  --kbd-border: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================================
+   2. BASE & LAYOUT STYLES
+   ============================================================ */
 
 * {
   margin: 0;
@@ -44,6 +262,7 @@ body {
   padding: 24px;
   overflow-x: hidden;
   position: relative;
+  transition: background 0.4s ease, color 0.3s ease;
 }
 
 /* Background Ambient Glow */
@@ -57,17 +276,18 @@ body::after {
   pointer-events: none;
   z-index: 0;
   filter: blur(120px);
-  opacity: 0.35;
+  opacity: var(--ambient-opacity);
+  transition: background 0.4s ease, opacity 0.4s ease;
 }
 
 body::before {
-  background: var(--primary);
+  background: var(--ambient-glow-1);
   top: 10%;
   left: 15%;
 }
 
 body::after {
-  background: var(--secondary);
+  background: var(--ambient-glow-2);
   bottom: 10%;
   right: 15%;
 }
@@ -80,10 +300,21 @@ body::after {
   margin: 0 auto;
 }
 
-/* Header */
+/* ============================================================
+   3. HEADER & THEME SWITCHER
+   ============================================================ */
+
 .app-header {
   text-align: center;
   margin-bottom: 28px;
+  position: relative;
+}
+
+.header-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
 }
 
 .title-badge {
@@ -92,29 +323,80 @@ body::after {
   gap: 8px;
   padding: 6px 14px;
   border-radius: 9999px;
-  background: rgba(99, 102, 241, 0.15);
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  color: #a5b4fc;
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  color: var(--badge-text);
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+/* Theme Switcher Segmented Control */
+.theme-switcher {
+  display: inline-flex;
+  align-items: center;
+  background: var(--tab-bg);
+  border: 1px solid var(--tab-border);
+  padding: 4px;
+  border-radius: 9999px;
+  gap: 4px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.theme-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.theme-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.theme-btn.active {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 2px 8px var(--primary-glow);
+}
+
+.theme-btn svg {
+  flex-shrink: 0;
 }
 
 .app-header h1 {
   font-size: 2.5rem;
   font-weight: 800;
   letter-spacing: -0.02em;
+  color: var(--text-main);
   margin-bottom: 8px;
+  transition: color 0.3s ease;
 }
 
 .app-header p {
   color: var(--text-muted);
   font-size: 1rem;
+  transition: color 0.3s ease;
 }
 
-/* Main Layout: Game Area & Side Result Panel */
+/* ============================================================
+   4. GAME LAYOUT & GLASS CARDS
+   ============================================================ */
+
 .game-layout {
   display: grid;
   grid-template-columns: 1fr 340px;
@@ -128,7 +410,6 @@ body::after {
   }
 }
 
-/* Glassmorphic Card */
 .glass-card {
   background: var(--card-bg);
   backdrop-filter: blur(16px);
@@ -136,12 +417,12 @@ body::after {
   border: 1px solid var(--card-border);
   border-radius: 24px;
   padding: 28px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: var(--card-shadow);
   display: flex;
   flex-direction: column;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Dice Stage */
 .stage-card {
   justify-content: space-between;
   min-height: 460px;
@@ -152,13 +433,14 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--tab-bg);
+  border: 1px solid var(--tab-border);
   padding: 6px;
   border-radius: 16px;
   width: fit-content;
   margin: 0 auto 24px auto;
   gap: 6px;
+  transition: all 0.3s ease;
 }
 
 .mode-btn {
@@ -179,7 +461,7 @@ body::after {
 
 .mode-btn:hover {
   color: var(--text-main);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .mode-btn.active {
@@ -188,7 +470,10 @@ body::after {
   box-shadow: 0 4px 16px var(--primary-glow);
 }
 
-/* 3D Dice Arena */
+/* ============================================================
+   5. 3D DICE ARENA & CUBES
+   ============================================================ */
+
 .dice-arena {
   display: flex;
   align-items: center;
@@ -200,7 +485,6 @@ body::after {
   min-height: 200px;
 }
 
-/* Single Scene */
 .dice-scene {
   width: var(--dice-size);
   height: var(--dice-size);
@@ -235,13 +519,14 @@ body::after {
   position: absolute;
   width: var(--dice-size);
   height: var(--dice-size);
-  background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+  background: var(--dice-face-bg);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--dice-face-border);
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.08), 0 8px 24px var(--dice-shadow);
   display: grid;
   padding: 16px;
   user-select: none;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Face transforms (translateZ = dice-size / 2) */
@@ -276,9 +561,10 @@ body::after {
   height: 16px;
   border-radius: 50%;
   background: var(--dice-pip-color);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6), 0 1px 1px rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(255, 255, 255, 0.3);
   justify-self: center;
   align-self: center;
+  transition: background 0.3s ease;
 }
 
 /* 1 Dot Face: Special Red Dot */
@@ -292,7 +578,7 @@ body::after {
   width: 24px;
   height: 24px;
   background: var(--dice-pip-red);
-  box-shadow: inset 0 3px 6px rgba(185, 28, 28, 0.7), 0 1px 2px rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 3px 6px rgba(185, 28, 28, 0.7), 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 
 /* 2 Dots */
@@ -373,10 +659,10 @@ body::after {
 .dice-floor-shadow {
   width: 90px;
   height: 18px;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
+  background: var(--dice-floor-shadow);
   border-radius: 50%;
   margin-top: 24px;
-  transition: transform 1.2s ease, opacity 1.2s ease;
+  transition: transform 1.2s ease, opacity 1.2s ease, background 0.3s ease;
 }
 
 .dice-container-wrap.rolling .dice-floor-shadow {
@@ -389,9 +675,13 @@ body::after {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-muted);
+  transition: color 0.3s ease;
 }
 
-/* Controls */
+/* ============================================================
+   6. CONTROLS BAR
+   ============================================================ */
+
 .controls-bar {
   display: flex;
   align-items: center;
@@ -401,7 +691,7 @@ body::after {
 }
 
 .roll-btn {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
   color: #ffffff;
   border: none;
   border-radius: 16px;
@@ -414,7 +704,7 @@ body::after {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 25px var(--primary-glow), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -422,12 +712,12 @@ body::after {
 
 .roll-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(99, 102, 241, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: 0 14px 30px var(--primary-glow), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .roll-btn:active:not(:disabled) {
   transform: translateY(1px);
-  box-shadow: 0 6px 15px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 6px 15px var(--primary-glow);
 }
 
 .roll-btn:disabled {
@@ -445,8 +735,8 @@ body::after {
 }
 
 .sound-toggle-btn {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--card-border);
+  background: var(--btn-subtle-bg);
+  border: 1px solid var(--btn-subtle-border);
   color: var(--text-muted);
   width: 52px;
   height: 52px;
@@ -460,14 +750,17 @@ body::after {
 
 .sound-toggle-btn:hover {
   color: var(--text-main);
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--btn-subtle-hover);
 }
 
 .sound-toggle-btn.muted svg {
   opacity: 0.4;
 }
 
-/* Side Result Panel */
+/* ============================================================
+   7. SIDE RESULT PANEL
+   ============================================================ */
+
 .panel-card {
   display: flex;
   flex-direction: column;
@@ -478,9 +771,10 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--card-border);
   padding-bottom: 14px;
   margin-bottom: 20px;
+  transition: border-color 0.3s ease;
 }
 
 .panel-header h2 {
@@ -489,6 +783,7 @@ body::after {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: var(--text-main);
 }
 
 .status-indicator {
@@ -506,7 +801,6 @@ body::after {
 }
 
 @keyframes pulse {
-
   0%,
   100% {
     opacity: 1;
@@ -521,14 +815,16 @@ body::after {
 
 /* Main Display Box */
 .main-result-box {
-  background: linear-gradient(145deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--result-box-bg);
+  border: 1px solid var(--result-box-border);
   border-radius: 20px;
   padding: 24px;
   text-align: center;
   margin-bottom: 20px;
   position: relative;
   overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .main-result-box::before {
@@ -548,6 +844,7 @@ body::after {
   color: var(--text-muted);
   font-weight: 600;
   margin-bottom: 8px;
+  transition: color 0.3s ease;
 }
 
 .result-number-wrap {
@@ -562,9 +859,9 @@ body::after {
   font-size: 4rem;
   font-weight: 700;
   line-height: 1;
-  color: #ffffff;
-  text-shadow: 0 4px 20px rgba(99, 102, 241, 0.6);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: var(--result-number-color);
+  text-shadow: 0 4px 20px var(--result-number-glow);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
 }
 
 .result-number.pop {
@@ -594,7 +891,7 @@ body::after {
   gap: 10px;
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  border-top: 1px dashed var(--tab-border);
 }
 
 .dice-breakdown.show {
@@ -602,11 +899,12 @@ body::after {
 }
 
 .breakdown-item {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--breakdown-bg);
+  border: 1px solid var(--breakdown-border);
   border-radius: 12px;
   padding: 8px 12px;
   text-align: center;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .breakdown-label {
@@ -619,7 +917,8 @@ body::after {
   font-family: var(--font-mono);
   font-size: 1.35rem;
   font-weight: 700;
-  color: #cbd5e1;
+  color: var(--breakdown-val);
+  transition: color 0.3s ease;
 }
 
 /* Double Badge */
@@ -673,7 +972,7 @@ body::after {
 }
 
 .clear-btn:hover {
-  color: #f87171;
+  color: #ef4444;
 }
 
 .history-list {
@@ -691,27 +990,32 @@ body::after {
 }
 
 .history-list::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--chip-scrollbar);
   border-radius: 4px;
 }
 
 .history-chip {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
   border-radius: 8px;
   padding: 4px 10px;
   font-family: var(--font-mono);
   font-size: 0.85rem;
   font-weight: 600;
-  color: #cbd5e1;
+  color: var(--chip-text);
   display: inline-flex;
   align-items: center;
   gap: 6px;
   animation: fadeIn 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 .history-chip.double {
-  border-color: rgba(245, 158, 11, 0.4);
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #d97706;
+}
+
+[data-theme="dark"] .history-chip.double {
   color: #fcd34d;
 }
 
@@ -728,14 +1032,17 @@ body::after {
 }
 
 .history-empty {
-  color: rgba(148, 163, 184, 0.6);
+  color: var(--text-muted);
   font-size: 0.85rem;
   text-align: center;
   padding: 16px 0;
   width: 100%;
 }
 
-/* Footer / Tips */
+/* ============================================================
+   8. FOOTER / TIPS
+   ============================================================ */
+
 .app-footer {
   text-align: center;
   margin-top: 24px;
@@ -744,11 +1051,12 @@ body::after {
 }
 
 .app-footer kbd {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--kbd-bg);
+  border: 1px solid var(--kbd-border);
   border-radius: 4px;
   padding: 2px 6px;
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--text-main);
+  transition: all 0.3s ease;
 }

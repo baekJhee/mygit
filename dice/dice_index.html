@@ -1,21 +1,57 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="실감나는 3D 회전 애니메이션과 1개/2개 모드 선택이 가능한 프리미엄 주사위 던지기 웹 애플리케이션입니다.">
-  <title>🎲 3D 럭키 주사위 던지기 | Lucky Dice 3D</title>
+  <title>🎲 3D 주사위 던지기_test</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <div class="container">
     <!-- 앱 헤더 -->
     <header class="app-header">
-      <div class="title-badge">
-        <span>🎲</span>
-        <span>Interactive 3D Game</span>
+      <div class="header-top-bar">
+        <div class="title-badge">
+          <span>🎲</span>
+          <span>Interactive 3D Game</span>
+        </div>
+
+        <!-- 테마 전환기 (시스템 / 라이트 / 다크) -->
+        <div class="theme-switcher" role="group" aria-label="테마 모드 선택">
+          <button id="theme-system-btn" class="theme-btn active" type="button" title="시스템 설정 따름">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+            <span class="theme-label">시스템</span>
+          </button>
+          <button id="theme-light-btn" class="theme-btn" type="button" title="라이트 모드">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <span class="theme-label">라이트</span>
+          </button>
+          <button id="theme-dark-btn" class="theme-btn" type="button" title="다크 모드">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span class="theme-label">다크</span>
+          </button>
+        </div>
       </div>
-      <h1>3D 럭키 주사위 던지기</h1>
+      <h1>3D 주사위 던지기</h1>
       <p>버튼을 눌러 주사위를 굴리고 행운의 숫자를 확인해보세요!</p>
     </header>
 
@@ -137,20 +173,24 @@
         <!-- 컨트롤 버튼 바 -->
         <div class="controls-bar">
           <button id="roll-btn" class="roll-btn" type="button" aria-label="주사위 던지기">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
             </svg>
             <span>주사위 던지기</span>
           </button>
-          
-          <button id="sound-toggle-btn" class="sound-toggle-btn" type="button" title="사운드 켜짐 (클릭시 음소거)" aria-label="효과음 토글">
+
+          <button id="sound-toggle-btn" class="sound-toggle-btn" type="button" title="사운드 켜짐 (클릭시 음소거)"
+            aria-label="효과음 토글">
             <!-- Sound On Icon -->
-            <svg id="sound-icon-on" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg id="sound-icon-on" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
               <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
             </svg>
             <!-- Sound Off Icon -->
-            <svg id="sound-icon-off" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+            <svg id="sound-icon-off" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
               <line x1="23" y1="9" x2="17" y2="15"></line>
               <line x1="17" y1="9" x2="23" y2="15"></line>
@@ -216,4 +256,5 @@
   <!-- 메인 스크립트 로드 -->
   <script src="js/main.js"></script>
 </body>
+
 </html>
