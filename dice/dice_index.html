@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="실감나는 3D 회전 애니메이션과 1개/2개 모드 선택이 가능한 프리미엄 주사위 던지기 웹 애플리케이션입니다.">
+  <title>🎲 3D 럭키 주사위 던지기 | Lucky Dice 3D</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 앱 헤더 -->
+    <header class="app-header">
+      <div class="title-badge">
+        <span>🎲</span>
+        <span>Interactive 3D Game</span>
+      </div>
+      <h1>3D 럭키 주사위 던지기</h1>
+      <p>버튼을 눌러 주사위를 굴리고 행운의 숫자를 확인해보세요!</p>
+    </header>
+
+    <!-- 메인 레이아웃: 주사위 스테이지 + 사이드 결과 패널 -->
+    <main class="game-layout">
+      <!-- 1. 주사위 게임 영역 -->
+      <section class="glass-card stage-card" aria-label="주사위 플레이 영역">
+        <!-- 모드 선택 탭 (1개 / 2개) -->
+        <div class="mode-selector" role="tablist" aria-label="주사위 개수 선택">
+          <button id="mode-1" class="mode-btn active" role="tab" aria-selected="true" aria-controls="dice-arena">
+            <span>🎲</span> 주사위 1개
+          </button>
+          <button id="mode-2" class="mode-btn" role="tab" aria-selected="false" aria-controls="dice-arena">
+            <span>🎲🎲</span> 주사위 2개
+          </button>
+        </div>
+
+        <!-- 주사위 3D 뷰포트 아레나 -->
+        <div id="dice-arena" class="dice-arena single-mode">
+          <!-- 주사위 1 -->
+          <div id="dice-wrap-1" class="dice-container-wrap">
+            <div class="dice-scene">
+              <div id="dice-cube-1" class="dice-cube" aria-label="주사위 1">
+                <!-- 1번 면 (Front) -->
+                <div class="dice-face face-1">
+                  <span class="pip"></span>
+                </div>
+                <!-- 2번 면 (Right) -->
+                <div class="dice-face face-2">
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                </div>
+                <!-- 3번 면 (Top) -->
+                <div class="dice-face face-3">
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                </div>
+                <!-- 4번 면 (Bottom) -->
+                <div class="dice-face face-4">
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                </div>
+                <!-- 5번 면 (Left) -->
+                <div class="dice-face face-5">
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                </div>
+                <!-- 6번 면 (Back) -->
+                <div class="dice-face face-6">
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                </div>
+              </div>
+            </div>
+            <div class="dice-floor-shadow"></div>
+            <span class="dice-label">주사위 A</span>
+          </div>
+
+          <!-- 주사위 2 (초기에는 1개 모드이므로 hidden) -->
+          <div id="dice-wrap-2" class="dice-container-wrap hidden">
+            <div class="dice-scene">
+              <div id="dice-cube-2" class="dice-cube" aria-label="주사위 2">
+                <!-- 1번 면 (Front) -->
+                <div class="dice-face face-1">
+                  <span class="pip"></span>
+                </div>
+                <!-- 2번 면 (Right) -->
+                <div class="dice-face face-2">
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                </div>
+                <!-- 3번 면 (Top) -->
+                <div class="dice-face face-3">
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                </div>
+                <!-- 4번 면 (Bottom) -->
+                <div class="dice-face face-4">
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                </div>
+                <!-- 5번 면 (Left) -->
+                <div class="dice-face face-5">
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                </div>
+                <!-- 6번 면 (Back) -->
+                <div class="dice-face face-6">
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                  <span class="pip"></span>
+                </div>
+              </div>
+            </div>
+            <div class="dice-floor-shadow"></div>
+            <span class="dice-label">주사위 B</span>
+          </div>
+        </div>
+
+        <!-- 컨트롤 버튼 바 -->
+        <div class="controls-bar">
+          <button id="roll-btn" class="roll-btn" type="button" aria-label="주사위 던지기">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <span>주사위 던지기</span>
+          </button>
+          
+          <button id="sound-toggle-btn" class="sound-toggle-btn" type="button" title="사운드 켜짐 (클릭시 음소거)" aria-label="효과음 토글">
+            <!-- Sound On Icon -->
+            <svg id="sound-icon-on" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <!-- Sound Off Icon -->
+            <svg id="sound-icon-off" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- 2. 사이드 결과 패널 -->
+      <aside class="glass-card panel-card" aria-label="결과 수치 및 기록">
+        <div>
+          <div class="panel-header">
+            <h2>
+              <span>📊</span>
+              <span>결과 현황</span>
+            </h2>
+            <div id="status-indicator" class="status-indicator" title="준비 완료"></div>
+          </div>
+
+          <!-- 메인 결과 수치 박스 -->
+          <div class="main-result-box">
+            <div id="result-caption" class="result-caption">주사위 결과</div>
+            <div class="result-number-wrap">
+              <span id="result-number" class="result-number">-</span>
+            </div>
+            <div>
+              <span id="double-badge" class="double-badge">✨ DOUBLE! 럭키 더블! ✨</span>
+            </div>
+
+            <!-- 주사위 2개 모드용 개별 눈금 분해 표시 -->
+            <div id="dice-breakdown" class="dice-breakdown">
+              <div class="breakdown-item">
+                <div class="breakdown-label">주사위 A</div>
+                <div id="breakdown-val-1" class="breakdown-val">-</div>
+              </div>
+              <div class="breakdown-item">
+                <div class="breakdown-label">주사위 B</div>
+                <div id="breakdown-val-2" class="breakdown-val">-</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 최근 히스토리 목록 -->
+        <div class="history-section">
+          <div class="history-header">
+            <span class="history-title">최근 기록</span>
+            <button id="clear-history-btn" class="clear-btn" type="button">기록 비우기</button>
+          </div>
+          <ul id="history-list" class="history-list">
+            <li class="history-empty">아직 던진 기록이 없습니다</li>
+          </ul>
+        </div>
+      </aside>
+    </main>
+
+    <!-- 푸터 팁 -->
+    <footer class="app-footer">
+      <p>💡 팁: 키보드 <kbd>Space</kbd> 키를 눌러도 주사위를 던질 수 있습니다.</p>
+    </footer>
+  </div>
+
+  <!-- 메인 스크립트 로드 -->
+  <script src="js/main.js"></script>
+</body>
+</html>
