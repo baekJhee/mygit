@@ -22,15 +22,16 @@
         <!-- 테마 전환기 (시스템 / 라이트 / 다크) -->
         <div class="theme-switcher" role="group" aria-label="테마 모드 선택">
           <button id="theme-system-btn" class="theme-btn active" type="button" title="시스템 설정 따름">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
               <line x1="8" y1="21" x2="16" y2="21"></line>
               <line x1="12" y1="17" x2="12" y2="21"></line>
             </svg>
-            <span class="theme-label">시스템</span>
           </button>
           <button id="theme-light-btn" class="theme-btn" type="button" title="라이트 모드">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="5"></circle>
               <line x1="12" y1="1" x2="12" y2="3"></line>
               <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -41,13 +42,12 @@
               <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
               <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
-            <span class="theme-label">라이트</span>
           </button>
           <button id="theme-dark-btn" class="theme-btn" type="button" title="다크 모드">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
-            <span class="theme-label">다크</span>
           </button>
         </div>
       </div>
@@ -62,10 +62,10 @@
         <!-- 모드 선택 탭 (1개 / 2개) -->
         <div class="mode-selector" role="tablist" aria-label="주사위 개수 선택">
           <button id="mode-1" class="mode-btn active" role="tab" aria-selected="true" aria-controls="dice-arena">
-            <span>🎲</span> 주사위 1개
+            <span>🎲</span>
           </button>
           <button id="mode-2" class="mode-btn" role="tab" aria-selected="false" aria-controls="dice-arena">
-            <span>🎲🎲</span> 주사위 2개
+            <span>🎲🎲</span>
           </button>
         </div>
 
@@ -75,45 +75,20 @@
           <div id="dice-wrap-1" class="dice-container-wrap">
             <div class="dice-scene">
               <div id="dice-cube-1" class="dice-cube" aria-label="주사위 1">
+                <!-- 속을 꽉 채워주는 3D 내부 솔리드 코어 (모서리 빈틈 방지) -->
+                <div class="dice-core"></div>
                 <!-- 1번 면 (Front) -->
-                <div class="dice-face face-1">
-                  <span class="pip"></span>
-                </div>
+                <div class="dice-face face-1"></div>
                 <!-- 2번 면 (Right) -->
-                <div class="dice-face face-2">
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                </div>
+                <div class="dice-face face-2"></div>
                 <!-- 3번 면 (Top) -->
-                <div class="dice-face face-3">
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                </div>
+                <div class="dice-face face-3"></div>
                 <!-- 4번 면 (Bottom) -->
-                <div class="dice-face face-4">
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                </div>
+                <div class="dice-face face-4"></div>
                 <!-- 5번 면 (Left) -->
-                <div class="dice-face face-5">
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                </div>
+                <div class="dice-face face-5"></div>
                 <!-- 6번 면 (Back) -->
-                <div class="dice-face face-6">
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                </div>
+                <div class="dice-face face-6"></div>
               </div>
             </div>
             <div class="dice-floor-shadow"></div>
@@ -124,45 +99,20 @@
           <div id="dice-wrap-2" class="dice-container-wrap hidden">
             <div class="dice-scene">
               <div id="dice-cube-2" class="dice-cube" aria-label="주사위 2">
+                <!-- 속을 꽉 채워주는 3D 내부 솔리드 코어 (모서리 빈틈 방지) -->
+                <div class="dice-core"></div>
                 <!-- 1번 면 (Front) -->
-                <div class="dice-face face-1">
-                  <span class="pip"></span>
-                </div>
+                <div class="dice-face face-1"></div>
                 <!-- 2번 면 (Right) -->
-                <div class="dice-face face-2">
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                </div>
+                <div class="dice-face face-2"></div>
                 <!-- 3번 면 (Top) -->
-                <div class="dice-face face-3">
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                </div>
+                <div class="dice-face face-3"></div>
                 <!-- 4번 면 (Bottom) -->
-                <div class="dice-face face-4">
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                </div>
+                <div class="dice-face face-4"></div>
                 <!-- 5번 면 (Left) -->
-                <div class="dice-face face-5">
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                </div>
+                <div class="dice-face face-5"></div>
                 <!-- 6번 면 (Back) -->
-                <div class="dice-face face-6">
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                  <span class="pip"></span>
-                </div>
+                <div class="dice-face face-6"></div>
               </div>
             </div>
             <div class="dice-floor-shadow"></div>
@@ -177,7 +127,7 @@
               stroke-linecap="round" stroke-linejoin="round">
               <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
             </svg>
-            <span>주사위 던지기</span>
+            <span>굴리기</span>
           </button>
 
           <button id="sound-toggle-btn" class="sound-toggle-btn" type="button" title="사운드 켜짐 (클릭시 음소거)"

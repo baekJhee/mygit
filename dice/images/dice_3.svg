@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 324 324">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#무제_그라디언트_11);
+      }
+    </style>
+    <radialGradient id="무제_그라디언트_11" data-name="무제 그라디언트 11" cx="162" cy="162" r="219.075" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="0.528" stop-color="#fdfdfd"/>
+      <stop offset="0.737" stop-color="#f6f6f6"/>
+      <stop offset="0.889" stop-color="#eaeaea"/>
+      <stop offset="1" stop-color="#dbdbdb"/>
+    </radialGradient>
+  </defs>
+  <g id="contents">
+    <rect class="cls-1" width="324" height="324" rx="32.283"/>
+    <g>
+      <circle cx="162" cy="162" r="27.587"/>
+      <circle cx="245.363" cy="245.363" r="27.587"/>
+      <circle cx="78.637" cy="78.637" r="27.587"/>
+    </g>
+  </g>
+</svg>

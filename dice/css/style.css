@@ -514,139 +514,101 @@ body::after {
   transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.25, 1.15);
 }
 
+/* ============================================================
+   3D 솔리드 내부 코어 (Solid Core)
+   - 둥근 모서리 및 꼭짓점 틈새 뒤를 주사위 본체 색상으로 꽉 채워
+     내부가 텅 비어 보이는 현상을 완벽하게 방지
+   ============================================================ */
+.dice-core {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: calc(var(--dice-size) - 2px);
+  height: calc(var(--dice-size) - 2px);
+  background: #dbdbdb;
+  border-radius: 14px;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.08);
+}
+
+/* 3차원 축 교차 솔리드 채움 (XY, XZ, YZ 3축 인터록 구조) */
+.dice-core::before,
+.dice-core::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #dbdbdb;
+  border-radius: 14px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.08);
+}
+
+.dice-core::before {
+  transform: rotateX(90deg);
+}
+
+.dice-core::after {
+  transform: rotateY(90deg);
+}
+
 /* Face Styling */
 .dice-face {
   position: absolute;
   width: var(--dice-size);
   height: var(--dice-size);
-  background: var(--dice-face-bg);
-  border-radius: 20px;
-  border: 1px solid var(--dice-face-border);
-  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.08), 0 8px 24px var(--dice-shadow);
-  display: grid;
-  padding: 16px;
+  background-color: #dbdbdb;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 12px;
+  /* SVG rx 곡률(약 10%)에 맞춘 최적 곡률 */
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 0 0 1px #d2d4d8,
+    /* 3D 모서리 접합선(Seam) 틈새 메움 */
+    inset 0 0 8px rgba(0, 0, 0, 0.04),
+    0 8px 24px var(--dice-shadow);
   user-select: none;
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  backface-visibility: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Face transforms (translateZ = dice-size / 2) */
+/* Face transforms (translateZ = dice-size / 2 - 미세 밀착 조정 49.8px) */
 .face-1 {
-  transform: rotateY(0deg) translateZ(50px);
+  transform: rotateY(0deg) translateZ(49.8px);
+  background-image: url(../images/dice_1.svg);
 }
 
 .face-6 {
-  transform: rotateY(180deg) translateZ(50px);
+  transform: rotateY(180deg) translateZ(49.8px);
+  background-image: url(../images/dice_6.svg);
 }
 
 .face-2 {
-  transform: rotateY(90deg) translateZ(50px);
+  transform: rotateY(90deg) translateZ(49.8px);
+  background-image: url(../images/dice_2.svg);
 }
 
 .face-5 {
-  transform: rotateY(-90deg) translateZ(50px);
+  transform: rotateY(-90deg) translateZ(49.8px);
+  background-image: url(../images/dice_5.svg);
 }
 
 .face-3 {
-  transform: rotateX(90deg) translateZ(50px);
+  transform: rotateX(90deg) translateZ(49.8px);
+  background-image: url(../images/dice_3.svg);
 }
 
 .face-4 {
-  transform: rotateX(-90deg) translateZ(50px);
+  transform: rotateX(-90deg) translateZ(49.8px);
+  background-image: url(../images/dice_4.svg);
 }
 
-/* Pips (Dots) */
-.pip {
-  display: block;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--dice-pip-color);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(255, 255, 255, 0.3);
-  justify-self: center;
-  align-self: center;
-  transition: background 0.3s ease;
-}
 
-/* 1 Dot Face: Special Red Dot */
-.face-1 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.face-1 .pip {
-  width: 24px;
-  height: 24px;
-  background: var(--dice-pip-red);
-  box-shadow: inset 0 3px 6px rgba(185, 28, 28, 0.7), 0 1px 2px rgba(255, 255, 255, 0.5);
-}
-
-/* 2 Dots */
-.face-2 {
-  display: flex;
-  justify-content: space-between;
-}
-
-.face-2 .pip:nth-child(2) {
-  align-self: flex-end;
-}
-
-/* 3 Dots */
-.face-3 {
-  display: flex;
-  justify-content: space-between;
-}
-
-.face-3 .pip:nth-child(2) {
-  align-self: center;
-}
-
-.face-3 .pip:nth-child(3) {
-  align-self: flex-end;
-}
-
-/* 4 Dots */
-.face-4 {
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-}
-
-/* 5 Dots */
-.face-5 {
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-}
-
-.face-5 .pip:nth-child(1) {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.face-5 .pip:nth-child(2) {
-  grid-column: 3;
-  grid-row: 1;
-}
-
-.face-5 .pip:nth-child(3) {
-  grid-column: 2;
-  grid-row: 2;
-}
-
-.face-5 .pip:nth-child(4) {
-  grid-column: 1;
-  grid-row: 3;
-}
-
-.face-5 .pip:nth-child(5) {
-  grid-column: 3;
-  grid-row: 3;
-}
-
-/* 6 Dots */
-.face-6 {
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-}
 
 /* Dice Shadow Beneath */
 .dice-container-wrap {
@@ -801,6 +763,7 @@ body::after {
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 1;
