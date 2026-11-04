@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="모둠별로 스티커를 붙이고 뗄 수 있는 인터랙티브 모둠 활동 스티커 보드">
+  <title>⭐ 모둠 스티커판 - 우리 모둠 칭찬 스티커</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- 프리텐다드 웹폰트 -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- 상단 헤더 영역 -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="logo-badge">
+          <span class="logo-icon">⭐</span>
+          <span class="logo-sub">CLASSROOM ACTIVITY</span>
+        </div>
+        <h1 class="app-title">모둠 스티커 보드</h1>
+      </div>
+
+      <div class="header-right">
+        <!-- 스티커 종류 선택기 -->
+        <div class="sticker-selector" title="스티커 종류 선택">
+          <span class="selector-label">스티커 테마</span>
+          <div class="sticker-options" id="stickerThemeGroup">
+            <button type="button" class="theme-sticker-btn active" data-type="star" title="별">⭐</button>
+            <button type="button" class="theme-sticker-btn" data-type="praise" title="참잘했어요">💮</button>
+            <button type="button" class="theme-sticker-btn" data-type="heart" title="하트">❤️</button>
+            <button type="button" class="theme-sticker-btn" data-type="smile" title="스마일">😊</button>
+            <button type="button" class="theme-sticker-btn" data-type="thumb" title="최고">👍</button>
+            <button type="button" class="theme-sticker-btn" data-type="trophy" title="트로피">🏆</button>
+            <button type="button" class="theme-sticker-btn" data-type="fire" title="열정">🔥</button>
+          </div>
+        </div>
+
+        <!-- 액션 버튼들 -->
+        <div class="header-actions">
+          <!-- 사운드 토글 버튼 -->
+          <button type="button" id="soundToggleBtn" class="btn-icon" title="효과음 켜기/끄기">
+            <span class="icon" id="soundIcon">🔊</span>
+            <span class="btn-text">소리 ON</span>
+          </button>
+
+          <!-- 전체 스티커 초기화 버튼 -->
+          <button type="button" id="resetAllStickersBtn" class="btn-secondary" title="모든 모둠의 스티커를 0개로 비웁니다">
+            <span>🔄</span> 스티커 비우기
+          </button>
+
+          <!-- 모둠 설정 버튼 (요구사항) -->
+          <button type="button" id="openSettingsBtn" class="btn-primary" title="모둠 수와 스티커 개수를 설정합니다">
+            <span>⚙️</span> 모둠 설정
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 대시보드 상태 요약 바 (한 줄 슬림 바) -->
+    <section class="summary-bar">
+      <div class="summary-items">
+        <span class="summary-pill">
+          <span class="pill-label">모둠 수</span>
+          <strong class="pill-val" id="summaryGroupCount">3개</strong>
+        </span>
+        <span class="summary-pill">
+          <span class="pill-label">목표 스티커</span>
+          <strong class="pill-val" id="summaryStickerGoal">5개</strong>
+        </span>
+        <span class="summary-pill">
+          <span class="pill-label">부착 스티커</span>
+          <strong class="pill-val highlight" id="summaryTotalStickers">0개</strong>
+        </span>
+        <span class="summary-pill">
+          <span class="pill-label">완주 모둠</span>
+          <strong class="pill-val complete" id="summaryCompletedCount">0 / 3</strong>
+        </span>
+      </div>
+      <div class="summary-guide">
+        💡 <strong>빈 칸 클릭:</strong> 붙이기 · <strong>스티커 클릭:</strong> 떼기
+      </div>
+    </section>
+
+    <!-- 모둠 카드 중앙 스테이지 래퍼 (상하좌우 여백 및 중앙 정렬) -->
+    <main class="groups-stage" id="groupsStage">
+      <div class="groups-container" id="groupsContainer" aria-label="모둠별 스티커 판 목록">
+        <!-- JavaScript로 동적 생성됨 -->
+      </div>
+    </main>
+  </div>
+
+  <!-- ================= 모달 1: 모둠 설정 팝업 ================= -->
+  <div class="modal-backdrop hidden" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-header-icon">⚙️</div>
+        <div>
+          <h2 class="modal-title" id="settingsModalTitle">모둠 및 스티커 설정</h2>
+          <p class="modal-desc">모둠 수와 각 모둠당 스티커 개수를 설정하세요.</p>
+        </div>
+        <button type="button" class="modal-close-btn" id="closeSettingsBtn" title="닫기" aria-label="닫기">×</button>
+      </div>
+
+      <form id="settingsForm" onsubmit="return false;" novalidate>
+        <div class="modal-body">
+          <!-- 모둠 수 입력 -->
+          <div class="form-group">
+            <div class="label-row">
+              <label for="groupCountInput">모둠 수</label>
+              <span class="range-badge">최소 3 ~ 최대 20</span>
+            </div>
+            <div class="input-wrapper">
+              <input 
+                type="number" 
+                id="groupCountInput" 
+                name="groupCount" 
+                min="3" 
+                max="20" 
+                step="1" 
+                value="3" 
+                placeholder="3 ~ 20 사이 숫자 입력"
+                required
+              />
+              <span class="input-unit">개 모둠</span>
+            </div>
+            <div class="quick-chips">
+              <span>빠른 선택:</span>
+              <button type="button" class="chip-btn" data-target="groupCountInput" data-value="3">3개</button>
+              <button type="button" class="chip-btn" data-target="groupCountInput" data-value="4">4개</button>
+              <button type="button" class="chip-btn" data-target="groupCountInput" data-value="5">5개</button>
+              <button type="button" class="chip-btn" data-target="groupCountInput" data-value="6">6개</button>
+              <button type="button" class="chip-btn" data-target="groupCountInput" data-value="8">8개</button>
+            </div>
+          </div>
+
+          <!-- 스티커 개수 입력 -->
+          <div class="form-group">
+            <div class="label-row">
+              <label for="stickerCountInput">모둠당 스티커 개수</label>
+              <span class="range-badge">최소 5 ~ 최대 20</span>
+            </div>
+            <div class="input-wrapper">
+              <input 
+                type="number" 
+                id="stickerCountInput" 
+                name="stickerCount" 
+                min="5" 
+                max="20" 
+                step="1" 
+                value="5" 
+                placeholder="5 ~ 20 사이 숫자 입력"
+                required
+              />
+              <span class="input-unit">개</span>
+            </div>
+            <div class="quick-chips">
+              <span>빠른 선택:</span>
+              <button type="button" class="chip-btn" data-target="stickerCountInput" data-value="5">5개</button>
+              <button type="button" class="chip-btn" data-target="stickerCountInput" data-value="7">7개</button>
+              <button type="button" class="chip-btn" data-target="stickerCountInput" data-value="10">10개</button>
+              <button type="button" class="chip-btn" data-target="stickerCountInput" data-value="15">15개</button>
+              <button type="button" class="chip-btn" data-target="stickerCountInput" data-value="20">20개</button>
+            </div>
+          </div>
+
+          <!-- 안내 알림 박스 -->
+          <div class="info-notice">
+            <span class="notice-icon">ℹ️</span>
+            <p>설정을 변경하면 새로운 모둠 판이 생성됩니다. 모둠 이름은 생성 후 언제든 이름을 클릭하여 자유롭게 변경할 수 있습니다.</p>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="cancelSettingsBtn">취소</button>
+          <button type="submit" class="btn-primary" id="confirmSettingsBtn">
+            <span>✓</span> 확인 및 생성
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= 모달 2: 유효성 오류 경고 팝업 (범위 벗어남 안내) ================= -->
+  <div class="modal-backdrop alert-backdrop hidden" id="alertModal" role="alertdialog" aria-modal="true" aria-labelledby="alertTitle" aria-describedby="alertMessage">
+    <div class="modal-card alert-card">
+      <div class="alert-icon-wrap">
+        <span class="alert-symbol">⚠️</span>
+      </div>
+      <h3 class="alert-title" id="alertTitle">입력 값 확인 필요</h3>
+      <div class="alert-content" id="alertMessage">
+        <!-- 유효성 검사 실패 메시지가 여기에 동적으로 삽입됨 -->
+      </div>
+      <div class="alert-footer">
+        <button type="button" class="btn-alert-confirm" id="alertConfirmBtn">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 모달 3: 전체 초기화 확인 모달 ================= -->
+  <div class="modal-backdrop alert-backdrop hidden" id="confirmResetModal" role="dialog" aria-modal="true">
+    <div class="modal-card alert-card">
+      <div class="alert-icon-wrap warning">
+        <span class="alert-symbol">🔄</span>
+      </div>
+      <h3 class="alert-title">스티커를 모두 비우시겠습니까?</h3>
+      <p class="alert-content">현재 모든 모둠에 붙여진 스티커가 0개로 초기화됩니다. 이 작업은 되돌릴 수 없습니다.</p>
+      <div class="modal-footer justify-center">
+        <button type="button" class="btn-secondary" id="cancelResetBtn">취소</button>
+        <button type="button" class="btn-danger" id="executeResetBtn">네, 모두 비우기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 축하 컨페티 효과 캔버스 -->
+  <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+  <!-- 토스트 메시지 알림 -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- 스크립트 연결 -->
+  <script src="js/app.js"></script>
+</body>
+</html>
+
