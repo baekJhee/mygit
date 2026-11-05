@@ -45,6 +45,10 @@
   padding: 0;
 }
 
+.hidden {
+  display: none !important;
+}
+
 html, body {
   height: 100%;
   width: 100%;
@@ -469,7 +473,7 @@ button {
   max-width: 100%;
 }
 
-/* 카드 헤더 우측 액션 (완주 배지 및 미니 비우기 버튼) */
+/* 카드 헤더 우측 액션 (완주 배지 및 미니 버튼들) */
 .card-header-actions {
   display: flex;
   align-items: center;
@@ -492,6 +496,40 @@ button {
 @keyframes miniTagPulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.08); }
+}
+
+/* 한번에 다 붙이기 버튼 */
+.btn-mini-fill {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: var(--radius-xs);
+  color: #059669;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  cursor: pointer;
+  line-height: 1.2;
+  transition: var(--transition);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.btn-mini-fill:hover:not(:disabled) {
+  background: #10b981;
+  border-color: #059669;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-mini-fill:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #94a3b8;
 }
 
 .btn-mini-clear {
@@ -580,16 +618,15 @@ button {
   color: var(--group-accent, var(--primary-color));
 }
 
-/* 스티커가 붙은 슬롯 스타일 */
+/* 스티커가 붙은 슬롯 기본 상태 (기본에는 애니메이션 없이 정적으로 유지) */
 .sticker-slot.attached {
   border: 1px solid rgba(0, 0, 0, 0.05);
   background: #ffffff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  animation: stickerPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .sticker-slot.attached:hover {
-  transform: scale(1.12);
+  transform: scale(1.1);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -628,12 +665,37 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transform-origin: center center;
 }
 
-@keyframes stickerPop {
-  0% { transform: scale(0.3) rotate(-12deg); opacity: 0; }
-  70% { transform: scale(1.22) rotate(6deg); }
-  100% { transform: scale(1) rotate(0); opacity: 1; }
+/* 🎯 오직 방금 붙인 슬롯 요소에만 적용되는 '확대 되었다 찹 하고 붙는' 애니메이션 */
+.sticker-slot.snap-attach .sticker-item {
+  animation: stickerSnap 0.32s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes stickerSnap {
+  0% {
+    transform: scale(2.6) rotate(-14deg);
+    opacity: 0;
+    filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.45));
+  }
+  30% {
+    opacity: 1;
+  }
+  65% {
+    /* 찹! 하고 내리꽂히며 납작하게 압축 */
+    transform: scale(0.86, 1.14) rotate(3deg);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.28));
+  }
+  82% {
+    /* 살짝 튕김 반동 */
+    transform: scale(1.08, 0.94) rotate(-1deg);
+  }
+  100% {
+    transform: scale(1, 1) rotate(0deg);
+    opacity: 1;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.18));
+  }
 }
 
 /* ---------- 20개 모둠용 동적 테마 색상 ---------- */

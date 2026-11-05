@@ -112,7 +112,7 @@
       }
     }
 
-    // 스티커 붙일 때 경쾌한 뾱! 소리
+    // 스티커 붙일 때 찰진 '찹!' 사운드
     playAttach() {
       if (!state.soundEnabled) return;
       this.initContext();
@@ -121,19 +121,20 @@
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
 
-      osc.type = 'sine';
+      osc.type = 'triangle';
       const now = this.ctx.currentTime;
-      osc.frequency.setValueAtTime(440, now);
-      osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+      // 높은 곳에서 빠르게 떨어져 바닥에 찹! 달라붙는 주파수
+      osc.frequency.setValueAtTime(650, now);
+      osc.frequency.exponentialRampToValueAtTime(130, now + 0.08);
 
-      gain.gain.setValueAtTime(0.2, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      gain.gain.setValueAtTime(0.3, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
 
       osc.start(now);
-      osc.stop(now + 0.12);
+      osc.stop(now + 0.09);
     }
 
     // 스티커 뗄 때 부드러운 퐁 소리
@@ -309,41 +310,23 @@
     return newGroups;
   }
 
-  function saveToLocalStorage() {
+  // 껐다 다시 켰을 때 항상 기본값(3모둠, 스티커 5개, 기록 없음)으로 초기화하도록 로컬스토리지 보존을 하지 않음
+  function clearSavedStorage() {
     try {
-      localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify({
-        groupCount: state.groupCount,
-        stickerTargetCount: state.stickerTargetCount,
-        stickerTheme: state.stickerTheme,
-        soundEnabled: state.soundEnabled,
-        groups: state.groups
-      }));
+      localStorage.removeItem(CONFIG.STORAGE_KEY);
     } catch (e) {
-      console.warn('LocalStorage 저장 실패:', e);
+      // 무시
     }
   }
 
+  function saveToLocalStorage() {
+    // 요구사항: 껐다 다시 켰을 때 기록 및 설정 초기화 -> 영구 저장하지 않음
+    clearSavedStorage();
+  }
+
   function loadFromLocalStorage() {
-    try {
-      const saved = localStorage.getItem(CONFIG.STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (
-          typeof parsed.groupCount === 'number' &&
-          typeof parsed.stickerTargetCount === 'number' &&
-          Array.isArray(parsed.groups)
-        ) {
-          state.groupCount = parsed.groupCount;
-          state.stickerTargetCount = parsed.stickerTargetCount;
-          state.stickerTheme = parsed.stickerTheme || 'star';
-          state.soundEnabled = parsed.soundEnabled !== false;
-          state.groups = parsed.groups;
-          return true;
-        }
-      }
-    } catch (e) {
-      console.warn('LocalStorage 로드 실패:', e);
-    }
+    // 항상 초기 기본값으로 시작
+    clearSavedStorage();
     return false;
   }
 
@@ -557,7 +540,7 @@
     card.setAttribute('data-total-stickers', state.stickerTargetCount);
 
     card.innerHTML = `
-      <!-- 카드 상단: 모둠 번호 배지, 이름, 미니 비우기 -->
+      <!-- 카드 상단: 모둠 번호 배지, 이름, 미니 액션(다 붙이기, 비우기) -->
       <div class="card-header">
         <div class="card-title-wrap">
           <span class="group-badge">${groupNumber}</span>
@@ -568,12 +551,17 @@
         </div>
         
         <div class="card-header-actions">
-          ${isCompleted ? '<span class="mini-complete-tag">🎉 완주</span>' : ''}
-          <button type="button" class="btn-mini-clear" title="이 모둠 스티커 비우기">↺ 비우기</button>
+          <span class="mini-complete-tag ${isCompleted ? '' : 'hidden'}">🎉 완주</span>
+          <button type="button" class="btn-mini-fill" title="이 모둠 스티커 한번에 다 붙이기" ${isCompleted ? 'disabled' : ''}>
+            ⚡ 다 붙이기
+          </button>
+          <button type="button" class="btn-mini-clear" title="이 모둠 스티커 비우기" ${attachedCount === 0 ? 'disabled' : ''}>
+            ↺ 비우기
+          </button>
         </div>
       </div>
 
-      <!-- 스티커 붙이기 판 (슬롯들만 화면에 가득 배치) -->
+      <!-- 스티커 붙이기 판 -->
       <div class="sticker-board" aria-label="${group.name} 스티커 판">
         ${group.stickers.map((isAttached, slotIdx) => `
           <div 
@@ -596,6 +584,38 @@
     return card;
   }
 
+  // 모둠 카드의 상태만 부분 업데이트 (전체 리렌더링 없이 깜빡임 및 애니메이션 재실행 방지)
+  function updateGroupCardState(card, group) {
+    if (!card || !group) return;
+    const attachedCount = group.stickers.filter(Boolean).length;
+    const isCompleted = attachedCount >= state.stickerTargetCount;
+
+    if (isCompleted) {
+      card.classList.add('goal-completed');
+    } else {
+      card.classList.remove('goal-completed');
+    }
+
+    const tag = card.querySelector('.mini-complete-tag');
+    if (tag) {
+      if (isCompleted) {
+        tag.classList.remove('hidden');
+      } else {
+        tag.classList.add('hidden');
+      }
+    }
+
+    const btnFill = card.querySelector('.btn-mini-fill');
+    if (btnFill) {
+      btnFill.disabled = isCompleted;
+    }
+
+    const btnClear = card.querySelector('.btn-mini-clear');
+    if (btnClear) {
+      btnClear.disabled = (attachedCount === 0);
+    }
+  }
+
   // ==========================================
   // 8. 모둠 카드 인터랙션 이벤트 처리
   // ==========================================
@@ -606,7 +626,7 @@
       const slot = e.target.closest('.sticker-slot');
       if (!slot) return;
       const slotIdx = parseInt(slot.getAttribute('data-slot-idx'), 10);
-      toggleSticker(group.id, slotIdx);
+      toggleSticker(group.id, slotIdx, slot, card);
     });
 
     stickerBoard.addEventListener('keydown', (e) => {
@@ -615,20 +635,28 @@
         if (slot) {
           e.preventDefault();
           const slotIdx = parseInt(slot.getAttribute('data-slot-idx'), 10);
-          toggleSticker(group.id, slotIdx);
+          toggleSticker(group.id, slotIdx, slot, card);
         }
       }
     });
 
-    // 2) 미니 비우기 버튼
-    const btnMiniClear = card.querySelector('.btn-mini-clear');
-    if (btnMiniClear) {
-      btnMiniClear.addEventListener('click', () => {
-        clearGroupStickers(group.id);
+    // 2) 각 모둠당 한번에 다 붙이기 버튼 (요구사항)
+    const btnMiniFill = card.querySelector('.btn-mini-fill');
+    if (btnMiniFill) {
+      btnMiniFill.addEventListener('click', () => {
+        fillGroupStickers(group.id, card);
       });
     }
 
-    // 3) 모둠 이름 인라인 편집
+    // 3) 미니 비우기 버튼
+    const btnMiniClear = card.querySelector('.btn-mini-clear');
+    if (btnMiniClear) {
+      btnMiniClear.addEventListener('click', () => {
+        clearGroupStickers(group.id, card);
+      });
+    }
+
+    // 4) 모둠 이름 인라인 편집
     const nameEl = card.querySelector('.group-name');
     nameEl.addEventListener('click', () => startEditingGroupName(nameEl, group));
     nameEl.addEventListener('keydown', (e) => {
@@ -638,22 +666,38 @@
     });
   }
 
-  // 스티커 토글 (붙이기 / 떼기)
-  function toggleSticker(groupId, slotIdx) {
+  // 스티커 토글 (오직 클릭한 슬롯 요소만 타겟 업데이트 -> 다른 스티커 애니메이션 재발생 방지!)
+  function toggleSticker(groupId, slotIdx, slotEl, cardEl) {
     const group = state.groups.find(g => g.id === groupId);
     if (!group) return;
+
+    const card = cardEl || DOM.groupsContainer.querySelector(`.group-card[data-group-id="${groupId}"]`);
+    const slot = slotEl || (card ? card.querySelector(`.sticker-slot[data-slot-idx="${slotIdx}"]`) : null);
+    if (!slot) return;
 
     const wasAttached = group.stickers[slotIdx];
     const willAttach = !wasAttached;
     const prevAttachedCount = group.stickers.filter(Boolean).length;
 
     group.stickers[slotIdx] = willAttach;
-
     const newAttachedCount = group.stickers.filter(Boolean).length;
+    const currentEmoji = STICKER_ICONS[state.stickerTheme] || '⭐';
 
     if (willAttach) {
       sound.playAttach();
-      // 방금 스티커를 붙여서 목표를 완성했는지 확인!
+
+      // 타겟 슬롯만 클래스 변경 및 확대->찹 애니메이션 트리거
+      slot.classList.remove('empty');
+      slot.classList.add('attached', 'snap-attach');
+      slot.innerHTML = `<span class="sticker-item">${currentEmoji}</span>`;
+      slot.title = '스티커 떼기 (클릭)';
+
+      // 1회성 애니메이션 종료 후 클래스 정리
+      slot.addEventListener('animationend', () => {
+        slot.classList.remove('snap-attach');
+      }, { once: true });
+
+      // 완주 축하
       if (newAttachedCount === state.stickerTargetCount && prevAttachedCount < state.stickerTargetCount) {
         sound.playFanfare();
         confetti.fire();
@@ -661,45 +705,87 @@
       }
     } else {
       sound.playDetach();
+
+      slot.classList.remove('attached', 'snap-attach');
+      slot.classList.add('empty');
+      slot.innerHTML = '';
+      slot.title = '스티커 붙이기 (클릭)';
     }
 
-    saveToLocalStorage();
-    renderGroups();
+    // 카드 헤더 및 요약 정보만 업데이트 (전체 renderGroups를 호출하지 않음!)
+    updateGroupCardState(card, group);
+    updateSummary();
   }
 
-  // 다음 빈 칸에 스티커 1개 바로 붙이기 (+)
-  function addNextSticker(groupId) {
+  // 각 모둠당 한번에 다 붙이기 기능 (요구사항)
+  function fillGroupStickers(groupId, cardEl) {
     const group = state.groups.find(g => g.id === groupId);
     if (!group) return;
 
-    const firstEmptyIndex = group.stickers.findIndex(s => !s);
-    if (firstEmptyIndex !== -1) {
-      toggleSticker(groupId, firstEmptyIndex);
-    }
-  }
+    const card = cardEl || DOM.groupsContainer.querySelector(`.group-card[data-group-id="${groupId}"]`);
+    if (!card) return;
 
-  // 마지막으로 붙은 스티커 1개 떼기 (-)
-  function removeLastSticker(groupId) {
-    const group = state.groups.find(g => g.id === groupId);
-    if (!group) return;
+    const currentEmoji = STICKER_ICONS[state.stickerTheme] || '⭐';
+    const slots = card.querySelectorAll('.sticker-slot');
+    let newlyAttachedCount = 0;
 
-    for (let i = group.stickers.length - 1; i >= 0; i--) {
-      if (group.stickers[i]) {
-        toggleSticker(groupId, i);
-        break;
+    group.stickers.forEach((isAttached, idx) => {
+      if (!isAttached) {
+        group.stickers[idx] = true;
+        newlyAttachedCount++;
+
+        const slot = slots[idx];
+        if (slot) {
+          slot.classList.remove('empty');
+          slot.classList.add('attached');
+          slot.innerHTML = `<span class="sticker-item">${currentEmoji}</span>`;
+          slot.title = '스티커 떼기 (클릭)';
+
+          // 순차적으로 찹! 하고 붙는 효과 (25ms 딜레이)
+          setTimeout(() => {
+            slot.classList.add('snap-attach');
+            slot.addEventListener('animationend', () => {
+              slot.classList.remove('snap-attach');
+            }, { once: true });
+          }, newlyAttachedCount * 25);
+        }
       }
+    });
+
+    if (newlyAttachedCount > 0) {
+      sound.playAttach();
+      setTimeout(() => {
+        sound.playFanfare();
+        confetti.fire();
+        showToast(`🎉 ${group.name} 스티커를 모두 붙였습니다!`);
+      }, newlyAttachedCount * 25 + 80);
     }
+
+    updateGroupCardState(card, group);
+    updateSummary();
   }
 
-  // 특정 모둠의 스티커만 비우기
-  function clearGroupStickers(groupId) {
+  // 특정 모둠의 스티커만 비우기 (타겟 DOM 업데이트)
+  function clearGroupStickers(groupId, cardEl) {
     const group = state.groups.find(g => g.id === groupId);
     if (!group) return;
+
+    const card = cardEl || DOM.groupsContainer.querySelector(`.group-card[data-group-id="${groupId}"]`);
+    if (!card) return;
 
     group.stickers = new Array(state.stickerTargetCount).fill(false);
+
+    const slots = card.querySelectorAll('.sticker-slot');
+    slots.forEach(slot => {
+      slot.classList.remove('attached', 'snap-attach');
+      slot.classList.add('empty');
+      slot.innerHTML = '';
+      slot.title = '스티커 붙이기 (클릭)';
+    });
+
     sound.playDetach();
-    saveToLocalStorage();
-    renderGroups();
+    updateGroupCardState(card, group);
+    updateSummary();
     showToast(`${group.name}의 스티커를 모두 비웠습니다.`);
   }
 
@@ -716,10 +802,19 @@
       const trimmed = input.value.trim();
       if (trimmed && trimmed !== currentName) {
         group.name = trimmed;
-        saveToLocalStorage();
         showToast(`모둠 이름이 '${trimmed}'(으)로 변경되었습니다.`);
       }
-      renderGroups();
+      const newNameEl = document.createElement('span');
+      newNameEl.className = 'group-name';
+      newNameEl.title = '클릭하여 모둠 이름 변경';
+      newNameEl.tabIndex = 0;
+      newNameEl.setAttribute('role', 'button');
+      newNameEl.innerHTML = `${escapeHtml(group.name)} <span class="edit-hint">✏️</span>`;
+      newNameEl.addEventListener('click', () => startEditingGroupName(newNameEl, group));
+      newNameEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') startEditingGroupName(newNameEl, group);
+      });
+      input.replaceWith(newNameEl);
     }
 
     input.addEventListener('blur', finishEdit);
@@ -1037,13 +1132,13 @@
   function initApp() {
     initEventListeners();
 
-    // 로컬스토리지 복원 시도, 없으면 기본값(3모둠, 스티커 5개)으로 생성
-    const restored = loadFromLocalStorage();
-    if (!restored || state.groups.length === 0) {
-      state.groupCount = CONFIG.DEFAULT_GROUP_COUNT;
-      state.stickerTargetCount = CONFIG.DEFAULT_STICKER_COUNT;
-      state.groups = createDefaultGroups(state.groupCount, state.stickerTargetCount);
-    }
+    // 요구사항: 껐다 다시 켰을 때 기록 및 설정을 항상 기본값(3모둠, 스티커 5개, 0개 부착)으로 초기화
+    clearSavedStorage();
+    state.groupCount = CONFIG.DEFAULT_GROUP_COUNT;
+    state.stickerTargetCount = CONFIG.DEFAULT_STICKER_COUNT;
+    state.stickerTheme = 'star';
+    state.soundEnabled = true;
+    state.groups = createDefaultGroups(state.groupCount, state.stickerTargetCount);
 
     // 사운드 상태 UI 동기화
     DOM.soundIcon.textContent = state.soundEnabled ? '🔊' : '🔇';

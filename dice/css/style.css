@@ -50,8 +50,6 @@
   --dice-face-border: rgba(255, 255, 255, 0.85);
   --dice-shadow: rgba(0, 0, 0, 0.35);
   --dice-floor-shadow: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
-  --dice-pip-color: #1e293b;
-  --dice-pip-red: #ef4444;
 
   /* Side Result Panel */
   --result-box-bg: linear-gradient(145deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
@@ -111,8 +109,6 @@
     --dice-face-border: rgba(203, 213, 225, 0.85);
     --dice-shadow: rgba(15, 23, 42, 0.16);
     --dice-floor-shadow: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
-    --dice-pip-color: #0f172a;
-    --dice-pip-red: #dc2626;
 
     --result-box-bg: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
     --result-box-border: rgba(226, 232, 240, 0.9);
@@ -166,8 +162,6 @@
   --dice-face-border: rgba(203, 213, 225, 0.85);
   --dice-shadow: rgba(15, 23, 42, 0.16);
   --dice-floor-shadow: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
-  --dice-pip-color: #0f172a;
-  --dice-pip-red: #dc2626;
 
   --result-box-bg: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
   --result-box-border: rgba(226, 232, 240, 0.9);
@@ -220,8 +214,6 @@
   --dice-face-border: rgba(255, 255, 255, 0.85);
   --dice-shadow: rgba(0, 0, 0, 0.35);
   --dice-floor-shadow: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
-  --dice-pip-color: #1e293b;
-  --dice-pip-red: #ef4444;
 
   --result-box-bg: linear-gradient(145deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
   --result-box-border: rgba(255, 255, 255, 0.08);

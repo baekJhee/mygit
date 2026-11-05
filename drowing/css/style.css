@@ -1,25 +1,27 @@
 /* ==========================================================================
    스마트 전자칠판 스타일시트 (style.css)
-   한 공간에서 텍스트 입력과 드로잉이 중첩되는 일체형 스마트보드
+   - 이미지 레퍼런스 기반 3그룹 툴바
+   - 분리된 텍스트/펜 색상 드롭다운 & 10단위 폰트크기 / 선굵기 드롭다운
+   - 단일 지우개 버튼 및 일체형 칠판 레이아웃
    ========================================================================== */
 
 :root {
-    --bg-app: #e2e8f0;
-    --bg-toolbar: #ffffff;
-    --border-color: #cbd5e1;
-    --border-hover: #94a3b8;
+    --bg-app: #dfe8e1;
+    --bg-toolbar: #e8f1e9;
+    --border-toolbar: #c4d9c7;
+    --border-card: #a8c2ab;
+    --border-btn: #cbd5e1;
+    --border-btn-hover: #94a3b8;
     --text-primary: #0f172a;
     --text-secondary: #475569;
     --primary-color: #2563eb;
     --primary-hover: #1d4ed8;
     --danger-color: #ef4444;
-    --danger-hover: #dc2626;
     --frame-bg: #334155;
-    --frame-border: #1e293b;
     --shadow-board: 0 12px 36px -4px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
     --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 16px;
+    --radius-md: 8px;
+    --radius-lg: 14px;
 }
 
 * {
@@ -49,12 +51,12 @@ html, body {
 }
 
 /* ==========================================================================
-   상단 헤더 & 툴바
+   상단 헤더 & 툴바 (이미지 레퍼런스 스타일)
    ========================================================================== */
 .app-header {
     background-color: var(--bg-toolbar);
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-bottom: 1.5px solid var(--border-toolbar);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     display: flex;
     align-items: center;
     padding: 8px 18px;
@@ -72,13 +74,13 @@ html, body {
 }
 
 .logo-icon {
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .app-title {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
-    color: var(--text-primary);
+    color: #1e3a24;
     letter-spacing: -0.3px;
     white-space: nowrap;
 }
@@ -86,48 +88,24 @@ html, body {
 .toolbar {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
     flex: 1;
 }
 
-.toolbar-section {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: #f8fafc;
-    padding: 4px 10px;
-    border-radius: var(--radius-md);
-    border: 1px solid #e2e8f0;
-    transition: all 0.2s ease;
-}
-
-.toolbar-section.highlighted {
-    border-color: #93c5fd;
-    background-color: #eff6ff;
-}
-
-.section-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    white-space: nowrap;
-}
-
-.toolbar-divider {
-    width: 1px;
-    height: 28px;
-    background-color: var(--border-color);
-}
-
-/* 버튼 공통 스타일 */
-.btn-group {
-    display: flex;
+/* 3개 그룹 박스 (이미지의 사각 테두리 컨테이너) */
+.toolbar-group-card {
+    display: inline-flex;
     align-items: center;
     gap: 4px;
+    background-color: #ffffff;
+    padding: 4px 6px;
+    border-radius: var(--radius-md);
+    border: 1.5px solid var(--border-card);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
+/* 버튼 및 토글 공통 */
 button {
     font-family: inherit;
     cursor: pointer;
@@ -137,161 +115,244 @@ button {
     transition: all 0.15s ease;
 }
 
-.tool-btn, .action-btn {
+.tool-btn, .dropdown-toggle {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 5px;
-    padding: 6px 11px;
+    padding: 6px 12px;
     border-radius: var(--radius-sm);
     font-size: 13px;
     font-weight: 600;
     color: var(--text-primary);
     background-color: #ffffff;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-btn);
+    min-height: 36px;
+    white-space: nowrap;
+    user-select: none;
 }
 
-.tool-btn:hover, .action-btn:hover {
-    background-color: #f1f5f9;
-    border-color: var(--border-hover);
+.tool-btn:hover, .dropdown-toggle:hover {
+    background-color: #f8fafc;
+    border-color: var(--border-btn-hover);
     transform: translateY(-1px);
 }
 
-.tool-btn:active, .action-btn:active {
+.tool-btn:active, .dropdown-toggle:active {
     transform: translateY(0);
 }
 
+/* 활성화 상태 (선택된 모드) */
 .tool-btn.active {
     background-color: #eff6ff;
     color: var(--primary-color);
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.18);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
-.action-btn.danger {
-    color: var(--danger-color);
-    border-color: #fecaca;
-    background-color: #fff;
+/* '가' 버튼 스타일 */
+.text-mode-btn {
+    min-width: 44px;
+    font-size: 16px;
+    font-weight: 700;
 }
 
-.action-btn.danger:hover {
+.btn-text-char {
+    display: inline-block;
+    color: inherit;
+}
+
+/* '✏️' 펜 버튼 스타일 */
+.pen-mode-btn {
+    min-width: 44px;
+    font-size: 16px;
+}
+
+/* 아이콘 전용 버튼 (그룹 3) */
+.icon-only-btn {
+    width: 38px;
+    height: 36px;
+    padding: 0;
+}
+
+.svg-icon {
+    display: block;
+}
+
+.combo-icon {
+    font-size: 14px;
+    letter-spacing: -2px;
+}
+
+.danger-hover:hover {
     background-color: #fee2e2;
     border-color: var(--danger-color);
+    color: var(--danger-color);
 }
 
-.action-btn.secondary {
-    color: #0f766e;
-    border-color: #99f6e4;
-}
-
-.action-btn.secondary:hover {
+.secondary-hover:hover {
     background-color: #ccfbf1;
+    border-color: #14b8a6;
+    color: #0f766e;
 }
 
 /* ==========================================================================
-   색상 팔레트 및 컬러 피커
+   커스텀 드롭다운 (폰트크기, 굵기, 색상)
    ========================================================================== */
-.color-palette {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.color-chip {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background-color: var(--chip-color);
-    border: 2px solid #ffffff;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+.custom-dropdown {
     position: relative;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: inline-block;
 }
 
-.color-chip:hover {
-    transform: scale(1.18);
+.dropdown-arrow {
+    font-size: 10px;
+    color: #64748b;
+    margin-left: 2px;
+    transition: transform 0.15s ease;
 }
 
-.color-chip.active {
-    transform: scale(1.18);
-    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--primary-color);
+.custom-dropdown.open .dropdown-arrow {
+    transform: rotate(180deg);
 }
 
-.custom-color-wrapper {
-    position: relative;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
-}
-
-.custom-color-wrapper input[type="color"] {
+.dropdown-menu {
     position: absolute;
-    top: -10px;
-    left: -10px;
-    width: 44px;
-    height: 44px;
-    opacity: 0;
-    cursor: pointer;
+    top: calc(100% + 5px);
+    left: 0;
+    min-width: 140px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    display: none;
+    padding: 4px;
 }
 
-.picker-preview {
+.custom-dropdown.open .dropdown-menu {
     display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
-    border: 2px solid #ffffff;
+    animation: dropdownFadeIn 0.12s ease-out;
 }
 
-/* ==========================================================================
-   슬라이더 컨트롤
-   ========================================================================== */
-.slider-control {
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 폰트 사이즈 드롭다운 메뉴 (10px ~ 100px 스크롤) */
+.font-size-menu {
+    max-height: 250px;
+    overflow-y: auto;
+    min-width: 130px;
+}
+
+.dropdown-item {
     display: flex;
     align-items: center;
     gap: 8px;
-}
-
-.range-slider {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 80px;
-    height: 6px;
-    border-radius: 3px;
-    background: #cbd5e1;
-    outline: none;
+    padding: 7px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    border-radius: var(--radius-sm);
     cursor: pointer;
+    transition: background 0.1s ease;
 }
 
-.range-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    transition: transform 0.1s ease;
-}
-
-.range-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-}
-
-.slider-badge {
-    min-width: 40px;
-    text-align: center;
-    font-size: 11px;
-    font-weight: 700;
+.dropdown-item:hover {
+    background-color: #f1f5f9;
     color: var(--primary-color);
+}
+
+.dropdown-item.active {
     background-color: #eff6ff;
-    padding: 2px 6px;
-    border-radius: 12px;
-    border: 1px solid #bfdbfe;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.dropdown-item.active::after {
+    content: "✓";
+    margin-left: auto;
+    font-weight: 700;
+}
+
+/* 선 굵기 드롭다운 메뉴 */
+.width-menu {
+    min-width: 170px;
+}
+
+.width-preview {
+    display: inline-block;
+    width: 28px;
+    background-color: #0f172a;
+    border-radius: 2px;
+}
+
+/* 색상 드롭다운 메뉴 */
+.color-preview-pill {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.color-menu {
+    min-width: 170px;
+    padding: 8px;
+}
+
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.color-item {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--c);
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.color-item:hover {
+    transform: scale(1.15);
+}
+
+.color-item.active {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--primary-color);
+}
+
+.custom-color-picker-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 6px;
+    border-top: 1px solid #f1f5f9;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.custom-color-picker-row input[type="color"] {
+    width: 28px;
+    height: 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background: none;
 }
 
 /* ==========================================================================
@@ -307,7 +368,7 @@ button {
     overflow: hidden;
     background: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
     background-size: 20px 20px;
-    background-color: #e2e8f0;
+    background-color: var(--bg-app);
 }
 
 /* 칠판 외곽 프레임 */
@@ -333,7 +394,7 @@ button {
     align-items: center;
     padding: 8px 16px;
     background-color: #f1f5f9;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #e2e8f0;
     user-select: none;
 }
 
@@ -365,7 +426,7 @@ button {
     padding: 3px 8px;
     border-radius: 4px;
     background-color: #ffffff;
-    border: 1px solid var(--border-color);
+    border: 1px solid #cbd5e1;
     color: var(--text-secondary);
     font-weight: 500;
 }
@@ -429,7 +490,7 @@ button {
     width: 100%;
     height: 100%;
     z-index: 2;
-    pointer-events: none; /* 기본은 이벤트 통과 */
+    pointer-events: none;
 }
 
 lib-drawing-board {
@@ -484,7 +545,7 @@ lib-drawing-board {
    ========================================================================== */
 .app-statusbar {
     background-color: #ffffff;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-toolbar);
     padding: 6px 18px;
     display: flex;
     justify-content: space-between;
@@ -505,17 +566,21 @@ lib-drawing-board {
 }
 
 /* ==========================================================================
-   반응형 모바일 대응
+   반응형 대응
    ========================================================================== */
 @media (max-width: 900px) {
     .app-header {
         padding: 6px 10px;
         gap: 8px;
     }
+    .toolbar-group-card {
+        padding: 3px 4px;
+    }
+    .tool-btn, .dropdown-toggle {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
     .board-frame {
         border-width: 4px;
-    }
-    .board-textarea {
-        padding: 14px 16px;
     }
 }
