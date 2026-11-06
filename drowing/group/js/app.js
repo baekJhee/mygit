@@ -2,13 +2,13 @@
  * ⭐ 모둠 스티커 보드 (Group Sticker Board) JavaScript
  * 
  * 기능:
- * 1. 초기 진입 시 기본 3모둠, 스티커 5개로 구성
- * 2. 스티커 슬롯 클릭 시 붙이기/떼기 토글 인터랙션
- * 3. 모둠 설정 팝업 (모둠수 3~20, 스티커 5~20)
- * 4. type="number" 인풋을 통한 유효성 검사 및 범위 초과 시 커스텀 경고 팝업 표시
- * 5. 모둠 이름 인라인 편집 기능
- * 6. Web Audio API 기반 효과음 및 목표 달성 시 축하 컨페티 효과
- * 7. 로컬스토리지 자동 저장 및 상태 복원
+ * 1. 초기 진입 시 기본 3모둠, 스티커 5개로 구성 (재접속/새로고침 시 항상 기본 초기화)
+ * 2. 4가지 고화질 벡터 스티커 (별, 스마일, 하트, 체크)
+ * 3. 스티커 슬롯 클릭 시 오직 클릭한 요소만 '확대되었다 찹!' 달라붙는 애니메이션 적용
+ * 4. 각 모둠별 [⚡ 다 붙이기] 기능 및 [↺ 비우기] 기능
+ * 5. 심플 모둠 설정 팝업 (모둠수 3~20, 스티커 5~20) 및 유효성 검사 경고창
+ * 6. 모둠 이름 인라인 편집 기능
+ * 7. Web Audio API 찰진 효과음 및 완주 시 팡파레 & 꽃가루 폭죽(Confetti)
  */
 
 (function () {
@@ -27,15 +27,12 @@
     STORAGE_KEY: 'classroom_group_sticker_board_v1'
   };
 
-  // 스티커 이모지 매핑
-  const STICKER_ICONS = {
-    star: '⭐',
-    praise: '💮',
-    heart: '❤️',
-    smile: '😊',
-    thumb: '👍',
-    trophy: '🏆',
-    fire: '🔥'
+  // 스티커 SVG 벡터 그래픽 (사용자가 전달한 이미지 속 4가지 디자인)
+  const STICKER_SVGS = {
+    star: `<svg viewBox="0 0 36 36"><path fill="#FFB300" d="M18 2.5l4.6 9.4 10.4 1.5-7.5 7.3 1.8 10.3L18 26.2l-9.3 4.8 1.8-10.3-7.5-7.3 10.4-1.5L18 2.5z" stroke="#FFA000" stroke-width="0.5" stroke-linejoin="round"/></svg>`,
+    smile: `<svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#FFCA28"/><circle cx="12.5" cy="14" r="2.2" fill="#4E342E"/><circle cx="23.5" cy="14" r="2.2" fill="#4E342E"/><path d="M11 20c1.8 4.2 12.2 4.2 14 0" fill="none" stroke="#4E342E" stroke-width="2.6" stroke-linecap="round"/></svg>`,
+    heart: `<svg viewBox="0 0 36 36"><path fill="#FF5252" d="M18 31.8S4.5 22.5 4.5 13C4.5 8 8.5 4.5 13.2 4.5c3.2 0 6 1.8 7.3 4.5 1.3-2.7 4.1-4.5 7.3-4.5 4.7 0 8.7 3.5 8.7 8.5 0 9.5-13.5 18.8-18.5 18.8z"/></svg>`,
+    check: `<svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#1E88E5"/><path d="M11 18.5l4.8 4.8 9.5-9.5" fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`
   };
 
   // ==========================================
@@ -53,12 +50,6 @@
   // 3. DOM 요소 캐싱
   // ==========================================
   const DOM = {
-    // 요약 바
-    summaryGroupCount: document.getElementById('summaryGroupCount'),
-    summaryStickerGoal: document.getElementById('summaryStickerGoal'),
-    summaryTotalStickers: document.getElementById('summaryTotalStickers'),
-    summaryCompletedCount: document.getElementById('summaryCompletedCount'),
-
     // 모둠 컨테이너
     groupsContainer: document.getElementById('groupsContainer'),
 
@@ -88,14 +79,12 @@
     cancelResetBtn: document.getElementById('cancelResetBtn'),
     executeResetBtn: document.getElementById('executeResetBtn'),
 
-    // 토스트 및 컨페티
-    toastContainer: document.getElementById('toastContainer'),
+    // 컨페티 캔버스
     confettiCanvas: document.getElementById('confettiCanvas')
   };
 
   // ==========================================
   // 4. 사운드 시스템 (Web Audio API)
-  // 외부 파일 의존성 없이 브라우저 자체 오실레이터로 깔끔한 효과음 생성
   // ==========================================
   class SoundManager {
     constructor() {
@@ -296,7 +285,7 @@
   const confetti = new ConfettiManager(DOM.confettiCanvas);
 
   // ==========================================
-  // 6. 데이터 초기화 및 로컬스토리지 관리
+  // 6. 데이터 초기화 관리 (재접속/새로고침 시 항상 기본 초기화)
   // ==========================================
   function createDefaultGroups(count, stickersPerGroup) {
     const newGroups = [];
@@ -310,7 +299,6 @@
     return newGroups;
   }
 
-  // 껐다 다시 켰을 때 항상 기본값(3모둠, 스티커 5개, 기록 없음)으로 초기화하도록 로컬스토리지 보존을 하지 않음
   function clearSavedStorage() {
     try {
       localStorage.removeItem(CONFIG.STORAGE_KEY);
@@ -319,40 +307,9 @@
     }
   }
 
-  function saveToLocalStorage() {
-    // 요구사항: 껐다 다시 켰을 때 기록 및 설정 초기화 -> 영구 저장하지 않음
-    clearSavedStorage();
-  }
-
-  function loadFromLocalStorage() {
-    // 항상 초기 기본값으로 시작
-    clearSavedStorage();
-    return false;
-  }
-
   // ==========================================
   // 7. 렌더링 함수들
   // ==========================================
-
-  // 대시보드 상태 요약 업데이트
-  function updateSummary() {
-    DOM.summaryGroupCount.textContent = `${state.groupCount}개`;
-    DOM.summaryStickerGoal.textContent = `${state.stickerTargetCount}개`;
-
-    let totalStickers = 0;
-    let completedGroups = 0;
-
-    state.groups.forEach(group => {
-      const attachedCount = group.stickers.filter(Boolean).length;
-      totalStickers += attachedCount;
-      if (attachedCount >= state.stickerTargetCount) {
-        completedGroups++;
-      }
-    });
-
-    DOM.summaryTotalStickers.textContent = `${totalStickers}개`;
-    DOM.summaryCompletedCount.textContent = `${completedGroups} / ${state.groupCount}`;
-  }
 
   // 모둠 수와 스티커 개수에 맞춘 최적 그리드 및 모둠판 크기 계산 (상하좌우 여백 및 자연스러운 크기 변화)
   function updateGridDimensions() {
@@ -408,94 +365,83 @@
 
     // 3) 모둠판 컨테이너의 자연스러운 최대 너비(max-width) 및 최대 높이(max-height)
     // 모둠 수가 적을 때 억지로 늘어나지 않고 상하좌우 여백을 주어 예쁘게 가운데 정렬!
-    let maxGridW, maxGridH, gridGap, cardPadding, boardPadding, slotGap, maxSlotSize, stickerFontSize;
+    let maxGridW, maxGridH, gridGap, cardPadding, boardPadding, slotGap, maxSlotSize;
 
     // 가로 최대 너비 계산
     if (gCount === 3) {
-      maxGridW = '1060px'; // 3개일 때 카드당 너비 약 320~340px
+      maxGridW = '1080px';
       gridGap = '20px';
-      cardPadding = '12px 14px';
+      cardPadding = '14px 18px';
     } else if (gCount === 4) {
-      maxGridW = '1280px';
+      maxGridW = '1300px';
       gridGap = '16px';
-      cardPadding = '10px 12px';
+      cardPadding = '12px 14px';
     } else if (gCount <= 6) {
-      maxGridW = '1120px';
+      maxGridW = '1140px';
       gridGap = '14px';
-      cardPadding = '9px 11px';
+      cardPadding = '10px 12px';
     } else if (gCount <= 8) {
-      maxGridW = '1360px';
+      maxGridW = '1380px';
       gridGap = '12px';
       cardPadding = '8px 10px';
     } else if (gCount <= 10) {
-      maxGridW = '1520px';
+      maxGridW = '1540px';
       gridGap = '10px';
-      cardPadding = '7px 9px';
+      cardPadding = '8px 10px';
     } else if (gCount <= 15) {
       maxGridW = '1600px';
       gridGap = '8px';
       cardPadding = '6px 8px';
     } else {
-      // 16~20개
       maxGridW = '100%';
       gridGap = '6px';
       cardPadding = '5px 7px';
     }
 
     // 세로 최대 높이 계산 (스티커 개수 sRows 및 행 수 rows에 따라 비례)
-    // 스티커 줄 수(sRows)가 1줄(5개), 2줄(6~10개), 3줄(11~15개), 4줄(16~20개)
     if (rows === 1) {
-      // 1행 (3~4 모둠): 스티커 개수에 따라 카드가 자연스럽게 위아래로 커짐
+      // 1행 (3~4 모둠)
       if (sRows === 1) {
-        maxGridH = '230px';
-        maxSlotSize = '62px';
-        stickerFontSize = '30px';
+        maxGridH = '250px';
+        maxSlotSize = '68px';
       } else if (sRows === 2) {
-        maxGridH = '310px';
-        maxSlotSize = '56px';
-        stickerFontSize = '28px';
+        maxGridH = '330px';
+        maxSlotSize = '62px';
       } else if (sRows === 3) {
-        maxGridH = '390px';
-        maxSlotSize = '52px';
-        stickerFontSize = '25px';
+        maxGridH = '410px';
+        maxSlotSize = '56px';
       } else {
-        maxGridH = '460px';
-        maxSlotSize = '48px';
-        stickerFontSize = '23px';
+        maxGridH = '490px';
+        maxSlotSize = '52px';
       }
-      boardPadding = '8px 10px';
-      slotGap = '8px';
+      boardPadding = '10px 12px';
+      slotGap = '10px';
     } else if (rows === 2) {
       // 2행 (5~10 모둠)
       if (sRows === 1) {
-        maxGridH = '420px';
-        maxSlotSize = '52px';
-        stickerFontSize = '25px';
+        maxGridH = '440px';
+        maxSlotSize = '56px';
       } else if (sRows === 2) {
-        maxGridH = '540px';
-        maxSlotSize = '46px';
-        stickerFontSize = '23px';
+        maxGridH = '560px';
+        maxSlotSize = '50px';
       } else {
-        maxGridH = '620px';
-        maxSlotSize = '42px';
-        stickerFontSize = '20px';
+        maxGridH = '640px';
+        maxSlotSize = '44px';
       }
-      boardPadding = '6px 8px';
-      slotGap = '6px';
+      boardPadding = '8px 10px';
+      slotGap = '8px';
     } else if (rows === 3) {
       // 3행 (11~15 모둠)
       maxGridH = '100%';
-      maxSlotSize = '40px';
-      stickerFontSize = '19px';
-      boardPadding = '4px 6px';
-      slotGap = '4px';
+      maxSlotSize = '42px';
+      boardPadding = '6px 8px';
+      slotGap = '6px';
     } else {
       // 4행 (16~20 모둠)
       maxGridH = '100%';
-      maxSlotSize = '34px';
-      stickerFontSize = '16px';
-      boardPadding = '3px 4px';
-      slotGap = '3px';
+      maxSlotSize = '36px';
+      boardPadding = '4px 6px';
+      slotGap = '4px';
     }
 
     DOM.groupsContainer.style.setProperty('--grid-cols', cols);
@@ -509,7 +455,6 @@
     DOM.groupsContainer.style.setProperty('--board-padding', boardPadding);
     DOM.groupsContainer.style.setProperty('--slot-gap', slotGap);
     DOM.groupsContainer.style.setProperty('--max-slot-size', maxSlotSize);
-    DOM.groupsContainer.style.setProperty('--sticker-font-size', stickerFontSize);
   }
 
   // 모둠 목록 전체 렌더링
@@ -522,16 +467,14 @@
       const card = createGroupCardElement(group, index + 1);
       DOM.groupsContainer.appendChild(card);
     });
-
-    updateSummary();
   }
 
-  // 개별 모둠 카드 DOM 요소 생성 (현황 및 +- 버튼 제거된 컴팩트 디자인)
+  // 개별 모둠 카드 DOM 요소 생성
   function createGroupCardElement(group, groupNumber) {
     const card = document.createElement('article');
     const attachedCount = group.stickers.filter(Boolean).length;
     const isCompleted = attachedCount >= state.stickerTargetCount;
-    const currentEmoji = STICKER_ICONS[state.stickerTheme] || '⭐';
+    const currentSvg = STICKER_SVGS[state.stickerTheme] || STICKER_SVGS.star;
 
     // 클래스 및 테마 설정 (1~20 모둠 컬러 순환)
     const themeIndex = ((groupNumber - 1) % 20) + 1;
@@ -572,7 +515,7 @@
             tabindex="0"
             role="button"
           >
-            ${isAttached ? `<span class="sticker-item">${currentEmoji}</span>` : ''}
+            ${isAttached ? `<span class="sticker-item">${currentSvg}</span>` : ''}
           </div>
         `).join('')}
       </div>
@@ -640,7 +583,7 @@
       }
     });
 
-    // 2) 각 모둠당 한번에 다 붙이기 버튼 (요구사항)
+    // 2) 각 모둠당 한번에 다 붙이기 버튼
     const btnMiniFill = card.querySelector('.btn-mini-fill');
     if (btnMiniFill) {
       btnMiniFill.addEventListener('click', () => {
@@ -681,18 +624,17 @@
 
     group.stickers[slotIdx] = willAttach;
     const newAttachedCount = group.stickers.filter(Boolean).length;
-    const currentEmoji = STICKER_ICONS[state.stickerTheme] || '⭐';
+    const currentSvg = STICKER_SVGS[state.stickerTheme] || STICKER_SVGS.star;
 
     if (willAttach) {
       sound.playAttach();
 
-      // 타겟 슬롯만 클래스 변경 및 확대->찹 애니메이션 트리거
+      // 타겟 슬롯만 클래스 변경 및 확대->찹! 애니메이션 트리거
       slot.classList.remove('empty');
       slot.classList.add('attached', 'snap-attach');
-      slot.innerHTML = `<span class="sticker-item">${currentEmoji}</span>`;
+      slot.innerHTML = `<span class="sticker-item">${currentSvg}</span>`;
       slot.title = '스티커 떼기 (클릭)';
 
-      // 1회성 애니메이션 종료 후 클래스 정리
       slot.addEventListener('animationend', () => {
         slot.classList.remove('snap-attach');
       }, { once: true });
@@ -701,7 +643,6 @@
       if (newAttachedCount === state.stickerTargetCount && prevAttachedCount < state.stickerTargetCount) {
         sound.playFanfare();
         confetti.fire();
-        showToast(`🎉 ${group.name}이(가) 스티커 ${state.stickerTargetCount}개를 모두 모았습니다!`);
       }
     } else {
       sound.playDetach();
@@ -712,12 +653,10 @@
       slot.title = '스티커 붙이기 (클릭)';
     }
 
-    // 카드 헤더 및 요약 정보만 업데이트 (전체 renderGroups를 호출하지 않음!)
     updateGroupCardState(card, group);
-    updateSummary();
   }
 
-  // 각 모둠당 한번에 다 붙이기 기능 (요구사항)
+  // 각 모둠당 한번에 다 붙이기 기능
   function fillGroupStickers(groupId, cardEl) {
     const group = state.groups.find(g => g.id === groupId);
     if (!group) return;
@@ -725,7 +664,7 @@
     const card = cardEl || DOM.groupsContainer.querySelector(`.group-card[data-group-id="${groupId}"]`);
     if (!card) return;
 
-    const currentEmoji = STICKER_ICONS[state.stickerTheme] || '⭐';
+    const currentSvg = STICKER_SVGS[state.stickerTheme] || STICKER_SVGS.star;
     const slots = card.querySelectorAll('.sticker-slot');
     let newlyAttachedCount = 0;
 
@@ -738,7 +677,7 @@
         if (slot) {
           slot.classList.remove('empty');
           slot.classList.add('attached');
-          slot.innerHTML = `<span class="sticker-item">${currentEmoji}</span>`;
+          slot.innerHTML = `<span class="sticker-item">${currentSvg}</span>`;
           slot.title = '스티커 떼기 (클릭)';
 
           // 순차적으로 찹! 하고 붙는 효과 (25ms 딜레이)
@@ -757,12 +696,10 @@
       setTimeout(() => {
         sound.playFanfare();
         confetti.fire();
-        showToast(`🎉 ${group.name} 스티커를 모두 붙였습니다!`);
       }, newlyAttachedCount * 25 + 80);
     }
 
     updateGroupCardState(card, group);
-    updateSummary();
   }
 
   // 특정 모둠의 스티커만 비우기 (타겟 DOM 업데이트)
@@ -785,8 +722,6 @@
 
     sound.playDetach();
     updateGroupCardState(card, group);
-    updateSummary();
-    showToast(`${group.name}의 스티커를 모두 비웠습니다.`);
   }
 
   // 모둠 이름 인라인 편집 기능
@@ -802,7 +737,6 @@
       const trimmed = input.value.trim();
       if (trimmed && trimmed !== currentName) {
         group.name = trimmed;
-        showToast(`모둠 이름이 '${trimmed}'(으)로 변경되었습니다.`);
       }
       const newNameEl = document.createElement('span');
       newNameEl.className = 'group-name';
@@ -855,10 +789,6 @@
     DOM.settingsModal.classList.add('hidden');
   }
 
-  /**
-   * 커스텀 경고 팝업창 띄우기
-   * 요구사항: "모둠수 최소 3 최대 20 스티커 개수 최소 5 최대 20 이고 그 범위 벗어나면 팝업창 과 문구가 뜨면 좋겠어"
-   */
   let focusTargetAfterAlert = null;
 
   function showAlertPopup(htmlMessage, targetInputToFocus) {
@@ -880,12 +810,7 @@
     focusTargetAfterAlert = null;
   }
 
-  /**
-   * 설정 확인 및 유효성 검사 로직
-   * 1. 모둠수 범위: 3 ~ 20
-   * 2. 스티커 개수 범위: 5 ~ 20
-   * 범위를 벗어나거나 빈 값/숫자가 아니면 팝업창과 상세 문구 표시
-   */
+  // 설정 확인 및 유효성 검사 로직
   function handleConfirmSettings() {
     const rawGroupVal = DOM.groupCountInput.value.trim();
     const rawStickerVal = DOM.stickerCountInput.value.trim();
@@ -893,7 +818,6 @@
     const groupNum = Number(rawGroupVal);
     const stickerNum = Number(rawStickerVal);
 
-    // 에러 내역 수집
     const errors = [];
     let firstErrorField = null;
 
@@ -901,16 +825,14 @@
     if (rawGroupVal === '' || isNaN(groupNum) || !Number.isInteger(groupNum)) {
       errors.push({
         field: DOM.groupCountInput,
-        title: '모둠 수 입력 오류',
-        msg: `모둠 수를 올바른 정수 숫자로 입력해주세요.`
+        msg: `모둠 수를 올바른 숫자로 입력해주세요.`
       });
       DOM.groupCountInput.classList.add('input-error');
       if (!firstErrorField) firstErrorField = DOM.groupCountInput;
     } else if (groupNum < CONFIG.MIN_GROUP || groupNum > CONFIG.MAX_GROUP) {
       errors.push({
         field: DOM.groupCountInput,
-        title: '모둠 수 범위 초과',
-        msg: `<strong>모둠 수</strong>는 최소 <strong>${CONFIG.MIN_GROUP}개</strong>에서 최대 <strong>${CONFIG.MAX_GROUP}개</strong>까지 설정 가능합니다. <br><span style="color:#64748b; font-size:13px;">(현재 입력값: <strong>${escapeHtml(rawGroupVal)}</strong>)</span>`
+        msg: `<strong>모둠 수</strong>는 <strong>${CONFIG.MIN_GROUP} ~ ${CONFIG.MAX_GROUP}</strong> 사이로 입력해주세요.<br><span style="color:#64748b; font-size:13px;">(입력값: <strong>${escapeHtml(rawGroupVal)}</strong>)</span>`
       });
       DOM.groupCountInput.classList.add('input-error');
       if (!firstErrorField) firstErrorField = DOM.groupCountInput;
@@ -922,16 +844,14 @@
     if (rawStickerVal === '' || isNaN(stickerNum) || !Number.isInteger(stickerNum)) {
       errors.push({
         field: DOM.stickerCountInput,
-        title: '스티커 개수 입력 오류',
-        msg: `스티커 개수를 올바른 정수 숫자로 입력해주세요.`
+        msg: `스티커 개수를 올바른 숫자로 입력해주세요.`
       });
       DOM.stickerCountInput.classList.add('input-error');
       if (!firstErrorField) firstErrorField = DOM.stickerCountInput;
     } else if (stickerNum < CONFIG.MIN_STICKER || stickerNum > CONFIG.MAX_STICKER) {
       errors.push({
         field: DOM.stickerCountInput,
-        title: '스티커 개수 범위 초과',
-        msg: `<strong>스티커 개수</strong>는 최소 <strong>${CONFIG.MIN_STICKER}개</strong>에서 최대 <strong>${CONFIG.MAX_STICKER}개</strong>까지 설정 가능합니다. <br><span style="color:#64748b; font-size:13px;">(현재 입력값: <strong>${escapeHtml(rawStickerVal)}</strong>)</span>`
+        msg: `<strong>스티커 개수</strong>는 <strong>${CONFIG.MIN_STICKER} ~ ${CONFIG.MAX_STICKER}</strong> 사이로 입력해주세요.<br><span style="color:#64748b; font-size:13px;">(입력값: <strong>${escapeHtml(rawStickerVal)}</strong>)</span>`
       });
       DOM.stickerCountInput.classList.add('input-error');
       if (!firstErrorField) firstErrorField = DOM.stickerCountInput;
@@ -939,7 +859,6 @@
       DOM.stickerCountInput.classList.remove('input-error');
     }
 
-    // 유효성 에러가 발생한 경우 -> 요구사항대로 팝업창과 안내 문구 노출!
     if (errors.length > 0) {
       const errorHtml = errors.map(err => `
         <div class="error-point">
@@ -955,7 +874,6 @@
     // 유효성 검사 모두 통과!
     applyNewSettings(groupNum, stickerNum);
     closeSettingsModal();
-    showToast(`✅ ${groupNum}개 모둠, 스티커 ${stickerNum}개로 새로 생성되었습니다.`);
   }
 
   // 새로운 모둠 및 스티커 설정 적용
@@ -963,8 +881,6 @@
     state.groupCount = newGroupCount;
     state.stickerTargetCount = newStickerCount;
     state.groups = createDefaultGroups(newGroupCount, newStickerCount);
-
-    saveToLocalStorage();
     renderGroups();
   }
 
@@ -986,19 +902,16 @@
 
     closeResetConfirmModal();
     sound.playDetach();
-    saveToLocalStorage();
     renderGroups();
-    showToast('모든 모둠의 스티커를 0개로 비웠습니다.');
   }
 
   // ==========================================
   // 11. 스티커 테마 및 사운드 토글
   // ==========================================
   function setStickerTheme(themeKey) {
-    if (!STICKER_ICONS[themeKey]) return;
+    if (!STICKER_SVGS[themeKey]) return;
     state.stickerTheme = themeKey;
 
-    // 테마 버튼 active 갱신
     DOM.stickerThemeGroup.querySelectorAll('.theme-sticker-btn').forEach(btn => {
       if (btn.getAttribute('data-type') === themeKey) {
         btn.classList.add('active');
@@ -1007,35 +920,18 @@
       }
     });
 
-    saveToLocalStorage();
     renderGroups();
-    showToast(`스티커 모양이 '${STICKER_ICONS[themeKey]}' 모양으로 변경되었습니다.`);
   }
 
   function toggleSound() {
     state.soundEnabled = !state.soundEnabled;
     DOM.soundIcon.textContent = state.soundEnabled ? '🔊' : '🔇';
     DOM.soundToggleBtn.querySelector('.btn-text').textContent = state.soundEnabled ? '소리 ON' : '소리 OFF';
-    saveToLocalStorage();
-    showToast(state.soundEnabled ? '🔊 효과음이 켜졌습니다.' : '🔇 효과음이 꺼졌습니다.');
   }
 
   // ==========================================
-  // 12. 유틸리티 함수들 (토스트, 이스케이프)
+  // 12. 유틸리티 함수 (이스케이프)
   // ==========================================
-  function showToast(message) {
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    DOM.toastContainer.appendChild(toast);
-
-    setTimeout(() => {
-      if (toast.parentElement) {
-        toast.remove();
-      }
-    }, 2800);
-  }
-
   function escapeHtml(str) {
     if (typeof str !== 'string') return '';
     return str
@@ -1062,28 +958,15 @@
       handleConfirmSettings();
     });
 
-    // 3) 빠른 선택 칩 버튼 클릭
-    document.querySelectorAll('.chip-btn').forEach(chip => {
-      chip.addEventListener('click', () => {
-        const targetId = chip.getAttribute('data-target');
-        const val = chip.getAttribute('data-value');
-        const targetInput = document.getElementById(targetId);
-        if (targetInput) {
-          targetInput.value = val;
-          targetInput.classList.remove('input-error');
-        }
-      });
-    });
-
-    // 4) 경고 팝업 확인 버튼 클릭
+    // 3) 경고 팝업 확인 버튼 클릭
     DOM.alertConfirmBtn.addEventListener('click', closeAlertPopup);
 
-    // 5) 전체 스티커 비우기 모달
+    // 4) 전체 스티커 비우기 모달
     DOM.resetAllStickersBtn.addEventListener('click', openResetConfirmModal);
     DOM.cancelResetBtn.addEventListener('click', closeResetConfirmModal);
     DOM.executeResetBtn.addEventListener('click', executeResetAllStickers);
 
-    // 6) 스티커 모양(테마) 선택
+    // 5) 스티커 모양(테마) 선택 (4가지 디자인)
     DOM.stickerThemeGroup.addEventListener('click', (e) => {
       const btn = e.target.closest('.theme-sticker-btn');
       if (!btn) return;
@@ -1091,10 +974,10 @@
       setStickerTheme(theme);
     });
 
-    // 7) 사운드 토글 버튼
+    // 6) 사운드 토글 버튼
     DOM.soundToggleBtn.addEventListener('click', toggleSound);
 
-    // 8) 모달 바깥 배경 클릭 시 닫기
+    // 7) 모달 바깥 배경 클릭 시 닫기
     window.addEventListener('click', (e) => {
       if (e.target === DOM.settingsModal) {
         closeSettingsModal();
@@ -1107,7 +990,7 @@
       }
     });
 
-    // 9) ESC 키로 모달 닫기
+    // 8) ESC 키로 모달 닫기
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         if (!DOM.alertModal.classList.contains('hidden')) {
@@ -1120,7 +1003,7 @@
       }
     });
 
-    // 10) 창 크기 조절 시 그리드 최적화 유지
+    // 9) 창 크기 조절 시 그리드 최적화 유지
     window.addEventListener('resize', () => {
       updateGridDimensions();
     });
@@ -1132,7 +1015,7 @@
   function initApp() {
     initEventListeners();
 
-    // 요구사항: 껐다 다시 켰을 때 기록 및 설정을 항상 기본값(3모둠, 스티커 5개, 0개 부착)으로 초기화
+    // 껐다 다시 켰을 때 기록 및 설정을 항상 기본값(3모둠, 스티커 5개, 0개 부착)으로 초기화
     clearSavedStorage();
     state.groupCount = CONFIG.DEFAULT_GROUP_COUNT;
     state.stickerTargetCount = CONFIG.DEFAULT_STICKER_COUNT;
@@ -1164,4 +1047,3 @@
   }
 
 })();
-

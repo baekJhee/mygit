@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 그룹웨어 | 플로우 포털</title>
+    <!-- 프리텐다드 웹폰트 -->
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+    <!-- ================= 로그인 화면 ================= -->
+    <section id="loginSection" class="login-container">
+        <div class="login-bg-decoration">
+            <div class="blur-circle circle-1"></div>
+            <div class="blur-circle circle-2"></div>
+        </div>
+
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <span class="login-badge">FLOW GROUPWARE</span>
+                <h2 class="login-title">그룹웨어 로그인</h2>
+                <p class="login-subtitle">스마트한 사내 협업 플랫폼에 오신 것을 환영합니다</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="loginId">사원 아이디</label>
+                    <div class="input-wrapper">
+                        <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <input type="text" id="loginId" placeholder="아이디를 입력하세요" value="baek01" required
+                            autocomplete="username">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <div class="input-wrapper">
+                        <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <input type="password" id="password" placeholder="비밀번호를 입력하세요" value="test1234" required
+                            autocomplete="current-password">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-login-submit">
+                    <span>로그인하기</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </form>
+
+            <p id="loginMessage" class="login-message"></p>
+
+            <div class="login-hint" title="클릭하면 아이디와 비밀번호가 자동으로 입력됩니다">
+                <span class="hint-label">💡 테스트 계정</span>
+                <span class="hint-value">아이디: <code>baek01</code> / 비밀번호: <code>test1234</code></span>
+            </div>
+
+            <button type="button" id="demoModeBtn" class="btn-demo-mode">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon
+                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                    </polygon>
+                </svg>
+                <span>서버 없이 UI 디자인 바로 체험하기</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- ================= 메인 대시보드 화면 ================= -->
+    <section id="mainSection" class="main-layout" hidden>
+        <!-- 상단 글로벌 네비게이션 헤더 -->
+        <header class="app-header">
+            <div class="header-container">
+                <div class="header-brand" role="button" tabindex="0" title="메인 화면으로 이동">
+
+                    <svg width="50" height="50" viewBox="0 0 35.454 38.878">
+                        <polygon class="cls-1"
+                            points="17.782 0 0 10.265 17.782 20.532 28.869 14.137 28.869 25.863 28.026 27.326 22.714 30.417 22.714 23.109 20.948 24.13 20.948 31.81 22.366 32.603 29.262 28.622 30.637 26.313 30.637 11.07 17.782 18.491 3.535 10.265 17.782 2.04 33.687 11.223 33.687 25.836 30.437 31.467 21.063 36.878 17.896 35.051 17.896 24.13 11.281 20.309 11.281 35.021 8.26 33.277 8.26 18.566 0.109 13.858 0.109 15.899 6.494 19.586 6.494 34.296 13.046 38.08 13.046 23.37 16.113 25.141 16.113 36.069 21.133 38.878 31.605 32.833 35.454 26.367 35.454 10.203 17.782 0" />
+                    </svg>
+
+                    <div class="brand-text">
+                        <span class="brand-name">SyncFlow</span>
+                        <span class="brand-tag">PORTAL</span>
+                    </div>
+                </div>
+
+                <!-- 탭 메뉴 -->
+                <nav id="mainMenu" class="main-menu-nav">
+                    <button type="button" class="nav-tab active" data-target="attendanceSection">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>출퇴근 관리</span>
+                    </button>
+
+                    <button type="button" class="nav-tab" data-target="gallerySection">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                        <span>포토갤러리</span>
+                    </button>
+
+                    <button type="button" class="nav-tab" data-target="contactSection">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        <span>직원 연락망</span>
+                    </button>
+                </nav>
+
+                <!-- 사용자 정보 및 로그아웃 -->
+                <div class="header-user-profile">
+                    <div class="user-avatar-badge" id="userAvatarBadge">사</div>
+                    <div class="user-meta-info">
+                        <h2 id="welcomeMessage" class="welcome-text"></h2>
+                        <p id="employeeInfo" class="employee-meta"></p>
+                    </div>
+                    <button id="logoutBtn" class="btn-logout" title="로그아웃">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>로그아웃</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- 메인 콘텐츠 영역 -->
+        <main class="content-wrapper">
+
+            <!-- 1. 근태 관리 섹션 -->
+            <section id="attendanceSection" class="content-section">
+                <div class="section-intro">
+                    <div>
+                        <h2 class="section-heading">출퇴근 및 근태 관리</h2>
+                        <p class="section-subtext">오늘의 근무 일정을 확인하고 빠르고 간편하게 출퇴근을 기록하세요.</p>
+                    </div>
+                </div>
+
+                <div class="attendance-card">
+                    <!-- 상단 헤더: 날짜와 실시간 시계 -->
+                    <div class="attendance-top-bar">
+                        <div class="date-badge-box">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <p id="workDate" class="work-date-text">근무일 로딩 중...</p>
+                        </div>
+                        <div class="live-clock-box">
+                            <span class="live-indicator"></span>
+                            <span id="liveClock" class="live-clock-time">--:--:--</span>
+                        </div>
+                    </div>
+
+                    <!-- 출퇴근 시간 디스플레이 2열 그리드 -->
+                    <div class="attendance-time-grid">
+                        <!-- 출근 시간 카드 -->
+                        <div class="time-card checkin-card">
+                            <div class="time-card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
+                            </div>
+                            <div class="time-card-content">
+                                <span class="time-card-label">출근 시간</span>
+                                <div class="time-card-val"><span id="checkInTime">-</span></div>
+                            </div>
+                        </div>
+
+                        <!-- 퇴근 시간 카드 -->
+                        <div class="time-card checkout-card">
+                            <div class="time-card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
+                            </div>
+                            <div class="time-card-content">
+                                <span class="time-card-label">퇴근 시간</span>
+                                <div class="time-card-val"><span id="checkOutTime">-</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 출퇴근 버튼 컨트롤 -->
+                    <div class="attendance-actions">
+                        <button id="checkInBtn" class="btn-work btn-checkin">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>출근하기</span>
+                        </button>
+
+                        <button id="checkOutBtn" class="btn-work btn-checkout" disabled>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.2">
+                                <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                                <line x1="12" y1="2" x2="12" y2="12"></line>
+                            </svg>
+                            <span>퇴근하기</span>
+                        </button>
+                    </div>
+
+                    <!-- 출퇴근 메시지 알림 -->
+                    <p id="attendanceMessage" class="attendance-msg"></p>
+                </div>
+            </section>
+
+            <!-- 2. 직원 연락망 섹션 -->
+            <section id="contactSection" class="content-section" hidden>
+                <div class="section-intro">
+                    <div>
+                        <h2 class="section-heading">직원 연락망</h2>
+                        <p class="section-subtext">사내 임직원의 부서 정보, 직급, 내선번호 및 연락처를 조회합니다.</p>
+                    </div>
+                    <div class="search-input-box">
+                        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="contactSearchInput" placeholder="이름, 부서, 직급 검색..." />
+                    </div>
+                </div>
+
+                <div id="contactList" class="contact-list">
+                    <!-- JS에서 직원 정보 출력 -->
+                </div>
+            </section>
+
+            <!-- 3. 포토갤러리 섹션 -->
+            <section id="gallerySection" class="content-section" hidden>
+
+                <!-- 갤러리 목록 화면 -->
+                <div id="galleryListView" class="gallery-list-container">
+                    <div class="section-intro">
+                        <div>
+                            <h2 class="section-heading">포토갤러리</h2>
+                            <p class="section-subtext">사내 행사, 워크샵, 문화 활동 등 다양한 일상과 소식을 사진으로 함께 나눕니다.</p>
+                        </div>
+                    </div>
+
+                    <div id="galleryList" class="gallery-list">
+                        <!-- JS에서 갤러리 카드 출력 -->
+                    </div>
+                </div>
+
+                <!-- 갤러리 상세 화면 -->
+                <div id="galleryDetailView" class="gallery-detail-container" hidden>
+                    <div id="galleryDetail" class="gallery-detail"></div>
+
+                    <div class="comment-section">
+                        <div class="comment-header-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            <h3>소통 댓글</h3>
+                        </div>
+
+                        <div id="commentList" class="comment-list"></div>
+
+                        <form id="commentForm" class="comment-write-form">
+                            <textarea placeholder="동료들에게 따뜻한 응원의 댓글을 남겨주세요." required></textarea>
+                            <button type="submit" class="btn-comment-submit">
+                                <span>등록하기</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+    </section>
+
+    <script src="./js/main.js?v=2"></script>
+
+</body>
+
+</html>
