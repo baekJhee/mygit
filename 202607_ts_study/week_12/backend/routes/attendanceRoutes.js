@@ -3,6 +3,9 @@ const router = express.Router();
 
 const attendanceController = require('../controllers/attendanceController');
 
+// 월별 전체 직원 출퇴근 기록 조회
+router.get('/monthly', attendanceController.getMonthlyAttendances);
+
 // 오늘 출퇴근 기록 조회
 router.get('/:userId/today', attendanceController.getTodayAttendance);
 

@@ -26,11 +26,16 @@ function updateLiveClock() {
 setInterval(updateLiveClock, 1000);
 updateLiveClock();
 
-// 로그인 테스트 계정 힌트 클릭 시 자동 입력
+// 로그인 테스트 계정 선택 시 자동 입력
 const loginHint = document.querySelector('.login-hint');
+
 if (loginHint) {
-    loginHint.addEventListener('click', () => {
-        document.querySelector('#loginId').value = 'baek01';
+    loginHint.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-login-id]');
+
+        if (!button) return;
+
+        document.querySelector('#loginId').value = button.dataset.loginId;
         document.querySelector('#password').value = 'test1234';
     });
 }
@@ -141,6 +146,7 @@ if (demoModeBtn) {
         loadAttendance();
         loadGalleries();
         loadEmployeeContacts();
+        loadMonthlyAttendances();
     });
 }
 
@@ -208,6 +214,7 @@ loginForm.addEventListener('submit', async (event) => {
         await loadAttendance();
         await loadGalleries();
         await loadEmployeeContacts();
+        await loadMonthlyAttendances();
 
     } catch (error) {
         console.error('로그인 오류:', error);
@@ -887,6 +894,322 @@ mainMenu.addEventListener('click', (event) => {
     }
 });
 
+
+
+// ==========================================================================
+// 월별 전체 직원 출퇴근 기록 달력
+// ==========================================================================
+
+const calendarDays = document.querySelector('#calendarDays');
+const calendarMonthLabel = document.querySelector('#calendarMonth');
+const prevMonthBtn = document.querySelector('#prevMonthBtn');
+const nextMonthBtn = document.querySelector('#nextMonthBtn');
+const selectedDateTitle = document.querySelector('#selectedDateTitle');
+const dailyAttendanceCount = document.querySelector('#dailyAttendanceCount');
+const dailyAttendanceList = document.querySelector('#dailyAttendanceList');
+
+// 현재 달력의 연도와 월
+let calendarDate = new Date();
+
+// 월별 전체 직원 출퇴근 데이터
+let calendarAttendances = [];
+
+// 선택된 날짜
+let selectedCalendarDate = getDateKey(new Date());
+
+
+// 날짜를 YYYY-MM-DD 문자열로 변환
+function getDateKey(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
+
+
+// 근태 상태 한글 변환
+function getWorkStatus(status) {
+    const statusMap = {
+        NORMAL: '정상',
+        LATE: '지각',
+        ABSENT: '결근',
+        EARLY_LEAVE: '조퇴'
+    };
+
+    return statusMap[status] || status || '미확인';
+}
+
+
+// 근태 상태 CSS 클래스
+function getWorkStatusClass(status) {
+    const statusMap = {
+        NORMAL: 'normal',
+        LATE: 'late',
+        ABSENT: 'absent'
+    };
+
+    return statusMap[status] || '';
+}
+
+
+// 월별 출퇴근 데이터 조회
+async function loadMonthlyAttendances() {
+    if (!currentEmployee) return;
+
+    const year = calendarDate.getFullYear();
+    const month = calendarDate.getMonth() + 1;
+
+    calendarMonthLabel.textContent = `${year}년 ${month}월`;
+
+    // 데모 모드는 실제 DB 데이터가 없으므로 빈 달력 표시
+    if (isDemoMode) {
+        calendarAttendances = [];
+        renderAttendanceCalendar();
+        renderDailyAttendance(selectedCalendarDate);
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `http://localhost:3000/api/attendance/monthly?year=${year}&month=${month}`
+        );
+
+        const result = await response.json();
+
+        if (result.code !== 200) {
+            throw new Error(result.message || '출퇴근 기록 조회에 실패했습니다.');
+        }
+
+        calendarAttendances = result.data || [];
+
+        // 현재 선택된 날짜가 다른 달이면 해당 월의 1일 선택
+        if (!selectedCalendarDate.startsWith(`${year}-${String(month).padStart(2, '0')}`)) {
+            selectedCalendarDate = `${year}-${String(month).padStart(2, '0')}-01`;
+        }
+
+        renderAttendanceCalendar();
+        renderDailyAttendance(selectedCalendarDate);
+
+    } catch (error) {
+        console.error('월별 출퇴근 기록 조회 오류:', error);
+
+        calendarDays.innerHTML = `
+            <div class="empty-state">
+                출퇴근 기록을 불러오지 못했습니다.
+            </div>
+        `;
+
+        dailyAttendanceList.innerHTML = `
+            <tr>
+                <td colspan="6">출퇴근 기록 조회에 실패했습니다.</td>
+            </tr>
+        `;
+    }
+}
+
+
+// 달력 생성
+function renderAttendanceCalendar() {
+    const year = calendarDate.getFullYear();
+    const month = calendarDate.getMonth();
+
+    // 해당 월의 첫 번째 요일 (일요일: 0 ~ 토요일: 6)
+    const firstDay = new Date(year, month, 1).getDay();
+
+    // 해당 월의 마지막 날짜
+    const lastDate = new Date(year, month + 1, 0).getDate();
+
+    const todayKey = getDateKey(new Date());
+
+    let calendarHTML = '';
+
+    // 첫 주의 빈 날짜
+    for (let i = 0; i < firstDay; i++) {
+        calendarHTML += `
+            <div class="calendar-day empty"></div>
+        `;
+    }
+
+    // 날짜 생성
+    for (let day = 1; day <= lastDate; day++) {
+        const dateKey = getDateKey(new Date(year, month, day));
+
+        // 해당 날짜의 출퇴근 기록
+        const dailyRecords = calendarAttendances.filter((record) => {
+            return String(record.work_date).slice(0, 10) === dateKey;
+        });
+
+        // 근태 상태별 인원수
+        const normalCount = dailyRecords.filter(
+            record => record.work_status === 'NORMAL'
+        ).length;
+
+        const lateCount = dailyRecords.filter(
+            record => record.work_status === 'LATE'
+        ).length;
+
+        const absentCount = dailyRecords.filter(
+            record => record.work_status === 'ABSENT'
+        ).length;
+
+        // 선택된 날짜 및 오늘 날짜 표시
+        const isSelected = selectedCalendarDate === dateKey;
+        const isToday = todayKey === dateKey;
+
+        const dayClasses = [
+            'calendar-day',
+            isSelected ? 'selected' : '',
+            isToday ? 'today' : ''
+        ].filter(Boolean).join(' ');
+
+        calendarHTML += `
+            <button
+                type="button"
+                class="${dayClasses}"
+                data-date="${dateKey}"
+            >
+                <span class="day-number">${day}</span>
+
+                <div class="day-attendance-info">
+                    ${dailyRecords.length > 0 ? `
+                        <span class="day-employee-count">
+                            기록 ${dailyRecords.length}건
+                        </span>
+                    ` : ''}
+
+                    ${normalCount > 0 ? `
+                        <span class="day-status normal">
+                            정상 ${normalCount}
+                        </span>
+                    ` : ''}
+
+                    ${lateCount > 0 ? `
+                        <span class="day-status late">
+                            지각 ${lateCount}
+                        </span>
+                    ` : ''}
+
+                    ${absentCount > 0 ? `
+                        <span class="day-status absent">
+                            결근 ${absentCount}
+                        </span>
+                    ` : ''}
+                </div>
+            </button>
+        `;
+    }
+
+    // 마지막 주의 빈 날짜
+    const totalCells = firstDay + lastDate;
+    const remainingCells = (7 - (totalCells % 7)) % 7;
+
+    for (let i = 0; i < remainingCells; i++) {
+        calendarHTML += `
+            <div class="calendar-day empty"></div>
+        `;
+    }
+
+    calendarDays.innerHTML = calendarHTML;
+}
+
+
+// 선택한 날짜의 직원별 출퇴근 기록 표시
+function renderDailyAttendance(dateKey) {
+    selectedCalendarDate = dateKey;
+
+    const [year, month, day] = dateKey.split('-');
+
+    selectedDateTitle.textContent =
+        `${year}년 ${Number(month)}월 ${Number(day)}일 출퇴근 기록`;
+
+    // 선택한 날짜의 데이터만 필터링
+    const dailyRecords = calendarAttendances.filter((record) => {
+        return String(record.work_date).slice(0, 10) === dateKey;
+    });
+
+    dailyAttendanceCount.textContent = `${dailyRecords.length}건`;
+
+    if (dailyRecords.length === 0) {
+        dailyAttendanceList.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    해당 날짜의 출퇴근 기록이 없습니다.
+                </td>
+            </tr>
+        `;
+
+        renderAttendanceCalendar();
+        return;
+    }
+
+    dailyAttendanceList.innerHTML = dailyRecords.map((record) => {
+        const statusClass = getWorkStatusClass(record.work_status);
+
+        return `
+            <tr>
+                <td>${escapeHTML(record.employee_name || '-')}</td>
+                <td>${escapeHTML(record.department || '-')}</td>
+                <td>${escapeHTML(record.position || '-')}</td>
+                <td>${escapeHTML(record.check_in || '-')}</td>
+                <td>${escapeHTML(record.check_out || '퇴근 전')}</td>
+                <td>
+                    <span class="day-status ${statusClass}">
+                        ${escapeHTML(getWorkStatus(record.work_status))}
+                    </span>
+                </td>
+            </tr>
+        `;
+    }).join('');
+
+    // 선택 날짜 강조 표시
+    renderAttendanceCalendar();
+}
+
+
+// 달력 날짜 클릭
+calendarDays.addEventListener('click', (event) => {
+    const dayButton = event.target.closest('.calendar-day[data-date]');
+
+    if (!dayButton) return;
+
+    renderDailyAttendance(dayButton.dataset.date);
+});
+
+
+// 이전 달
+prevMonthBtn.addEventListener('click', () => {
+    calendarDate.setMonth(calendarDate.getMonth() - 1);
+    selectedCalendarDate = getDateKey(
+        new Date(calendarDate.getFullYear(), calendarDate.getMonth(), 1)
+    );
+
+    loadMonthlyAttendances();
+});
+
+
+// 다음 달
+nextMonthBtn.addEventListener('click', () => {
+    calendarDate.setMonth(calendarDate.getMonth() + 1);
+    selectedCalendarDate = getDateKey(
+        new Date(calendarDate.getFullYear(), calendarDate.getMonth(), 1)
+    );
+
+    loadMonthlyAttendances();
+});
+
+
+// 출퇴근 메뉴를 다시 클릭해도 최신 기록 조회
+mainMenu.addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-target]');
+
+    if (button?.dataset.target === 'attendanceSection') {
+        loadMonthlyAttendances();
+    }
+});
+
+
+
 // 새로고침 시 로그인 상태 확인
 const savedEmployee = localStorage.getItem('currentEmployee');
 const savedIsDemo = localStorage.getItem('isDemoMode') === 'true';
@@ -907,6 +1230,7 @@ if (savedEmployee) {
         loadAttendance();
         loadGalleries();
         loadEmployeeContacts();
+        loadMonthlyAttendances();
     } catch (e) {
         localStorage.removeItem('currentEmployee');
         localStorage.removeItem('isDemoMode');

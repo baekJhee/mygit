@@ -70,11 +70,39 @@ const checkOut = async (userId) => {
     return result.affectedRows;
 };
 
+// 월별 전체 직원 출퇴근 기록 조회
+const getMonthlyAttendances = async (year, month) => {
+    const startDate = `${year}-${String(month).padStart(2, '0')}-01`;
+
+    const [rows] = await db.query(
+        `SELECT
+            a.attendance_id,
+            a.user_id,
+            e.name AS employee_name,
+            e.department,
+            e.position,
+            DATE_FORMAT(a.work_date, '%Y-%m-%d') AS work_date,
+            a.check_in,
+            a.check_out,
+            a.work_status
+         FROM attendance a
+         LEFT JOIN employees e
+            ON a.user_id = e.id
+         WHERE a.work_date >= ?
+         AND a.work_date < DATE_ADD(?, INTERVAL 1 MONTH)
+         ORDER BY a.work_date ASC, e.name ASC`,
+        [startDate, startDate]
+    );
+
+    return rows;
+};
+
 // 외부에서 사용할 함수 내보내기
 module.exports = {
     getAttendances,
     getAttendancesByEmployeeId,
     getTodayAttendance,
     checkIn,
-    checkOut
+    checkOut,
+    getMonthlyAttendances
 };

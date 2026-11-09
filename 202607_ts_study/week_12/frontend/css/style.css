@@ -1,45 +1,42 @@
-/* ==========================================================================
-   스마트 그룹웨어 모던 디자인 시스템 (SyncFlow Groupware)
-   ========================================================================== */
+/* =========================================
+   SyncFlow - Blue Liquid Glass Theme
+========================================= */
 
 :root {
-    /* Brand & Accent Colors */
-    --primary: #4F46E5;
-    --primary-hover: #4338CA;
-    --primary-light: #EEF2FF;
-    --primary-border: #C7D2FE;
+    --primary: #2589D8;
+    --primary-hover: #1475C2;
+    --primary-light: #E6F4FF;
+    --primary-border: #B9DFFF;
 
-    --success: #10B981;
-    --success-hover: #059669;
-    --success-light: #ECFDF5;
-    --success-border: #A7F3D0;
+    --success: #18A999;
+    --success-hover: #108F81;
+    --success-light: #E5FAF6;
+    --success-border: #A6E8DC;
 
-    --danger: #EF4444;
-    --danger-hover: #DC2626;
-    --danger-light: #FEF2F2;
-    --danger-border: #FECACA;
+    --danger: #EF647B;
+    --danger-hover: #D94D68;
+    --danger-light: #FFF0F3;
+    --danger-border: #FFD0D9;
 
-    --warning: #F59E0B;
-    --info: #0284C7;
+    --warning: #F4B860;
+    --info: #2589D8;
 
-    /* Neutrals */
-    --bg-page: #F8FAFC;
-    --bg-surface: #FFFFFF;
-    --bg-surface-alt: #F1F5F9;
-    --bg-input: #FFFFFF;
+    --bg-page: #ecfbff;
+    --bg-surface: rgba(255, 255, 255, 0.68);
+    --bg-surface-alt: rgba(225, 241, 253, 0.65);
+    --bg-input: rgba(255, 255, 255, 0.8);
 
-    --text-primary: #0F172A;
-    --text-secondary: #475569;
-    --text-muted: #94A3B8;
+    --text-primary: #18334D;
+    --text-secondary: #58738C;
+    --text-muted: #8AA5BC;
 
-    --border-light: #E2E8F0;
-    --border-medium: #CBD5E1;
+    --border-light: rgba(255, 255, 255, 0.8);
+    --border-medium: rgba(133, 185, 220, 0.45);
 
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    --shadow-sm: 0 4px 12px rgba(62, 126, 171, 0.06);
+    --shadow-md: 0 8px 24px rgba(62, 126, 171, 0.10);
+    --shadow-lg: 0 14px 35px rgba(62, 126, 171, 0.13);
+    --shadow-xl: 0 20px 50px rgba(62, 126, 171, 0.16);
 
     /* Radii */
     --radius-sm: 8px;
@@ -89,56 +86,7 @@ a {
     text-decoration: none;
 }
 
-/* =========================================
-   SyncFlow - Blue Liquid Glass Theme
-========================================= */
 
-:root {
-    --primary: #2589D8;
-    --primary-hover: #1475C2;
-    --primary-light: #E6F4FF;
-    --primary-border: #B9DFFF;
-
-    --success: #18A999;
-    --success-hover: #108F81;
-    --success-light: #E5FAF6;
-    --success-border: #A6E8DC;
-
-    --danger: #EF647B;
-    --danger-hover: #D94D68;
-    --danger-light: #FFF0F3;
-    --danger-border: #FFD0D9;
-
-    --warning: #F4B860;
-    --info: #2589D8;
-
-    --bg-page: #EAF4FC;
-    --bg-surface: rgba(255, 255, 255, 0.68);
-    --bg-surface-alt: rgba(225, 241, 253, 0.65);
-    --bg-input: rgba(255, 255, 255, 0.8);
-
-    --text-primary: #18334D;
-    --text-secondary: #58738C;
-    --text-muted: #8AA5BC;
-
-    --border-light: rgba(255, 255, 255, 0.8);
-    --border-medium: rgba(133, 185, 220, 0.45);
-
-    --shadow-sm: 0 4px 12px rgba(62, 126, 171, 0.06);
-    --shadow-md: 0 8px 24px rgba(62, 126, 171, 0.10);
-    --shadow-lg: 0 14px 35px rgba(62, 126, 171, 0.13);
-    --shadow-xl: 0 20px 50px rgba(62, 126, 171, 0.16);
-}
-
-/* 전체 배경 */
-body {
-    background:
-        radial-gradient(circle at 10% 10%, rgba(153, 218, 255, 0.45), transparent 35%),
-        radial-gradient(circle at 90% 80%, rgba(176, 218, 255, 0.45), transparent 35%),
-        linear-gradient(135deg, #EDF7FF, #DDEEFF, #F5FAFF);
-    background-attachment: fixed;
-    color: var(--text-primary);
-}
 
 /* ==========================================================================
    1. 로그인 화면 (#loginSection)
@@ -171,7 +119,7 @@ body {
 .circle-1 {
     width: 450px;
     height: 450px;
-    background: #818CF8;
+    background: #f8ad81;
     top: -120px;
     right: -100px;
 }
@@ -326,7 +274,7 @@ body {
 
 .btn-login-submit:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+    box-shadow: 0 6px 16px rgba(0, 106, 133, 0.4);
 }
 
 .btn-login-submit:active {
@@ -350,24 +298,26 @@ body {
 }
 
 .login-hint {
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px dashed var(--border-light);
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 6px;
-    font-size: 12.5px;
-    color: var(--text-secondary);
-    background: var(--bg-surface-alt);
-    border-radius: var(--radius-sm);
-    padding: 12px;
-    cursor: pointer;
-    transition: background var(--transition-fast);
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.login-hint:hover {
-    background: #E2E8F0;
+.login-hint button {
+    padding: 7px 12px;
+    border: 1px solid var(--primary-border);
+    border-radius: 8px;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.login-hint button:hover {
+    background: var(--primary);
+    color: #fff;
 }
 
 .hint-label {
@@ -566,8 +516,9 @@ polygon.cls-1 {
     width: 38px;
     height: 38px;
     border-radius: var(--radius-full);
-    background: linear-gradient(135deg, var(--primary) 0%, #55B8F5 100%);
-    color: #FFFFFF;
+    background: linear-gradient(135deg, var(--primary) 0%, #2BC0E4 100%);
+
+    color: #fff;
     font-size: 15px;
     font-weight: 700;
     display: flex;
@@ -758,7 +709,7 @@ polygon.cls-1 {
     padding: 24px;
     border-radius: var(--radius-lg);
     border: 1.5px solid var(--border-light);
-    background: var(--bg-page);
+    background: var(--primary-light);
     transition: all var(--transition-base);
 }
 
@@ -840,16 +791,6 @@ polygon.cls-1 {
     box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
 }
 
-.btn-checkout {
-    background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%);
-    color: #FFFFFF;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
-}
-
-.btn-checkout:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.4);
-}
 
 .btn-work:disabled {
     background: #E2E8F0;
@@ -889,6 +830,293 @@ polygon.cls-1 {
     border: 1px solid #BAE6FD;
     padding: 10px;
     border-radius: var(--radius-sm);
+}
+
+/* ==========================================
+   월별 출퇴근 기록 달력
+========================================== */
+
+.attendance-calendar-card {
+    margin-top: 28px;
+    padding: 28px;
+    background: var(--surface, #fff);
+    border: 1px solid var(--border, #E5E7EB);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.calendar-header h3,
+.daily-attendance-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary, #111827);
+}
+
+.calendar-header p {
+    margin: 7px 0 0;
+    font-size: 13px;
+    color: var(--text-secondary, #6B7280);
+}
+
+.calendar-month-control {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.calendar-month-control strong {
+    min-width: 110px;
+    text-align: center;
+    font-size: 17px;
+    color: var(--text-primary, #111827);
+}
+
+.calendar-month-control button {
+    padding: 8px 12px;
+    border: 1px solid var(--border, #E5E7EB);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--text-primary, #374151);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.calendar-month-control button:hover {
+    background: var(--primary-light, #EEF2FF);
+    border-color: var(--primary-border, #C7D2FE);
+    color: var(--primary, #4F46E5);
+}
+
+.calendar-legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.calendar-legend span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-secondary, #6B7280);
+}
+
+.calendar-legend span::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.legend-normal {
+    color: #10B981 !important;
+}
+
+.legend-late {
+    color: #F59E0B !important;
+}
+
+.legend-absent {
+    color: #EF4444 !important;
+}
+
+.attendance-calendar {
+    overflow: hidden;
+    border: 1px solid var(--border, #E5E7EB);
+    border-radius: 12px;
+}
+
+.calendar-weekdays,
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.calendar-weekdays {
+    background: var(--primary-light, #EEF2FF);
+}
+
+.calendar-weekdays>div {
+    padding: 13px 4px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary, #4F46E5);
+}
+
+.calendar-day {
+    min-width: 0;
+    min-height: 105px;
+    padding: 10px;
+    border: none;
+    border-top: 1px solid var(--border, #E5E7EB);
+    border-right: 1px solid var(--border, #E5E7EB);
+    background: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.calendar-day:nth-child(7n) {
+    border-right: none;
+}
+
+.calendar-day:hover {
+    background: var(--primary-light, #EEF2FF);
+}
+
+.calendar-day.empty {
+    background: #F9FAFB;
+    cursor: default;
+}
+
+.calendar-day.selected {
+    background: var(--primary-light, #EEF2FF);
+    box-shadow: inset 0 0 0 2px var(--primary, #e58e46);
+}
+
+.calendar-day.today .day-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--primary, #4F46E5);
+    color: #fff;
+}
+
+.day-number {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary, #374151);
+}
+
+.day-attendance-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 9px;
+}
+
+.day-status {
+    width: fit-content;
+    padding: 3px 6px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.day-status.normal {
+    background: #D1FAE5;
+    color: #047857;
+}
+
+.day-status.late {
+    background: #FEF3C7;
+    color: #B45309;
+}
+
+.day-status.absent {
+    background: #FEE2E2;
+    color: #B91C1C;
+}
+
+.day-employee-count {
+    font-size: 11px;
+    color: var(--text-secondary, #6B7280);
+}
+
+.daily-attendance {
+    margin-top: 32px;
+}
+
+.daily-attendance-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+#dailyAttendanceCount {
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: var(--primary-light, #EEF2FF);
+    color: var(--primary, #4F46E5);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.daily-attendance-table-wrap {
+    overflow-x: auto;
+}
+
+.daily-attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+.daily-attendance-table th,
+.daily-attendance-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--border, #E5E7EB);
+    text-align: center;
+}
+
+.daily-attendance-table th {
+    background: #F9FAFB;
+    color: var(--text-secondary, #6B7280);
+    font-weight: 600;
+}
+
+.daily-attendance-table td {
+    color: var(--text-primary, #374151);
+}
+
+.daily-attendance-table td[colspan] {
+    padding: 30px;
+    color: var(--text-secondary, #9CA3AF);
+}
+
+@media (max-width: 768px) {
+    .attendance-calendar-card {
+        padding: 16px;
+    }
+
+    .calendar-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .calendar-month-control {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .calendar-day {
+        min-height: 75px;
+        padding: 6px 3px;
+    }
+
+    .day-status {
+        padding: 2px 3px;
+        font-size: 9px;
+    }
+
+    .day-employee-count {
+        font-size: 9px;
+    }
 }
 
 /* ==========================================================================
@@ -959,7 +1187,8 @@ polygon.cls-1 {
     width: 48px;
     height: 48px;
     border-radius: 14px;
-    background: linear-gradient(135deg, #E0E7FF 0%, #C7D2FE 100%);
+    border: 2px solid var(--border-medium);
+    background-color: #Fff;
     color: var(--primary);
     display: flex;
     align-items: center;
@@ -1458,16 +1687,17 @@ polygon.cls-1 {
 }
 
 /* 근태 카드 내부 */
-.time-card {
+/* .time-card {
     background: rgba(232, 245, 255, 0.65);
     border-color: rgba(255, 255, 255, 0.9);
-}
+} */
 
 /* 주요 버튼 */
 .btn-login-submit,
 .btn-checkout {
     background: linear-gradient(135deg, #55B8F5, #2789D8);
     box-shadow: 0 6px 18px rgba(37, 137, 216, 0.25);
+    color: #fff;
 }
 
 .btn-login-submit:hover,
@@ -1499,9 +1729,9 @@ polygon.cls-1 {
 
 .login-container {
     background:
-        radial-gradient(circle at 15% 20%, #B9E5FF 0%, transparent 40%),
-        radial-gradient(circle at 85% 80%, #C5E4FF 0%, transparent 40%),
-        linear-gradient(135deg, #EAF6FF, #DCEEFF);
+        radial-gradient(circle at 15% 20%, #2BC0E4 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, #EAECC6 0%, transparent 40%),
+        linear-gradient(135deg, #abe2f0, #fdffe0);
 }
 
 .login-card {

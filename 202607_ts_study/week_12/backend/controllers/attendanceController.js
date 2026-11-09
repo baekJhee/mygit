@@ -186,9 +186,49 @@ const checkOut = async (req, res) => {
         });
     }
 };
+// 월별 전체 직원 출퇴근 기록 조회
+const getMonthlyAttendances = async (req, res) => {
+    try {
+        const year = Number(req.query.year);
+        const month = Number(req.query.month);
 
+        // 연도와 월 유효성 검사
+        if (
+            !Number.isInteger(year) ||
+            year < 2000 ||
+            year > 2100 ||
+            !Number.isInteger(month) ||
+            month < 1 ||
+            month > 12
+        ) {
+            return res.status(400).json({
+                code: 400,
+                message: '올바른 연도와 월을 입력해 주세요.'
+            });
+        }
+
+        // 월별 전체 직원 기록 조회
+        const attendances =
+            await attendanceModel.getMonthlyAttendances(year, month);
+
+        return res.json({
+            code: 200,
+            message: '월별 출퇴근 기록 조회 성공',
+            data: attendances
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+            code: 500,
+            message: '월별 출퇴근 기록 조회 실패'
+        });
+    }
+};
 module.exports = {
     getTodayAttendance,
     checkIn,
-    checkOut
+    checkOut,
+    getMonthlyAttendances
 };
