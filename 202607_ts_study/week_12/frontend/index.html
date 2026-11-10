@@ -79,26 +79,16 @@
                 <button type="button" data-login-id="papa03">testId_03</button>
                 <span>클릭하면 테스트 계정이 자동 입력됩니다.</span>
             </div>
-
-            <!-- <button type="button" id="demoModeBtn" class="btn-demo-mode">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon
-                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                    </polygon>
-                </svg>
-                <span>서버 없이 UI 디자인 바로 체험하기</span>
-            </button> -->
         </div>
     </section>
 
     <!-- ================= 메인 대시보드 화면 ================= -->
     <section id="mainSection" class="main-layout" hidden>
-        <!-- 상단 글로벌 네비게이션 헤더 -->
-        <header class="app-header">
-            <div class="header-container">
-                <div class="header-brand" role="button" tabindex="0" title="메인 화면으로 이동">
-
-                    <svg width="50" height="50" viewBox="0 0 35.454 38.878">
+        <!-- 왼쪽 세로 네비게이션 사이드바 -->
+        <aside class="app-sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand" role="button" tabindex="0" title="메인 화면으로 이동">
+                    <svg width="40" height="40" viewBox="0 0 35.454 38.878">
                         <polygon class="cls-1"
                             points="17.782 0 0 10.265 17.782 20.532 28.869 14.137 28.869 25.863 28.026 27.326 22.714 30.417 22.714 23.109 20.948 24.13 20.948 31.81 22.366 32.603 29.262 28.622 30.637 26.313 30.637 11.07 17.782 18.491 3.535 10.265 17.782 2.04 33.687 11.223 33.687 25.836 30.437 31.467 21.063 36.878 17.896 35.051 17.896 24.13 11.281 20.309 11.281 35.021 8.26 33.277 8.26 18.566 0.109 13.858 0.109 15.899 6.494 19.586 6.494 34.296 13.046 38.08 13.046 23.37 16.113 25.141 16.113 36.069 21.133 38.878 31.605 32.833 35.454 26.367 35.454 10.203 17.782 0" />
                     </svg>
@@ -108,59 +98,57 @@
                         <span class="brand-tag">PORTAL</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- 탭 메뉴 -->
-                <nav id="mainMenu" class="main-menu-nav">
-                    <button type="button" class="nav-tab active" data-target="attendanceSection">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        <span>출퇴근 관리</span>
-                    </button>
+            <!-- 세로 탭 메뉴 -->
+            <nav id="mainMenu" class="sidebar-nav">
+                <button type="button" class="nav-tab active" data-target="attendanceSection">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>출퇴근 관리</span>
+                </button>
 
-                    <button type="button" class="nav-tab" data-target="gallerySection">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
-                        <span>포토갤러리</span>
-                    </button>
+                <button type="button" class="nav-tab" data-target="gallerySection">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    <span>포토갤러리</span>
+                </button>
 
-                    <button type="button" class="nav-tab" data-target="contactSection">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                        <span>직원 연락망</span>
-                    </button>
-                </nav>
+                <button type="button" class="nav-tab" data-target="contactSection">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>직원 연락망</span>
+                </button>
+            </nav>
 
-                <!-- 사용자 정보 및 로그아웃 -->
-                <div class="header-user-profile">
+            <!-- 하단 사용자 정보 및 로그아웃 -->
+            <div class="sidebar-footer">
+                <div class="sidebar-user-profile">
                     <div class="user-avatar-badge" id="userAvatarBadge">사</div>
                     <div class="user-meta-info">
                         <h2 id="welcomeMessage" class="welcome-text"></h2>
                         <p id="employeeInfo" class="employee-meta"></p>
                     </div>
-                    <button id="logoutBtn" class="btn-logout" title="로그아웃">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                            <polyline points="16 17 21 12 16 7"></polyline>
-                            <line x1="21" y1="12" x2="9" y2="12"></line>
-                        </svg>
-                        <span>로그아웃</span>
-                    </button>
                 </div>
+                <button id="logoutBtn" class="btn-logout" title="로그아웃">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>로그아웃</span>
+                </button>
             </div>
-        </header>
+        </aside>
 
         <!-- 메인 콘텐츠 영역 -->
         <main class="content-wrapper">
@@ -362,7 +350,44 @@
                             <p class="section-subtext">사내 행사, 워크샵, 문화 활동 등 다양한 일상과 소식을 사진으로 함께 나눕니다.</p>
                         </div>
                     </div>
+                    <!-- 사진 등록 버튼 -->
+                    <div class="gallery-write">
+                        <button type="button" id="galleryWriteBtn">
+                            사진 등록하기
+                        </button>
 
+                        <!-- 등록 폼 -->
+                        <form id="galleryForm" hidden>
+                            <div class="form-group">
+                                <label for="galleryAuthorName">작성자</label>
+                                <input type="text" id="galleryAuthorName" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="galleryTitle">제목</label>
+                                <input type="text" id="galleryTitle" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="galleryDescription">내용</label>
+                                <textarea id="galleryDescription"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="galleryImage">이미지</label>
+                                <input type="file" id="galleryImage" accept="image/jpeg,image/png,image/gif,image/webp"
+                                    required>
+                                <img id="galleryPreview" hidden alt="이미지 미리보기">
+                            </div>
+
+                            <div class="gallery-form-buttons">
+                                <button type="submit">등록하기</button>
+                                <button type="button" id="galleryCancelBtn">취소</button>
+                            </div>
+
+                            <p id="galleryMessage"></p>
+                        </form>
+                    </div>
                     <div id="galleryList" class="gallery-list">
                         <!-- JS에서 갤러리 카드 출력 -->
                     </div>
@@ -402,7 +427,7 @@
         </main>
     </section>
 
-    <script src="./js/main.js?v=2"></script>
+    <script src="./js/main.js?v=3"></script>
 
 </body>
 

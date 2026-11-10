@@ -18,29 +18,31 @@
   --warning-light: #fef3c7;
   --success-color: #10b981;
   --success-light: #d1fae5;
-  
+
   --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #f1f5f9 100%);
   --card-bg: rgba(255, 255, 255, 0.96);
   --card-border: rgba(226, 232, 240, 0.9);
   --text-primary: #0f172a;
   --text-secondary: #475569;
   --text-muted: #94a3b8;
-  
+
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 8px -1px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 12px 20px -3px rgba(0, 0, 0, 0.12);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
-  
+
   --radius-xs: 6px;
   --radius-sm: 10px;
   --radius-md: 14px;
   --radius-lg: 18px;
   --radius-full: 9999px;
-  
+
   --transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -50,10 +52,12 @@
   display: none !important;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
-  overflow: hidden; /* 그룹이 늘어나도 전체 화면 스크롤 절대 방지 */
+  overflow: hidden;
+  /* 그룹이 늘어나도 전체 화면 스크롤 절대 방지 */
 }
 
 body {
@@ -207,7 +211,10 @@ button {
   font-family: inherit;
 }
 
-.btn-primary, .btn-secondary, .btn-danger, .btn-icon {
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-icon {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -445,8 +452,15 @@ button {
 }
 
 @keyframes miniTagPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
 }
 
 /* 한번에 다 붙이기 버튼 */
@@ -586,28 +600,6 @@ button {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-.sticker-slot.attached::after {
-  content: '✕';
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  width: 18px;
-  height: 18px;
-  background: var(--danger-color);
-  color: #ffffff;
-  font-size: 10px;
-  font-weight: 900;
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: scale(0.6);
-  transition: all 0.15s ease;
-  pointer-events: none;
-  z-index: 2;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
 
 .sticker-slot.attached:hover::after {
   opacity: 1;
@@ -642,18 +634,22 @@ button {
     opacity: 0;
     filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.45));
   }
+
   30% {
     opacity: 1;
   }
+
   65% {
     /* 찹! 하고 내리꽂히며 납작하게 압축 */
     transform: scale(0.86, 1.14) rotate(3deg);
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.28));
   }
+
   82% {
     /* 살짝 튕김 반동 */
     transform: scale(1.08, 0.94) rotate(-1deg);
   }
+
   100% {
     transform: scale(1, 1) rotate(0deg);
     opacity: 1;
@@ -662,26 +658,85 @@ button {
 }
 
 /* ---------- 20개 모둠용 동적 테마 색상 ---------- */
-.group-theme-1  { --group-accent: #3b82f6; }
-.group-theme-2  { --group-accent: #10b981; }
-.group-theme-3  { --group-accent: #f59e0b; }
-.group-theme-4  { --group-accent: #ec4899; }
-.group-theme-5  { --group-accent: #8b5cf6; }
-.group-theme-6  { --group-accent: #06b6d4; }
-.group-theme-7  { --group-accent: #ef4444; }
-.group-theme-8  { --group-accent: #84cc16; }
-.group-theme-9  { --group-accent: #f97316; }
-.group-theme-10 { --group-accent: #6366f1; }
-.group-theme-11 { --group-accent: #14b8a6; }
-.group-theme-12 { --group-accent: #d946ef; }
-.group-theme-13 { --group-accent: #eab308; }
-.group-theme-14 { --group-accent: #0284c7; }
-.group-theme-15 { --group-accent: #059669; }
-.group-theme-16 { --group-accent: #be123c; }
-.group-theme-17 { --group-accent: #7c3aed; }
-.group-theme-18 { --group-accent: #475569; }
-.group-theme-19 { --group-accent: #b45309; }
-.group-theme-20 { --group-accent: #2563eb; }
+.group-theme-1 {
+  --group-accent: #3b82f6;
+}
+
+.group-theme-2 {
+  --group-accent: #10b981;
+}
+
+.group-theme-3 {
+  --group-accent: #f59e0b;
+}
+
+.group-theme-4 {
+  --group-accent: #ec4899;
+}
+
+.group-theme-5 {
+  --group-accent: #8b5cf6;
+}
+
+.group-theme-6 {
+  --group-accent: #06b6d4;
+}
+
+.group-theme-7 {
+  --group-accent: #ef4444;
+}
+
+.group-theme-8 {
+  --group-accent: #84cc16;
+}
+
+.group-theme-9 {
+  --group-accent: #f97316;
+}
+
+.group-theme-10 {
+  --group-accent: #6366f1;
+}
+
+.group-theme-11 {
+  --group-accent: #14b8a6;
+}
+
+.group-theme-12 {
+  --group-accent: #d946ef;
+}
+
+.group-theme-13 {
+  --group-accent: #eab308;
+}
+
+.group-theme-14 {
+  --group-accent: #0284c7;
+}
+
+.group-theme-15 {
+  --group-accent: #059669;
+}
+
+.group-theme-16 {
+  --group-accent: #be123c;
+}
+
+.group-theme-17 {
+  --group-accent: #7c3aed;
+}
+
+.group-theme-18 {
+  --group-accent: #475569;
+}
+
+.group-theme-19 {
+  --group-accent: #b45309;
+}
+
+.group-theme-20 {
+  --group-accent: #2563eb;
+}
 
 /* ---------- 모달 팝업 스타일 (심플 & 미니멀) ---------- */
 .modal-backdrop {
@@ -718,8 +773,15 @@ button {
 }
 
 @keyframes modalPop {
-  0% { transform: scale(0.95); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .modal-header {
