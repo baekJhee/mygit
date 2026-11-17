@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,10 @@
   <title>⭐ 모둠 스티커판 - 우리 모둠 칭찬 스티커</title>
   <link rel="stylesheet" href="css/style.css">
   <!-- 프리텐다드 웹폰트 -->
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 </head>
+
 <body>
   <div class="app-container">
     <!-- 상단 헤더 영역 -->
@@ -27,16 +30,33 @@
           <span class="selector-label">스티커 모양</span>
           <div class="sticker-options" id="stickerThemeGroup">
             <button type="button" class="theme-sticker-btn active" data-type="star" title="별">
-              <svg viewBox="0 0 36 36"><path fill="#FFB300" d="M18 2.5l4.6 9.4 10.4 1.5-7.5 7.3 1.8 10.3L18 26.2l-9.3 4.8 1.8-10.3-7.5-7.3 10.4-1.5L18 2.5z" stroke="#FFA000" stroke-width="0.5" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 36 36">
+                <path fill="#FFB300"
+                  d="M18 2.5l4.6 9.4 10.4 1.5-7.5 7.3 1.8 10.3L18 26.2l-9.3 4.8 1.8-10.3-7.5-7.3 10.4-1.5L18 2.5z"
+                  stroke="#FFA000" stroke-width="0.5" stroke-linejoin="round" />
+              </svg>
             </button>
             <button type="button" class="theme-sticker-btn" data-type="smile" title="스마일">
-              <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#FFCA28"/><circle cx="12.5" cy="14" r="2.2" fill="#4E342E"/><circle cx="23.5" cy="14" r="2.2" fill="#4E342E"/><path d="M11 20c1.8 4.2 12.2 4.2 14 0" fill="none" stroke="#4E342E" stroke-width="2.6" stroke-linecap="round"/></svg>
+              <svg viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="16" fill="#FFCA28" />
+                <circle cx="12.5" cy="14" r="2.2" fill="#4E342E" />
+                <circle cx="23.5" cy="14" r="2.2" fill="#4E342E" />
+                <path d="M11 20c1.8 4.2 12.2 4.2 14 0" fill="none" stroke="#4E342E" stroke-width="2.6"
+                  stroke-linecap="round" />
+              </svg>
             </button>
             <button type="button" class="theme-sticker-btn" data-type="heart" title="하트">
-              <svg viewBox="0 0 36 36"><path fill="#FF5252" d="M18 31.8S4.5 22.5 4.5 13C4.5 8 8.5 4.5 13.2 4.5c3.2 0 6 1.8 7.3 4.5 1.3-2.7 4.1-4.5 7.3-4.5 4.7 0 8.7 3.5 8.7 8.5 0 9.5-13.5 18.8-18.5 18.8z"/></svg>
+              <svg viewBox="0 0 36 36">
+                <path fill="#FF5252"
+                  d="M18 31.8S4.5 22.5 4.5 13C4.5 8 8.5 4.5 13.2 4.5c3.2 0 6 1.8 7.3 4.5 1.3-2.7 4.1-4.5 7.3-4.5 4.7 0 8.7 3.5 8.7 8.5 0 9.5-13.5 18.8-18.5 18.8z" />
+              </svg>
             </button>
             <button type="button" class="theme-sticker-btn" data-type="check" title="체크">
-              <svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#1E88E5"/><path d="M11 18.5l4.8 4.8 9.5-9.5" fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="16" fill="#1E88E5" />
+                <path d="M11 18.5l4.8 4.8 9.5-9.5" fill="none" stroke="#FFFFFF" stroke-width="3.6"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
             </button>
           </div>
         </div>
@@ -67,11 +87,19 @@
       <div class="groups-container" id="groupsContainer" aria-label="모둠별 스티커 판 목록">
         <!-- JavaScript로 동적 생성됨 -->
       </div>
+
+
     </main>
+
+    <div class="flower" id="flower"></div>
+
+    <input type="range" id="petalCount" min="5" max="20" value="8">
+    <span id="countValue">8개</span>
   </div>
 
   <!-- ================= 모달 1: 모둠 설정 팝업 (심플 & 빠른선택 제거) ================= -->
-  <div class="modal-backdrop hidden" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+  <div class="modal-backdrop hidden" id="settingsModal" role="dialog" aria-modal="true"
+    aria-labelledby="settingsModalTitle">
     <div class="modal-card">
       <div class="modal-header">
         <h2 class="modal-title" id="settingsModalTitle">모둠 설정</h2>
@@ -87,17 +115,8 @@
               <span class="range-badge">3 ~ 20</span>
             </div>
             <div class="input-wrapper">
-              <input 
-                type="number" 
-                id="groupCountInput" 
-                name="groupCount" 
-                min="3" 
-                max="20" 
-                step="1" 
-                value="3" 
-                placeholder="3 ~ 20"
-                required
-              />
+              <input type="number" id="groupCountInput" name="groupCount" min="3" max="20" step="1" value="3"
+                placeholder="3 ~ 20" required />
               <span class="input-unit">개</span>
             </div>
           </div>
@@ -109,17 +128,8 @@
               <span class="range-badge">5 ~ 20</span>
             </div>
             <div class="input-wrapper">
-              <input 
-                type="number" 
-                id="stickerCountInput" 
-                name="stickerCount" 
-                min="5" 
-                max="20" 
-                step="1" 
-                value="5" 
-                placeholder="5 ~ 20"
-                required
-              />
+              <input type="number" id="stickerCountInput" name="stickerCount" min="5" max="20" step="1" value="5"
+                placeholder="5 ~ 20" required />
               <span class="input-unit">개</span>
             </div>
           </div>
@@ -134,7 +144,8 @@
   </div>
 
   <!-- ================= 모달 2: 유효성 오류 경고 팝업 (범위 벗어남 안내) ================= -->
-  <div class="modal-backdrop alert-backdrop hidden" id="alertModal" role="alertdialog" aria-modal="true" aria-labelledby="alertTitle" aria-describedby="alertMessage">
+  <div class="modal-backdrop alert-backdrop hidden" id="alertModal" role="alertdialog" aria-modal="true"
+    aria-labelledby="alertTitle" aria-describedby="alertMessage">
     <div class="modal-card alert-card">
       <div class="alert-icon-wrap">
         <span class="alert-symbol">⚠️</span>
@@ -170,4 +181,5 @@
   <!-- 스크립트 연결 -->
   <script src="js/app.js"></script>
 </body>
+
 </html>

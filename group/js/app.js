@@ -18,8 +18,8 @@
   // 1. 상수 및 초기 기본값 설정
   // ==========================================
   const CONFIG = {
-    DEFAULT_GROUP_COUNT: 3,
-    DEFAULT_STICKER_COUNT: 5,
+    DEFAULT_GROUP_COUNT: 10,
+    DEFAULT_STICKER_COUNT: 10,
     MIN_GROUP: 3,
     MAX_GROUP: 20,
     MIN_STICKER: 5,

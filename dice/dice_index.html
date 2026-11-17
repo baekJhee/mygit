@@ -11,12 +11,16 @@
 
 <body>
   <div class="container">
-    <!-- 앱 헤더 -->
+    <!-- 앱 헤더 (컴팩트 상단 바) -->
     <header class="app-header">
-      <div class="header-top-bar">
-        <div class="title-badge">
-          <span>🎲</span>
-          <span>Interactive 3D Game</span>
+      <div class="header-main-bar">
+        <div class="header-left">
+          <div class="title-badge">
+            <span>🎲</span>
+            <span>3D Physics</span>
+          </div>
+          <h1>3D 주사위 던지기</h1>
+          <span class="header-sub">실감나는 3D 물리 시뮬레이션</span>
         </div>
 
         <!-- 테마 전환기 (시스템 / 라이트 / 다크) -->
@@ -51,85 +55,87 @@
           </button>
         </div>
       </div>
-      <h1>3D 주사위 던지기</h1>
-      <p>버튼을 눌러 주사위를 굴리고 행운의 숫자를 확인해보세요!</p>
     </header>
 
     <!-- 메인 레이아웃: 주사위 스테이지 + 사이드 결과 패널 -->
     <main class="game-layout">
       <!-- 1. 주사위 게임 영역 -->
       <section class="glass-card stage-card" aria-label="주사위 플레이 영역">
-        <!-- 모드 선택 탭 (1개 / 2개) -->
-        <div class="mode-selector" role="tablist" aria-label="주사위 개수 선택">
-          <button id="mode-1" class="mode-btn active" role="tab" aria-selected="true" aria-controls="dice-arena">
-            <span>🎲</span>
-          </button>
-          <button id="mode-2" class="mode-btn" role="tab" aria-selected="false" aria-controls="dice-arena">
-            <span>🎲🎲</span>
-          </button>
+        <!-- 상단 옵션 패널 (주사위 개수 & 질감 선택) -->
+        <div class="stage-options-bar">
+          <!-- 모드 선택 탭 (1개 ~ 5개) -->
+          <div class="mode-selector" role="tablist" aria-label="주사위 개수 선택">
+            <button id="mode-1" class="mode-btn" data-count="1" role="tab" aria-selected="false" aria-controls="dice-arena">
+              <span>🎲 1</span>
+            </button>
+            <button id="mode-2" class="mode-btn active" data-count="2" role="tab" aria-selected="true" aria-controls="dice-arena">
+              <span>🎲 2</span>
+            </button>
+            <button id="mode-3" class="mode-btn" data-count="3" role="tab" aria-selected="false" aria-controls="dice-arena">
+              <span>🎲 3</span>
+            </button>
+            <button id="mode-4" class="mode-btn" data-count="4" role="tab" aria-selected="false" aria-controls="dice-arena">
+              <span>🎲 4</span>
+            </button>
+            <button id="mode-5" class="mode-btn" data-count="5" role="tab" aria-selected="false" aria-controls="dice-arena">
+              <span>🎲 5</span>
+            </button>
+          </div>
+
+          <!-- 질감 선택 탭 (나무, 플라스틱, 쇠, 유리) -->
+          <div class="material-selector" role="group" aria-label="주사위 질감 선택">
+            <button id="mat-wood" class="mat-btn" data-material="wood" type="button" title="나무 질감 및 효과음">
+              <span>🪵 나무</span>
+            </button>
+            <button id="mat-plastic" class="mat-btn active" data-material="plastic" type="button" title="플라스틱 질감 및 효과음">
+              <span>🎲 플라스틱</span>
+            </button>
+            <button id="mat-metal" class="mat-btn" data-material="metal" type="button" title="쇠/금속 질감 및 효과음">
+              <span>⚙️ 쇠</span>
+            </button>
+            <button id="mat-glass" class="mat-btn" data-material="glass" type="button" title="유리 질감 및 효과음">
+              <span>💎 유리</span>
+            </button>
+          </div>
         </div>
 
         <!-- 주사위 3D 뷰포트 아레나 -->
-        <div id="dice-arena" class="dice-arena single-mode">
-          <!-- 주사위 1 -->
-          <div id="dice-wrap-1" class="dice-container-wrap">
-            <div class="dice-scene">
-              <div id="dice-cube-1" class="dice-cube" aria-label="주사위 1">
-                <!-- 속을 꽉 채워주는 3D 내부 솔리드 코어 (모서리 빈틈 방지) -->
-                <div class="dice-core"></div>
-                <!-- 1번 면 (Front) -->
-                <div class="dice-face face-1"></div>
-                <!-- 2번 면 (Right) -->
-                <div class="dice-face face-2"></div>
-                <!-- 3번 면 (Top) -->
-                <div class="dice-face face-3"></div>
-                <!-- 4번 면 (Bottom) -->
-                <div class="dice-face face-4"></div>
-                <!-- 5번 면 (Left) -->
-                <div class="dice-face face-5"></div>
-                <!-- 6번 면 (Back) -->
-                <div class="dice-face face-6"></div>
-              </div>
-            </div>
-            <div class="dice-floor-shadow"></div>
-            <span class="dice-label">주사위 A</span>
-          </div>
-
-          <!-- 주사위 2 (초기에는 1개 모드이므로 hidden) -->
-          <div id="dice-wrap-2" class="dice-container-wrap hidden">
-            <div class="dice-scene">
-              <div id="dice-cube-2" class="dice-cube" aria-label="주사위 2">
-                <!-- 속을 꽉 채워주는 3D 내부 솔리드 코어 (모서리 빈틈 방지) -->
-                <div class="dice-core"></div>
-                <!-- 1번 면 (Front) -->
-                <div class="dice-face face-1"></div>
-                <!-- 2번 면 (Right) -->
-                <div class="dice-face face-2"></div>
-                <!-- 3번 면 (Top) -->
-                <div class="dice-face face-3"></div>
-                <!-- 4번 면 (Bottom) -->
-                <div class="dice-face face-4"></div>
-                <!-- 5번 면 (Left) -->
-                <div class="dice-face face-5"></div>
-                <!-- 6번 면 (Back) -->
-                <div class="dice-face face-6"></div>
-              </div>
-            </div>
-            <div class="dice-floor-shadow"></div>
-            <span class="dice-label">주사위 B</span>
+        <div id="dice-arena" class="dice-arena" tabindex="0" role="region" aria-label="3D 주사위 필드 (클릭하여 던지기)">
+          <div id="canvas-container" class="canvas-container"></div>
+          <div id="arena-hint" class="arena-hint">
+            <span>화면을 터치/클릭하거나 스페이스바를 눌러 던지세요</span>
           </div>
         </div>
 
         <!-- 컨트롤 버튼 바 -->
         <div class="controls-bar">
-          <button id="roll-btn" class="roll-btn" type="button" aria-label="주사위 던지기">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          <!-- 1번 굴리기 버튼 -->
+          <button id="roll-btn" class="roll-btn" type="button" aria-label="1번 굴리기">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
               stroke-linecap="round" stroke-linejoin="round">
               <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
             </svg>
-            <span>굴리기</span>
+            <span>1번 굴리기</span>
           </button>
 
+          <!-- 연속 굴리기 / 멈추기 버튼 -->
+          <button id="continuous-btn" class="continuous-btn" type="button" aria-label="연속으로 굴리기">
+            <!-- 기본 상태 아이콘 (회전 루프) -->
+            <svg class="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 2l4 4-4 4"/>
+              <path d="M3 11v-1a4 4 0 0 1 4-4h14"/>
+              <path d="M7 22l-4-4 4-4"/>
+              <path d="M21 13v1a4 4 0 0 1-4 4H3"/>
+            </svg>
+            <!-- 멈추기 상태 아이콘 (스퀘어 정지) -->
+            <svg class="icon-stop" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+              <rect x="5" y="5" width="14" height="14" rx="2" />
+            </svg>
+            <span class="btn-text">연속 굴리기</span>
+          </button>
+
+          <!-- 사운드 토글 버튼 -->
           <button id="sound-toggle-btn" class="sound-toggle-btn" type="button" title="사운드 켜짐 (클릭시 음소거)"
             aria-label="효과음 토글">
             <!-- Sound On Icon -->
@@ -161,25 +167,16 @@
           </div>
 
           <!-- 메인 결과 수치 박스 -->
-          <div class="main-result-box">
+          <div id="main-result-box" class="main-result-box">
             <div id="result-caption" class="result-caption">주사위 결과</div>
             <div class="result-number-wrap">
               <span id="result-number" class="result-number">-</span>
             </div>
-            <div>
-              <span id="double-badge" class="double-badge">✨ DOUBLE! 럭키 더블! ✨</span>
-            </div>
 
-            <!-- 주사위 2개 모드용 개별 눈금 분해 표시 -->
-            <div id="dice-breakdown" class="dice-breakdown">
-              <div class="breakdown-item">
-                <div class="breakdown-label">주사위 A</div>
-                <div id="breakdown-val-1" class="breakdown-val">-</div>
-              </div>
-              <div class="breakdown-item">
-                <div class="breakdown-label">주사위 B</div>
-                <div id="breakdown-val-2" class="breakdown-val">-</div>
-              </div>
+            <!-- 주사위 1~5개 모드용 개별 눈금 및 계산식 분해 표시 -->
+            <div id="dice-breakdown-wrapper" class="dice-breakdown-wrapper">
+              <div id="dice-equation" class="dice-equation"></div>
+              <div id="dice-breakdown" class="dice-breakdown"></div>
             </div>
           </div>
         </div>
@@ -199,10 +196,13 @@
 
     <!-- 푸터 팁 -->
     <footer class="app-footer">
-      <p>💡 팁: 키보드 <kbd>Space</kbd> 키를 눌러도 주사위를 던질 수 있습니다.</p>
+      <p>💡 팁: <kbd>Space</kbd> 키로 1번 굴리기, <kbd>R</kbd> 키로 연속 굴리기/멈추기 (방향키 ←/→ 로 개수 조절)</p>
     </footer>
   </div>
 
+  <!-- 3D 엔진 라이브러리 (Three.js & Cannon.js) -->
+  <script src="js/three.min.js"></script>
+  <script src="js/cannon.min.js"></script>
   <!-- 메인 스크립트 로드 -->
   <script src="js/main.js"></script>
 </body>
