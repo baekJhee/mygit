@@ -988,98 +988,6 @@ class DiceEngine3D {
     this.applyImpulseFromCurrent(power);
   }
 
-  // ----------------------------------------
-  // 연속 굴리기 시작 (Continuous Roll Start)
-  // ----------------------------------------
-  // startContinuousRoll() {
-  //   state.isRolling = true;
-  //   state.isContinuous = true;
-  //   this.isSettling = false;
-  //   this.restStableFrames = 0;
-  //   this.rollStartTime = performance.now();
-
-  //   // UI 상태: 연속 굴리기 -> 멈추기 버튼 전환
-  //   elements.rollBtn.disabled = true;
-  //   elements.continuousBtn.classList.add('stopping');
-  //   elements.continuousBtn.querySelector('.btn-text').textContent = '멈추기';
-  //   elements.continuousBtn.querySelector('.icon-play').style.display = 'none';
-  //   elements.continuousBtn.querySelector('.icon-stop').style.display = 'inline-block';
-
-  //   elements.statusIndicator.classList.add('rolling');
-  //   elements.arenaHint.classList.add('hidden');
-
-  //   elements.resultNumber.classList.remove('pop');
-  //   elements.resultNumber.classList.add('rolling');
-  //   elements.resultNumber.textContent = '...';
-
-  //   if (elements.mainResultBox) {
-  //     elements.mainResultBox.classList.remove('reveal');
-  //   }
-
-  //   sfx.playThrow();
-  //   this.pointLight.intensity = 2.0;
-  //   setTimeout(() => { this.pointLight.intensity = 0; }, 120);
-
-  //   this.applyImpulseFromCurrent();
-
-  // }
-
-  // ----------------------------------------
-  // 연속 굴리기 멈추기 (Stop Continuous Roll)
-  // ----------------------------------------
-  // stopContinuousRoll() {
-  //   if (!state.isContinuous) return;
-
-  //   // 연속 굴리기 종료
-  //   state.isContinuous = false;
-
-  //   // 마지막 굴리기 기준 시간 초기화
-  //   this.rollStartTime = performance.now();
-  //   this.restStableFrames = 0;
-  //   this.isSettling = false;
-
-  //   // UI 복원
-  //   elements.continuousBtn.classList.remove('stopping');
-  //   elements.continuousBtn.querySelector('.btn-text').textContent = '연속 굴리기';
-  //   elements.continuousBtn.querySelector('.icon-play').style.display = 'inline-block';
-  //   elements.continuousBtn.querySelector('.icon-stop').style.display = 'none';
-
-  //   // 마지막으로 한 번 더 강하게 튀어 오르며 회전
-  //   const activeDice = this.getActiveDice();
-
-  //   activeDice.forEach((d) => {
-  //     if (d.alignAnim) cancelAnimationFrame(d.alignAnim);
-  //     d.alignAnim = null;
-
-  //     d.body.linearDamping = 0.08;
-  //     d.body.angularDamping = 0.1;
-
-  //     const angle = Math.random() * Math.PI * 2;
-  //     const speed = 8 + Math.random() * 5;
-
-  //     d.body.velocity.set(
-  //       Math.cos(angle) * speed,
-  //       15 + Math.random() * 5,
-  //       Math.sin(angle) * speed
-  //     );
-
-  //     d.body.angularVelocity.set(
-  //       (Math.random() - 0.5) * 65,
-  //       (Math.random() - 0.5) * 65,
-  //       (Math.random() - 0.5) * 65
-  //     );
-
-  //     d.body.wakeUp();
-  //   });
-
-  //   // 마지막 던지기 효과음
-  //   sfx.playThrow();
-
-  //   this.pointLight.intensity = 2.0;
-  //   setTimeout(() => {
-  //     this.pointLight.intensity = 0;
-  //   }, 120);
-  // }
 
   // 모든 활성 주사위에 초기 3D 물리 솟구침 및 강한 회전 부여
   applyImpulseToAll() {
@@ -1121,6 +1029,7 @@ class DiceEngine3D {
   applyImpulseFromCurrent(power = 1) {
     const activeDice = this.getActiveDice();
 
+
     activeDice.forEach((d, i) => {
       if (d.alignAnim) cancelAnimationFrame(d.alignAnim);
       d.alignAnim = null;
@@ -1143,17 +1052,13 @@ class DiceEngine3D {
       d.body.velocity.set(speedX, speedY, speedZ);
 
       // 회전력도 충전 정도에 따라 조절
-      const spinPower = (45 + Math.random() * 35) * (0.7 + power * 0.6);
+      const spinPower = (140 + Math.random() * 60) * (0.7 + power * 0.6);
 
       d.body.angularVelocity.set(
         (Math.random() - 0.5) * spinPower,
         (Math.random() - 0.5) * spinPower,
         (Math.random() - 0.5) * spinPower
       );
-
-      // 회전 방향에 랜덤성 추가
-      d.body.angularVelocity.x += (Math.random() - 0.5) * 25;
-      d.body.angularVelocity.z += (Math.random() - 0.5) * 25;
 
       // 물리 엔진에 즉시 반영
       d.body.wakeUp();
