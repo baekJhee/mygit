@@ -692,10 +692,13 @@ body::after {
 }
 
 @keyframes stopPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 6px 18px rgba(239, 68, 68, 0.45);
     transform: scale(1);
   }
+
   50% {
     box-shadow: 0 10px 28px rgba(239, 68, 68, 0.75);
     transform: scale(1.02);
@@ -830,10 +833,12 @@ body::after {
     box-shadow: 0 0 0 rgba(99, 102, 241, 0);
     border-color: rgba(99, 102, 241, 0.2);
   }
+
   40% {
     box-shadow: 0 0 32px rgba(99, 102, 241, 0.4), inset 0 0 18px rgba(99, 102, 241, 0.18);
     border-color: rgba(99, 102, 241, 0.8);
   }
+
   100% {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
     border-color: var(--result-box-border);
@@ -876,10 +881,13 @@ body::after {
 }
 
 @keyframes dotBreathe {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.4;
     transform: scale(0.96);
   }
+
   50% {
     opacity: 0.9;
     transform: scale(1.04);
@@ -896,11 +904,13 @@ body::after {
     transform: scale(0.6);
     opacity: 0;
   }
+
   60% {
     transform: scale(1.18);
     opacity: 1;
     text-shadow: 0 0 28px var(--primary-glow);
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
@@ -1075,4 +1085,39 @@ body::after {
   font-size: 0.8rem;
   color: var(--text-main);
   transition: all 0.3s ease;
+}
+
+
+
+
+
+/* 누르고 던지기 */
+#roll-btn,
+#dice-arena {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#roll-btn {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#roll-btn.charging {
+  transform: scale(0.96);
+  filter: brightness(0.9);
+  box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.2);
+}
+
+#dice-arena {
+  cursor: grab;
+}
+
+#dice-arena.charging {
+  cursor: grabbing;
+}
+
+#dice-arena.charging .arena-hint {
+  color: #818cf8;
+  font-weight: 700;
 }

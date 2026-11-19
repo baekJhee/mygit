@@ -10,12 +10,13 @@
 // 1. 애플리케이션 상태 (State)
 // ==========================================
 const state = {
-  diceCount: 2, // 1 ~ 5
-  material: 'plastic', // 'plastic' | 'wood' | 'metal' | 'glass'
+  diceCount: 2,
+  material: 'plastic',
   isRolling: false,
-  isContinuous: false, // 연속 굴리기 진행 여부
+  isContinuous: false,
+  isCharging: false,
   soundEnabled: true,
-  themeMode: 'system', // 'system' | 'light' | 'dark'
+  themeMode: 'system',
   history: []
 };
 
@@ -52,8 +53,8 @@ const elements = {
 
   // Controls
   rollBtn: document.getElementById('roll-btn'),
-  continuousBtn: document.getElementById('continuous-btn'),
   soundBtn: document.getElementById('sound-toggle-btn'),
+
   soundIconOn: document.getElementById('sound-icon-on'),
   soundIconOff: document.getElementById('sound-icon-off'),
 
@@ -86,7 +87,7 @@ class SoundFX {
       this.ctx = new AudioCtx();
     }
     if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume().catch(() => {});
+      this.ctx.resume().catch(() => { });
     }
   }
 
@@ -115,7 +116,7 @@ class SoundFX {
 
       osc.start(now);
       osc.stop(now + 0.26);
-    } catch (e) {}
+    } catch (e) { }
   }
 
   // 질감별 물리 충돌음 (나무, 플라스틱, 쇠, 유리)
@@ -261,7 +262,7 @@ class SoundFX {
           thud.stop(now + 0.07);
         }
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 
   // 안착음
@@ -288,7 +289,7 @@ class SoundFX {
 
       osc.start(now);
       osc.stop(now + 0.1);
-    } catch (e) {}
+    } catch (e) { }
   }
 
   // 결과 계산 완료 맑은 알림음 (Educational chime)
@@ -318,7 +319,7 @@ class SoundFX {
         osc.start(start);
         osc.stop(start + 0.35);
       });
-    } catch (e) {}
+    } catch (e) { }
   }
 }
 
@@ -357,7 +358,7 @@ class DiceEngine3D {
     this.restStableFrames = 0;
 
     // 규격 상수 (대형 아레나 & 1.5배 확대된 주사위)
-    this.DICE_SIZE = 3.6;
+    this.DICE_SIZE = 3.3;
     this.ARENA_DEPTH = 22;
     this.ARENA_WIDTH = 32;
     this.ARENA_CENTER_Z = -1.0;
@@ -398,22 +399,25 @@ class DiceEngine3D {
 
     this.world.addContactMaterial(
       new CANNON.ContactMaterial(diceMat, floorMat, {
-        friction: 0.45,
-        restitution: 0.45
+        // 주사위 ↔ 바닥
+        friction: 0.35,
+        restitution: 0.65
       })
     );
 
     this.world.addContactMaterial(
       new CANNON.ContactMaterial(diceMat, diceMat, {
-        friction: 0.3,
-        restitution: 0.55
+        // 주사위 ↔ 주사위
+        friction: 0.25,
+        restitution: 0.65
       })
     );
 
     this.world.addContactMaterial(
       new CANNON.ContactMaterial(diceMat, wallMat, {
-        friction: 0.25,
-        restitution: 0.65
+        // 주사위 ↔ 벽
+        friction: 0.2,
+        restitution: 0.75
       })
     );
 
@@ -433,7 +437,7 @@ class DiceEngine3D {
     const ceilingBody = new CANNON.Body({ mass: 0 });
     ceilingBody.addShape(ceilingShape);
     ceilingBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI / 2);
-    ceilingBody.position.set(0, 38, 0);
+    ceilingBody.position.set(0, 30, 0);
     this.world.addBody(ceilingBody);
 
     this.updatePhysicsWalls();
@@ -716,7 +720,7 @@ class DiceEngine3D {
         return new THREE.MeshStandardMaterial({
           map: textures[num],
           roughness: 0.24,
-          metalness: 0.88
+          metalness: 0.3
         });
       } else if (matType === 'glass') {
         return new THREE.MeshStandardMaterial({
@@ -779,6 +783,29 @@ class DiceEngine3D {
       mesh.castShadow = true;
       mesh.receiveShadow = true;
 
+      // 충전 에너지 조명
+      const chargeLight = new THREE.PointLight(0x818cf8, 0, 10);
+      chargeLight.position.set(0, 1.5, 0);
+      mesh.add(chargeLight);
+
+      // 바닥 에너지 링
+      const chargeRing = new THREE.Mesh(
+        new THREE.RingGeometry(1.9, 2.15, 48),
+        new THREE.MeshBasicMaterial({
+          color: 0x818cf8,
+          transparent: true,
+          opacity: 0,
+          side: THREE.DoubleSide,
+          depthWrite: false
+        })
+      );
+
+      chargeRing.rotation.x = -Math.PI / 2;
+      chargeRing.position.y = 0.03;
+      chargeRing.visible = false;
+
+      this.scene.add(chargeRing);
+
       const edgeLines = new THREE.LineSegments(edgesGeo, edgeMaterial);
       mesh.add(edgeLines);
       this.scene.add(mesh);
@@ -806,12 +833,12 @@ class DiceEngine3D {
         let contactVel = 2.0;
         try {
           contactVel = Math.abs(e.contact.getImpactVelocityAlongNormal());
-        } catch (err) {}
+        } catch (err) { }
 
         if (contactVel > 0.8) {
           sfx.playCollision(hitType, contactVel);
           if (hitType === 'floor' && contactVel > 5 && 'vibrate' in navigator) {
-            try { navigator.vibrate(10); } catch (err) {}
+            try { navigator.vibrate(10); } catch (err) { }
           }
         }
       });
@@ -822,6 +849,8 @@ class DiceEngine3D {
         index: i,
         mesh,
         body,
+        chargeLight,
+        chargeRing,
         value: 1,
         active: false,
         alignAnim: null
@@ -881,11 +910,45 @@ class DiceEngine3D {
   getActiveDice() {
     return this.diceObjects.filter((d) => d.active);
   }
+  // 주사위 힘 모으기 시작
+  startCharge() {
+    if (state.isRolling || state.isCharging) return;
 
+    state.isCharging = true;
+    this.chargeStartTime = performance.now();
+
+    elements.diceArena.classList.add('charging');
+    elements.rollBtn.classList.add('charging');
+
+    elements.arenaHint.classList.remove('hidden');
+    elements.arenaHint.querySelector('span').textContent = '힘을 모으는 중... 손을 떼면 던져집니다!';
+
+    sfx.init();
+  }
+
+  // 손을 떼면 던지기
+  releaseCharge() {
+    if (!state.isCharging || state.isRolling) return;
+
+    const holdTime = performance.now() - this.chargeStartTime;
+
+    // 최대 1.2초까지 힘 충전
+    const chargePower = Math.min(holdTime / 1200, 1);
+
+    // 최소 힘 35%, 최대 힘 100%
+    const power = 0.35 + chargePower * 0.65;
+
+    state.isCharging = false;
+
+    elements.diceArena.classList.remove('charging');
+    elements.rollBtn.classList.remove('charging');
+
+    this.rollSingle(power);
+  }
   // ----------------------------------------
   // 1번 굴리기 실행 (Single Roll)
   // ----------------------------------------
-  rollSingle() {
+  rollSingle(power = 1) {
     if (state.isRolling) return;
 
     state.isRolling = true;
@@ -895,7 +958,6 @@ class DiceEngine3D {
     this.rollStartTime = performance.now();
 
     elements.rollBtn.disabled = true;
-    elements.continuousBtn.disabled = true;
     elements.statusIndicator.classList.add('rolling');
     elements.arenaHint.classList.add('hidden');
 
@@ -911,62 +973,101 @@ class DiceEngine3D {
     this.pointLight.intensity = 2.0;
     setTimeout(() => { this.pointLight.intensity = 0; }, 120);
 
-    this.applyImpulseToAll();
+    this.applyImpulseFromCurrent(power);
   }
 
   // ----------------------------------------
   // 연속 굴리기 시작 (Continuous Roll Start)
   // ----------------------------------------
-  startContinuousRoll() {
-    state.isRolling = true;
-    state.isContinuous = true;
-    this.isSettling = false;
-    this.restStableFrames = 0;
-    this.rollStartTime = performance.now();
+  // startContinuousRoll() {
+  //   state.isRolling = true;
+  //   state.isContinuous = true;
+  //   this.isSettling = false;
+  //   this.restStableFrames = 0;
+  //   this.rollStartTime = performance.now();
 
-    // UI 상태: 연속 굴리기 -> 멈추기 버튼 전환
-    elements.rollBtn.disabled = true;
-    elements.continuousBtn.classList.add('stopping');
-    elements.continuousBtn.querySelector('.btn-text').textContent = '멈추기';
-    elements.continuousBtn.querySelector('.icon-play').style.display = 'none';
-    elements.continuousBtn.querySelector('.icon-stop').style.display = 'inline-block';
+  //   // UI 상태: 연속 굴리기 -> 멈추기 버튼 전환
+  //   elements.rollBtn.disabled = true;
+  //   elements.continuousBtn.classList.add('stopping');
+  //   elements.continuousBtn.querySelector('.btn-text').textContent = '멈추기';
+  //   elements.continuousBtn.querySelector('.icon-play').style.display = 'none';
+  //   elements.continuousBtn.querySelector('.icon-stop').style.display = 'inline-block';
 
-    elements.statusIndicator.classList.add('rolling');
-    elements.arenaHint.classList.add('hidden');
+  //   elements.statusIndicator.classList.add('rolling');
+  //   elements.arenaHint.classList.add('hidden');
 
-    elements.resultNumber.classList.remove('pop');
-    elements.resultNumber.classList.add('rolling');
-    elements.resultNumber.textContent = '...';
+  //   elements.resultNumber.classList.remove('pop');
+  //   elements.resultNumber.classList.add('rolling');
+  //   elements.resultNumber.textContent = '...';
 
-    if (elements.mainResultBox) {
-      elements.mainResultBox.classList.remove('reveal');
-    }
+  //   if (elements.mainResultBox) {
+  //     elements.mainResultBox.classList.remove('reveal');
+  //   }
 
-    sfx.playThrow();
-    this.pointLight.intensity = 2.0;
-    setTimeout(() => { this.pointLight.intensity = 0; }, 120);
+  //   sfx.playThrow();
+  //   this.pointLight.intensity = 2.0;
+  //   setTimeout(() => { this.pointLight.intensity = 0; }, 120);
 
-    this.applyImpulseToAll();
-  }
+  //   this.applyImpulseFromCurrent();
+
+  // }
 
   // ----------------------------------------
   // 연속 굴리기 멈추기 (Stop Continuous Roll)
   // ----------------------------------------
-  stopContinuousRoll() {
-    if (!state.isContinuous) return;
+  // stopContinuousRoll() {
+  //   if (!state.isContinuous) return;
 
-    state.isContinuous = false;
+  //   // 연속 굴리기 종료
+  //   state.isContinuous = false;
 
-    // UI 상태: 멈추기 -> 연속 굴리기 버튼 복원
-    elements.continuousBtn.classList.remove('stopping');
-    elements.continuousBtn.querySelector('.btn-text').textContent = '연속 굴리기';
-    elements.continuousBtn.querySelector('.icon-play').style.display = 'inline-block';
-    elements.continuousBtn.querySelector('.icon-stop').style.display = 'none';
+  //   // 마지막 굴리기 기준 시간 초기화
+  //   this.rollStartTime = performance.now();
+  //   this.restStableFrames = 0;
+  //   this.isSettling = false;
 
-    // 멈추는 시점부터 감속 단계 시작
-    this.rollStartTime = performance.now();
-    this.restStableFrames = 0;
-  }
+  //   // UI 복원
+  //   elements.continuousBtn.classList.remove('stopping');
+  //   elements.continuousBtn.querySelector('.btn-text').textContent = '연속 굴리기';
+  //   elements.continuousBtn.querySelector('.icon-play').style.display = 'inline-block';
+  //   elements.continuousBtn.querySelector('.icon-stop').style.display = 'none';
+
+  //   // 마지막으로 한 번 더 강하게 튀어 오르며 회전
+  //   const activeDice = this.getActiveDice();
+
+  //   activeDice.forEach((d) => {
+  //     if (d.alignAnim) cancelAnimationFrame(d.alignAnim);
+  //     d.alignAnim = null;
+
+  //     d.body.linearDamping = 0.08;
+  //     d.body.angularDamping = 0.1;
+
+  //     const angle = Math.random() * Math.PI * 2;
+  //     const speed = 8 + Math.random() * 5;
+
+  //     d.body.velocity.set(
+  //       Math.cos(angle) * speed,
+  //       15 + Math.random() * 5,
+  //       Math.sin(angle) * speed
+  //     );
+
+  //     d.body.angularVelocity.set(
+  //       (Math.random() - 0.5) * 65,
+  //       (Math.random() - 0.5) * 65,
+  //       (Math.random() - 0.5) * 65
+  //     );
+
+  //     d.body.wakeUp();
+  //   });
+
+  //   // 마지막 던지기 효과음
+  //   sfx.playThrow();
+
+  //   this.pointLight.intensity = 2.0;
+  //   setTimeout(() => {
+  //     this.pointLight.intensity = 0;
+  //   }, 120);
+  // }
 
   // 모든 활성 주사위에 초기 3D 물리 솟구침 및 강한 회전 부여
   applyImpulseToAll() {
@@ -977,24 +1078,73 @@ class DiceEngine3D {
       if (d.alignAnim) cancelAnimationFrame(d.alignAnim);
       d.alignAnim = null;
 
-      d.body.linearDamping = 0.12;
-      d.body.angularDamping = 0.15;
+      // 초기 뎀핑을 약간 낮춰 (감쇠가 늦어짐)
+      d.body.linearDamping = 0.10;
+      d.body.angularDamping = 0.12;
 
+      // 위치 재배치 유지 (기존 로직)
       const spreadX = (i - (count - 1) / 2) * 2.2;
-      d.body.position.set(spreadX + (Math.random() - 0.5) * 1.5, 3.2 + Math.random() * 2.5, (Math.random() - 0.5) * 2);
+      d.body.position.set(
+        spreadX + (Math.random() - 0.5) * 1.5,
+        3.2 + Math.random() * 2.5,
+        (Math.random() - 0.5) * 2
+      );
 
-      const speedY = 16 + Math.random() * 8;
+      // 강한 임펄스 (역동적 구름)
+      const speedY = 20 + Math.random() * 10;          // 크게 위로
       const angle = Math.random() * Math.PI * 2;
-      const speedHoriz = 6 + Math.random() * 8;
+      const speedHoriz = 12 + Math.random() * 8;
+      const speedX = Math.cos(angle) * speedHoriz;
+      const speedZ = Math.sin(angle) * speedHoriz;
+      d.body.velocity.set(speedX, speedY, speedZ);
+
+      // 회전도 크게
+      const spinX = (Math.random() - 0.5) * 80;
+      const spinY = (Math.random() - 0.5) * 80;
+      const spinZ = (Math.random() - 0.5) * 80;
+      d.body.angularVelocity.set(spinX, spinY, spinZ);
+    });
+  }
+  // 현재 위치에서 강하게 튀어 오르며 회전
+  applyImpulseFromCurrent(power = 1) {
+    const activeDice = this.getActiveDice();
+
+    activeDice.forEach((d, i) => {
+      if (d.alignAnim) cancelAnimationFrame(d.alignAnim);
+      d.alignAnim = null;
+
+      // 초반에는 감쇠를 최소화해서 회전 유지
+      d.body.linearDamping = 0.04;
+      d.body.angularDamping = 0.04;
+
+      // 주사위마다 다른 방향으로 발사
+      const angle = Math.random() * Math.PI * 2;
+      const speedHoriz = (7 + Math.random() * 5) * (0.75 + power * 0.5);
+
       const speedX = Math.cos(angle) * speedHoriz;
       const speedZ = Math.sin(angle) * speedHoriz;
 
+
+      // 충전 정도에 따라 상승력 조절
+      const speedY = (13 + Math.random() * 4) * (0.8 + power * 0.45);
+
       d.body.velocity.set(speedX, speedY, speedZ);
 
-      const spinX = (Math.random() - 0.5) * 65;
-      const spinY = (Math.random() - 0.5) * 65;
-      const spinZ = (Math.random() - 0.5) * 65;
-      d.body.angularVelocity.set(spinX, spinY, spinZ);
+      // 회전력도 충전 정도에 따라 조절
+      const spinPower = (45 + Math.random() * 35) * (0.7 + power * 0.6);
+
+      d.body.angularVelocity.set(
+        (Math.random() - 0.5) * spinPower,
+        (Math.random() - 0.5) * spinPower,
+        (Math.random() - 0.5) * spinPower
+      );
+
+      // 회전 방향에 랜덤성 추가
+      d.body.angularVelocity.x += (Math.random() - 0.5) * 25;
+      d.body.angularVelocity.z += (Math.random() - 0.5) * 25;
+
+      // 물리 엔진에 즉시 반영
+      d.body.wakeUp();
     });
   }
 
@@ -1030,7 +1180,7 @@ class DiceEngine3D {
     }
 
     // 8프레임 연속 안정적 정지 or 최대 2.5초 경과 시 안착 확정
-    if (this.restStableFrames >= 8 || elapsed > 2500) {
+    if (this.restStableFrames >= 8 || elapsed > 3500) {
       this.isSettling = true;
       this.finishRoll();
     }
@@ -1071,7 +1221,6 @@ class DiceEngine3D {
       state.isRolling = false;
       this.isSettling = false;
       elements.rollBtn.disabled = false;
-      elements.continuousBtn.disabled = false;
       elements.statusIndicator.classList.remove('rolling');
 
       renderResult(results);
@@ -1152,13 +1301,15 @@ class DiceEngine3D {
         d.body.angularDamping = 0.1;
       });
     } else if (state.isRolling) {
-      // 멈춤/단일 굴리기 시 1초 이후 서서히 댐핑을 높여 자연스러운 안착 유도
       const elapsed = performance.now() - this.rollStartTime;
-      if (elapsed > 1000) {
-        const factor = Math.min(1.0, (elapsed - 1000) / 900);
+
+      // 마지막 튀김과 회전을 충분히 보여준 뒤 감속
+      if (elapsed > 1300) {
+        const factor = Math.min(1.0, (elapsed - 1300) / 1200);
+
         activeDice.forEach((d) => {
-          d.body.linearDamping = 0.15 + factor * 0.45;
-          d.body.angularDamping = 0.18 + factor * 0.5;
+          d.body.linearDamping = 0.08 + factor * 0.65;
+          d.body.angularDamping = 0.1 + factor * 0.75;
         });
       }
 
@@ -1167,9 +1318,48 @@ class DiceEngine3D {
 
     // 물리 Body 위치/회전을 Three.js Mesh에 복사
     this.diceObjects.forEach((d) => {
-      if (d.active) {
-        d.mesh.position.copy(d.body.position);
-        d.mesh.quaternion.copy(d.body.quaternion);
+      if (!d.active) return;
+
+      const now = performance.now();
+
+      // 기본 위치 및 회전 동기화
+      d.mesh.position.copy(d.body.position);
+      d.mesh.quaternion.copy(d.body.quaternion);
+
+      if (state.isCharging) {
+        const elapsed = now - this.chargeStartTime;
+        const charge = Math.min(elapsed / 1200, 1);
+
+        // 1. 서서히 떠오르는 효과
+        const lift = charge * 0.9;
+        const floating = Math.sin(now * 0.006) * 0.06 * charge;
+
+        d.mesh.position.y += lift + floating;
+
+        // 2. 에너지 조명 효과
+        d.chargeLight.intensity = charge * 2.5;
+        d.chargeLight.distance = 5 + charge * 5;
+
+        // 3. 바닥 에너지 링
+        d.chargeRing.visible = true;
+        d.chargeRing.position.set(
+          d.body.position.x,
+          0.04,
+          d.body.position.z
+        );
+
+        const ringScale = 0.7 + charge * 0.6;
+        d.chargeRing.scale.set(ringScale, ringScale, ringScale);
+
+        d.chargeRing.material.opacity = charge * 0.65;
+
+        // 은은하게 회전
+        d.chargeRing.rotation.z = now * 0.0008;
+
+      } else {
+        // 충전 종료 시 원상복구
+        d.chargeLight.intensity = 0;
+        d.chargeRing.visible = false;
       }
     });
 
@@ -1291,7 +1481,7 @@ function clearHistory() {
 // 7. 주사위 개수 모드 전환 (1 ~ 5개)
 // ==========================================
 function setDiceCount(count) {
-  if (state.isRolling || state.diceCount === count) return;
+  if (state.isRolling || state.isCharging || state.diceCount === count) return;
   if (count < 1 || count > 5) return;
 
   state.diceCount = count;
@@ -1380,7 +1570,7 @@ function applyTheme(mode, save = true) {
   if (save) {
     try {
       localStorage.setItem('dice-theme', mode);
-    } catch (e) {}
+    } catch (e) { }
   }
 }
 
@@ -1388,7 +1578,7 @@ function initTheme() {
   let saved = 'system';
   try {
     saved = localStorage.getItem('dice-theme') || 'system';
-  } catch (e) {}
+  } catch (e) { }
   applyTheme(saved, false);
 
   if (window.matchMedia) {
@@ -1423,39 +1613,36 @@ function initEvents() {
       btn.addEventListener('click', () => setMaterial(key));
     }
   });
+  // 누르기 시작
+  const startDiceCharge = (e) => {
+    if (e.button !== undefined && e.button !== 0) return;
+    if (!diceEngine || state.isRolling || state.isCharging) return;
 
-  // 1번 굴리기 버튼
-  elements.rollBtn.addEventListener('click', () => {
-    sfx.init();
-    if (diceEngine) diceEngine.rollSingle();
-  });
+    e.preventDefault();
+    diceEngine.startCharge();
+  };
 
-  // 연속 굴리기 / 멈추기 버튼
-  elements.continuousBtn.addEventListener('click', () => {
-    sfx.init();
-    if (!diceEngine) return;
+  // 손을 떼면 던지기
+  const releaseDiceCharge = () => {
+    if (!diceEngine || !state.isCharging) return;
 
-    if (!state.isContinuous) {
-      // 연속 굴리기 시작
-      diceEngine.startContinuousRoll();
-    } else {
-      // 멈추기
-      diceEngine.stopContinuousRoll();
-    }
-  });
+    diceEngine.releaseCharge();
+  };
 
-  // 3D 아레나 화면 터치/클릭: 굴리는 중이 아닐 때는 1번 굴리기, 연속 굴리는 중일 때는 멈추기
-  elements.diceArena.addEventListener('click', (e) => {
+  // 굴리기 버튼
+  elements.rollBtn.addEventListener('pointerdown', startDiceCharge);
+
+  // 3D 아레나
+  elements.diceArena.addEventListener('pointerdown', (e) => {
     if (e.target.closest('button, [role=button]')) return;
-    sfx.init();
-    if (!diceEngine) return;
 
-    if (state.isContinuous) {
-      diceEngine.stopContinuousRoll();
-    } else if (!state.isRolling) {
-      diceEngine.rollSingle();
-    }
+    startDiceCharge(e);
   });
+
+  // 마우스 또는 터치에서 손을 떼면 던지기
+  window.addEventListener('pointerup', releaseDiceCharge);
+  window.addEventListener('pointercancel', releaseDiceCharge);
+
 
   // 사운드 토글
   elements.soundBtn.addEventListener('click', toggleSound);
@@ -1463,30 +1650,18 @@ function initEvents() {
   // 히스토리 비우기
   elements.clearHistoryBtn.addEventListener('click', clearHistory);
 
+
+  // 키보드 단축키
+
+
   // 키보드 단축키
   window.addEventListener('keydown', (e) => {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
-    if (e.code === 'Space' || e.code === 'Enter') {
-      if (document.activeElement && document.activeElement.tagName === 'BUTTON') return;
+    if (e.code === 'Space') {
       e.preventDefault();
-      sfx.init();
-      if (!diceEngine) return;
-
-      if (state.isContinuous) {
-        diceEngine.stopContinuousRoll();
-      } else if (!state.isRolling) {
-        diceEngine.rollSingle();
-      }
-    } else if (e.code === 'KeyR' || e.code === 'KeyC') {
-      // R 또는 C 키: 연속 굴리기 / 멈추기 토글
-      e.preventDefault();
-      sfx.init();
-      if (!diceEngine) return;
-      if (!state.isContinuous) {
-        diceEngine.startContinuousRoll();
-      } else {
-        diceEngine.stopContinuousRoll();
+      if (!e.repeat && diceEngine) {
+        diceEngine.startCharge();
       }
     } else if (e.code === 'ArrowRight' || e.code === 'ArrowUp') {
       e.preventDefault();
@@ -1505,10 +1680,24 @@ function initEvents() {
     }
   });
 
+  window.addEventListener('keyup', (e) => {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      if (diceEngine) diceEngine.releaseCharge();
+    }
+  });
+
+  // 창을 벗어나거나 포커스를 잃어도 충전 상태가 남지 않도록 처리
+  window.addEventListener('blur', () => {
+    if (diceEngine) diceEngine.releaseCharge();
+  });
+
   // 윈도우 리사이즈 대응
   window.addEventListener('resize', () => {
     if (diceEngine) diceEngine.resize();
   });
+
+
 }
 
 // ==========================================

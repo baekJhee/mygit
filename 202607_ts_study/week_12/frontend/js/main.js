@@ -24,7 +24,7 @@ function updateLiveClock() {
 	clockEl.textContent = `${hours}:${minutes}:${seconds}`;
 }
 setInterval(updateLiveClock, 1000);
-updateLiveClock();
+updateLiveClock(); ㅋ
 
 // 로그인 테스트 계정 선택 시 자동 입력
 const loginHint = document.querySelector('.login-hint');

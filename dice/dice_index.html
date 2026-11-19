@@ -65,19 +65,24 @@
         <div class="stage-options-bar">
           <!-- 모드 선택 탭 (1개 ~ 5개) -->
           <div class="mode-selector" role="tablist" aria-label="주사위 개수 선택">
-            <button id="mode-1" class="mode-btn" data-count="1" role="tab" aria-selected="false" aria-controls="dice-arena">
+            <button id="mode-1" class="mode-btn" data-count="1" role="tab" aria-selected="false"
+              aria-controls="dice-arena">
               <span>🎲 1</span>
             </button>
-            <button id="mode-2" class="mode-btn active" data-count="2" role="tab" aria-selected="true" aria-controls="dice-arena">
+            <button id="mode-2" class="mode-btn active" data-count="2" role="tab" aria-selected="true"
+              aria-controls="dice-arena">
               <span>🎲 2</span>
             </button>
-            <button id="mode-3" class="mode-btn" data-count="3" role="tab" aria-selected="false" aria-controls="dice-arena">
+            <button id="mode-3" class="mode-btn" data-count="3" role="tab" aria-selected="false"
+              aria-controls="dice-arena">
               <span>🎲 3</span>
             </button>
-            <button id="mode-4" class="mode-btn" data-count="4" role="tab" aria-selected="false" aria-controls="dice-arena">
+            <button id="mode-4" class="mode-btn" data-count="4" role="tab" aria-selected="false"
+              aria-controls="dice-arena">
               <span>🎲 4</span>
             </button>
-            <button id="mode-5" class="mode-btn" data-count="5" role="tab" aria-selected="false" aria-controls="dice-arena">
+            <button id="mode-5" class="mode-btn" data-count="5" role="tab" aria-selected="false"
+              aria-controls="dice-arena">
               <span>🎲 5</span>
             </button>
           </div>
@@ -103,36 +108,18 @@
         <div id="dice-arena" class="dice-arena" tabindex="0" role="region" aria-label="3D 주사위 필드 (클릭하여 던지기)">
           <div id="canvas-container" class="canvas-container"></div>
           <div id="arena-hint" class="arena-hint">
-            <span>화면을 터치/클릭하거나 스페이스바를 눌러 던지세요</span>
+            <span>화면을 누르고 있다가 손을 떼면 주사위가 던져집니다</span>
           </div>
         </div>
 
         <!-- 컨트롤 버튼 바 -->
         <div class="controls-bar">
-          <!-- 1번 굴리기 버튼 -->
-          <button id="roll-btn" class="roll-btn" type="button" aria-label="1번 굴리기">
+          <button id="roll-btn" class="roll-btn" type="button" aria-label="누르고 있다가 놓아 주사위 던지기">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
               stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+              <path d="M12 2v20M2 12h20" />
             </svg>
-            <span>1번 굴리기</span>
-          </button>
-
-          <!-- 연속 굴리기 / 멈추기 버튼 -->
-          <button id="continuous-btn" class="continuous-btn" type="button" aria-label="연속으로 굴리기">
-            <!-- 기본 상태 아이콘 (회전 루프) -->
-            <svg class="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 2l4 4-4 4"/>
-              <path d="M3 11v-1a4 4 0 0 1 4-4h14"/>
-              <path d="M7 22l-4-4 4-4"/>
-              <path d="M21 13v1a4 4 0 0 1-4 4H3"/>
-            </svg>
-            <!-- 멈추기 상태 아이콘 (스퀘어 정지) -->
-            <svg class="icon-stop" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-              <rect x="5" y="5" width="14" height="14" rx="2" />
-            </svg>
-            <span class="btn-text">연속 굴리기</span>
+            <span>누르고 있다가 놓기</span>
           </button>
 
           <!-- 사운드 토글 버튼 -->
@@ -196,7 +183,7 @@
 
     <!-- 푸터 팁 -->
     <footer class="app-footer">
-      <p>💡 팁: <kbd>Space</kbd> 키로 1번 굴리기, <kbd>R</kbd> 키로 연속 굴리기/멈추기 (방향키 ←/→ 로 개수 조절)</p>
+      <p>💡 팁: 화면 또는 버튼을 누르고 있다가 놓으면 주사위가 던져집니다. 방향키 ←/→ 로 개수를 조절할 수 있어요.</p>
     </footer>
   </div>
 
