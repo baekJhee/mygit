@@ -474,12 +474,24 @@ class DiceEngine3D {
   initGraphics() {
     const width = this.container.clientWidth;
     const height = this.container.clientHeight;
+    const isMobile = width <= 600;
 
     this.scene = new THREE.Scene();
     this.updateThemeColors();
 
-    this.camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 120);
-    this.camera.position.set(0, 27, 16);
+    this.camera = new THREE.PerspectiveCamera(
+      isMobile ? 48 : 40,
+      width / height,
+      0.1,
+      120
+    );
+
+    this.camera.position.set(
+      0,
+      isMobile ? 34 : 27,
+      isMobile ? 20 : 16
+    );
+
     this.camera.lookAt(0, 0, -1.0);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
@@ -1368,16 +1380,26 @@ class DiceEngine3D {
 
   resize() {
     if (!this.container || !this.renderer || !this.camera) return;
+
     const width = this.container.clientWidth;
     const height = this.container.clientHeight;
+    const isMobile = width <= 600;
 
     this.camera.aspect = width / height;
+    this.camera.fov = isMobile ? 48 : 40;
+
+    this.camera.position.set(
+      0,
+      isMobile ? 34 : 27,
+      isMobile ? 20 : 16
+    );
+
+    this.camera.lookAt(0, 0, -1.0);
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(width, height);
     this.updatePhysicsWalls();
   }
-}
 
 let diceEngine = null;
 
