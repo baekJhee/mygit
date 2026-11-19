@@ -1377,7 +1377,6 @@ class DiceEngine3D {
 
     this.renderer.render(this.scene, this.camera);
   }
-
   resize() {
     if (!this.container || !this.renderer || !this.camera) return;
 
@@ -1400,6 +1399,7 @@ class DiceEngine3D {
     this.renderer.setSize(width, height);
     this.updatePhysicsWalls();
   }
+}
 
 let diceEngine = null;
 
