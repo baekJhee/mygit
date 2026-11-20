@@ -43,7 +43,8 @@
     stickerTargetCount: CONFIG.DEFAULT_STICKER_COUNT,
     stickerTheme: 'star',
     soundEnabled: true,
-    groups: [] // [{ id: 1, name: '1모둠', stickers: [true, false, ...] }]
+    groups: [], // [{ id: 1, name: '1모둠', stickers: [true, false, ...] }]
+    uiTheme: 'basic'
   };
 
   // ==========================================
@@ -59,6 +60,7 @@
     soundIcon: document.getElementById('soundIcon'),
     resetAllStickersBtn: document.getElementById('resetAllStickersBtn'),
     openSettingsBtn: document.getElementById('openSettingsBtn'),
+    uiThemeGroup: document.getElementById('uiThemeGroup'),
 
     // 설정 모달
     settingsModal: document.getElementById('settingsModal'),
@@ -918,7 +920,23 @@
     DOM.soundIcon.textContent = state.soundEnabled ? '🔊' : '🔇';
     DOM.soundToggleBtn.querySelector('.btn-text').textContent = state.soundEnabled ? '소리 ON' : '소리 OFF';
   }
+  // 전체 화면 테마 변경
+  function setUiTheme(themeKey) {
+    if (!['basic', 'play'].includes(themeKey)) return;
 
+    state.uiTheme = themeKey;
+
+    // body에 테마 적용
+    document.body.dataset.uiTheme = themeKey;
+
+    // 선택 버튼 active 처리
+    DOM.uiThemeGroup.querySelectorAll('.ui-theme-btn').forEach(btn => {
+      btn.classList.toggle(
+        'active',
+        btn.dataset.theme === themeKey
+      );
+    });
+  }
   // ==========================================
   // 12. 유틸리티 함수 (이스케이프)
   // ==========================================
@@ -963,7 +981,13 @@
       const theme = btn.getAttribute('data-type');
       setStickerTheme(theme);
     });
+    // 화면 테마 선택
+    DOM.uiThemeGroup.addEventListener('click', (e) => {
+      const btn = e.target.closest('.ui-theme-btn');
+      if (!btn) return;
 
+      setUiTheme(btn.dataset.theme);
+    });
     // 6) 사운드 토글 버튼
     DOM.soundToggleBtn.addEventListener('click', toggleSound);
 
@@ -1012,6 +1036,8 @@
     state.stickerTheme = 'star';
     state.soundEnabled = true;
     state.groups = createDefaultGroups(state.groupCount, state.stickerTargetCount);
+    state.uiTheme = 'basic';
+    setUiTheme('basic');
 
     // 사운드 상태 UI 동기화
     DOM.soundIcon.textContent = state.soundEnabled ? '🔊' : '🔇';

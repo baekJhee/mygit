@@ -986,3 +986,195 @@ input[type="number"].input-error {
   width: 100vw;
   height: 100vh;
 }
+
+/* ==========================================
+   화면 테마 선택기
+========================================== */
+.ui-theme-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ui-theme-options {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background: #f1f5f9;
+  border-radius: 12px;
+}
+
+.ui-theme-btn {
+  border: 0;
+  background: transparent;
+  padding: 7px 12px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  transition: all .2s ease;
+  white-space: nowrap;
+}
+
+.ui-theme-btn.active {
+  background: #fff;
+  color: #4f46e5;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+}
+
+/* ==========================================
+   PLAY THEME - 초등학생용
+========================================== */
+body[data-ui-theme="play"] {
+  --primary-color: #ff9f43;
+  --primary-hover: #f58b27;
+  --primary-light: #fff0d9;
+
+  --bg-gradient: linear-gradient(135deg,
+      #fff8e8 0%,
+      #fff0f3 50%,
+      #eaf7ff 100%);
+
+  --card-bg: #fffefa;
+  --card-border: #f5dfbd;
+
+  --text-primary: #55483f;
+  --text-secondary: #827064;
+  --text-muted: #b5a394;
+
+  --radius-xs: 10px;
+  --radius-sm: 15px;
+  --radius-md: 22px;
+  --radius-lg: 26px;
+
+  --shadow-sm: 0 3px 8px rgba(191, 148, 105, .09);
+  --shadow-md: 0 6px 14px rgba(191, 148, 105, .13);
+}
+
+/* 전체 배경 */
+body[data-ui-theme="play"] {
+  background-color: #fff8e8;
+}
+
+/* 헤더 */
+body[data-ui-theme="play"] .app-header {
+  border: 2px solid #f5dfbd;
+  border-radius: 22px;
+  box-shadow: 0 5px 15px rgba(191, 148, 105, .1);
+}
+
+/* 로고 */
+body[data-ui-theme="play"] .logo-badge {
+  background: #fff0b9;
+  color: #d58a31;
+}
+
+/* 제목 */
+body[data-ui-theme="play"] .app-title {
+  color: #6b5143;
+}
+
+/* 모둠 카드 */
+body[data-ui-theme="play"] .group-card {
+  border: 2px solid #f4dfc7;
+  border-radius: 22px;
+  box-shadow: 0 5px 12px rgba(191, 148, 105, .1);
+}
+
+body[data-ui-theme="play"] .group-card::before {
+  height: 8px;
+  border-radius: 20px 20px 0 0;
+}
+
+/* 모둠 이름 */
+body[data-ui-theme="play"] .group-name {
+  color: #654f42;
+}
+
+/* 모둠 번호 */
+body[data-ui-theme="play"] .group-badge {
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+}
+
+/* 스티커 보드 */
+body[data-ui-theme="play"] .sticker-board {
+  background: #fff9ed;
+  border: 2px dashed #edcf9e;
+  border-radius: 18px;
+}
+
+/* 빈 스티커 슬롯 */
+body[data-ui-theme="play"] .sticker-slot.empty {
+  background: #fffefa;
+  border: 2px dashed #e8d8c4;
+  border-radius: 15px;
+}
+
+/* 붙어 있는 스티커 */
+body[data-ui-theme="play"] .sticker-slot.attached {
+  background: #fff;
+  border: 2px solid #f5e6d4;
+  border-radius: 15px;
+  box-shadow: 0 3px 7px rgba(174, 133, 94, .15);
+}
+
+/* 버튼 */
+body[data-ui-theme="play"] .btn-primary {
+  background: #ffad5c;
+  color: #fff;
+  border-radius: 13px;
+  box-shadow: 0 3px 0 #e58b3c;
+}
+
+body[data-ui-theme="play"] .btn-primary:hover {
+  background: #ff9d42;
+}
+
+body[data-ui-theme="play"] .btn-secondary {
+  background: #fff5e7;
+  border: 1px solid #f0d7b6;
+  color: #80634d;
+  border-radius: 13px;
+}
+
+/* 모둠별 액션 */
+body[data-ui-theme="play"] .btn-mini-fill {
+  background: #e4f7e9;
+  border-color: #b8e6c4;
+  color: #41945a;
+  border-radius: 10px;
+}
+
+body[data-ui-theme="play"] .btn-mini-clear {
+  border-radius: 10px;
+}
+
+/* 테마 선택 버튼 */
+body[data-ui-theme="play"] .ui-theme-options {
+  background: #fff0d9;
+}
+
+body[data-ui-theme="play"] .ui-theme-btn.active {
+  background: #fff;
+  color: #e58b3c;
+  box-shadow: 0 2px 5px rgba(174, 133, 94, .15);
+}
+
+/* 스티커 모양 선택기 */
+body[data-ui-theme="play"] .sticker-selector {
+  background: #fff5e7;
+  border-color: #f0dfc7;
+}
+
+body[data-ui-theme="play"] .theme-sticker-btn.active {
+  outline-color: #ffad5c;
+}
+
+/* 모달 */
+body[data-ui-theme="play"] .modal-card {
+  border: 2px solid #f4dfc7;
+  border-radius: 24px;
+}
