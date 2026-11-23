@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6fb">
+  <title>그룹 스티커 보드</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-theme="basic">
+  <main class="app" id="app">
+    <header class="toolbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40">
+            <path d="M20 3.5 23.8 15l11.7 1.2-8.9 7.7 2.7 11.4L20 29.1 10.7 35.3l2.7-11.4-8.9-7.7L16.2 15 20 3.5Z"
+              fill="currentColor" />
+            <circle cx="31.5" cy="7" r="2" fill="currentColor" />
+          </svg></span>
+        <div><strong>스티커 보드</strong><small>함께 모으는 오늘의 칭찬</small></div>
+      </div>
+      <div class="toolbar-actions">
+        <div class="theme-switch" role="group" aria-label="테마 선택"><button class="theme-btn active" data-theme="basic"
+            aria-pressed="true">베이직</button><button class="theme-btn" data-theme="play"
+            aria-pressed="false">플레이</button></div>
+        <button class="tool-btn" id="clearAllBtn">모두 비우기</button><button class="tool-btn" id="settingsBtn">모둠
+          설정</button>
+        <div class="sticker-picker" role="group" aria-label="스티커 선택"><span>스티커</span><button
+            class="sticker-choice selected" data-sticker="star" aria-label="별 스티커" aria-pressed="true">★</button><button
+            class="sticker-choice" data-sticker="smile" aria-label="웃는 얼굴 스티커" aria-pressed="false">☻</button><button
+            class="sticker-choice" data-sticker="heart" aria-label="하트 스티커" aria-pressed="false">♥</button><button
+            class="sticker-choice" data-sticker="check" aria-label="체크 스티커" aria-pressed="false">✓</button></div>
+      </div>
+    </header>
+    <section class="board-area">
+      <div class="board-heading">
+        <div><span class="eyebrow">TODAY'S TEAM CHALLENGE</span>
+          <h1>우리 모둠의 반짝이는 순간</h1>
+        </div>
+        <p>빈 칸을 누르면 스티커가 차곡차곡 붙어요.</p>
+      </div>
+      <div class="progress-summary" id="progressSummary" aria-live="polite"></div>
+      <section class="groups" id="groups" aria-label="모둠별 스티커 보드"></section>
+      <div class="board-foot"><span class="foot-spark">✦</span> 서로 도와주고, 함께 도전해요!</div>
+    </section>
+  </main>
+  <div class="modal-backdrop show" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <form class="dialog" id="settingsForm">
+      <div class="dialog-icon">✦</div>
+      <p class="dialog-kicker">BOARD SETUP</p>
+      <h2 id="settingsTitle">모둠 설정</h2>
+      <p class="dialog-desc">오늘 함께할 모둠과 스티커 개수를 정해 주세요.</p>
+      <label class="number-field"><span>모둠 수</span>
+        <div class="stepper"><button type="button" data-step="groups" data-delta="-1">−</button><input id="groupCount"
+            type="number" min="2" max="10" value="3"><button type="button" data-step="groups" data-delta="1">＋</button>
+        </div>
+      </label>
+      <label class="number-field"><span>스티커 수</span>
+        <div class="stepper"><button type="button" data-step="stickers" data-delta="-1">−</button><input
+            id="stickerCount" type="number" min="5" max="20" value="5"><button type="button" data-step="stickers"
+            data-delta="1">＋</button></div>
+      </label>
+      <p class="field-hint">모둠은 2~10개, 스티커는 5~20개까지 설정할 수 있어요.</p>
+      <p class="form-error" id="formError" role="alert"></p>
+      <div class="dialog-actions"><button type="button" class="btn secondary" id="cancelSettings">취소</button><button
+          type="submit" class="btn primary">보드 만들기</button></div>
+    </form>
+  </div>
+  <div class="modal-backdrop" id="noticeModal" role="dialog" aria-modal="true" aria-labelledby="noticeTitle">
+    <div class="dialog notice-dialog">
+      <div class="notice-symbol">!</div>
+      <h2 id="noticeTitle">잠깐만요!</h2>
+      <p id="noticeMessage"></p><button class="btn primary" id="noticeOk">확인</button>
+    </div>
+  </div>
+  <div class="modal-backdrop event-backdrop" id="eventModal" role="dialog" aria-modal="true"
+    aria-labelledby="eventTitle">
+    <div class="event-card"><button class="event-close" id="closeEvent" aria-label="이벤트 닫기">×</button><span
+        class="event-confetti">✦　✧　✦</span>
+      <p class="event-kicker">SURPRISE MOMENT</p>
+      <h2 id="eventTitle">칭찬 타임!</h2>
+      <p class="event-team" id="eventTeam">2모둠을 칭찬합니다!</p>
+      <p class="event-message" id="eventMessage">서로 도와주며 열심히 참여했어요.</p>
+      <div class="event-illustration">👏　✨　🙌</div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+  <script src="script.js"></script>
+</body>
+
+</html>
