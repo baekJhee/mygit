@@ -288,7 +288,7 @@ body::after {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 1360px;
+  /* max-width: 1360px; */
   margin: 0 auto;
 }
 
@@ -590,7 +590,7 @@ body::after {
 
 .canvas-container canvas {
   width: 100% !important;
-  height: 100% !important;
+  height: auto !important;
   display: block;
 }
 
