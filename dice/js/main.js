@@ -357,10 +357,10 @@ class DiceEngine3D {
     this.rollStartTime = 0;
     this.restStableFrames = 0;
 
-    // 규격 상수 (대형 아레나 & 1.5배 확대된 주사위)
+    // 규격 상수
     this.DICE_SIZE = 3.3;
-    this.ARENA_DEPTH = 22;
-    this.ARENA_WIDTH = 32;
+    this.ARENA_DEPTH = 20;
+    this.ARENA_WIDTH = 45;
     this.ARENA_CENTER_Z = -1.0;
 
     // Face Normals 매핑: [+X:2, -X:5, +Y:1, -Y:6, +Z:3, -Z:4]
@@ -377,6 +377,7 @@ class DiceEngine3D {
   init() {
     this.initPhysics();
     this.initGraphics();
+    this.createArenaOutline(); // 주사위 판 범위
     this.initAllMaterials();
     this.createDicePool();
     this.updateDiceCount(state.diceCount);
@@ -720,8 +721,16 @@ class DiceEngine3D {
   }
 
   buildMaterialsFor(matType, textures) {
+    const loader = new THREE.TextureLoader();
     const faceOrder = [2, 5, 1, 6, 3, 4];
+
     return faceOrder.map((num) => {
+      const texture = loader.load(
+        `images/dice/dice_${num}.svg`
+      );
+
+      texture.colorSpace = THREE.SRGBColorSpace;
+
       if (matType === 'wood') {
         return new THREE.MeshStandardMaterial({
           map: textures[num],
@@ -751,7 +760,6 @@ class DiceEngine3D {
       }
     });
   }
-
   // 질감 변경 적용
   setMaterial(type) {
     state.material = type;
@@ -1040,7 +1048,7 @@ class DiceEngine3D {
 
       // 주사위마다 다른 방향으로 발사
       const angle = Math.random() * Math.PI * 2;
-      const speedHoriz = (7 + Math.random() * 5) * (0.75 + power * 0.5);
+      const speedHoriz = (6 + Math.random() * 3) * (0.75 + power * 0.5);
 
       const speedX = Math.cos(angle) * speedHoriz;
       const speedZ = Math.sin(angle) * speedHoriz;
@@ -1304,6 +1312,33 @@ class DiceEngine3D {
     this.renderer.setSize(width, height);
     this.updatePhysicsWalls();
   }
+
+
+  createArenaOutline() {
+    const geometry = new THREE.BoxGeometry(
+      this.ARENA_WIDTH,
+      0.1,
+      this.ARENA_DEPTH
+    );
+
+    const edges = new THREE.EdgesGeometry(geometry);
+
+    const material = new THREE.LineBasicMaterial({
+      color: 0x00ff00,
+      transparent: true,
+      opacity: 0.8
+    });
+
+    this.arenaOutline = new THREE.LineSegments(edges, material);
+
+    this.arenaOutline.position.set(
+      0,
+      0,
+      this.ARENA_CENTER_Z
+    );
+
+    this.scene.add(this.arenaOutline);
+  }
 }
 
 let diceEngine = null;
@@ -1390,7 +1425,7 @@ function renderHistory() {
     if (item.count === 1) {
       li.innerHTML = `<span>🎲</span> <strong>${item.values[0]}</strong>`;
     } else {
-      const diceIcons = '🎲'.repeat(Math.min(item.count, 3)) + (item.count > 3 ? `x${item.count}` : '');
+      const diceIcons = '🎲'.repeat(Math.min(item.count, 1)) + (item.count > 1 ? `x${item.count}` : '');
       const detail = item.values.join('+');
       li.innerHTML = `<span>${diceIcons}</span> <strong>${item.sum}</strong> <small>(${detail})</small>`;
     }

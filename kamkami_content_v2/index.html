@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>깜깜이 | 수업 집중 도구</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/app.js" defer></script>
+</head>
+
+<body>
+  <main class="app" id="app">
+    <header class="topbar">
+      <nav class="mode-tabs" aria-label="화면 모드">
+        <button class="mode-tab is-active" type="button" data-mode="cover" aria-pressed="true">깜깜이</button>
+        <button class="mode-tab" type="button" data-mode="attention" aria-pressed="false">주목 시키기</button>
+
+      </nav>
+      <div class="flexBox">
+        <div class="attention-options" id="attentionOptions" hidden>
+          <button class="option-btn" id="textOpenBtn" type="button" aria-label="텍스트 변경" title="텍스트 변경">T</button>
+          <button class="option-btn" id="backgroundOpenBtn" type="button" aria-label="배경 변경" title="배경 변경">▧</button>
+          <button class="option-btn sound-btn" id="soundToggleBtn" type="button" aria-label="소리 켜기"
+            title="소리 켜기">♫</button>
+        </div>
+        <button type="button" id="fullscreenBtn" aria-label="전체화면 켜기">
+          ⛶
+        </button>
+      </div>
+    </header>
+
+    <section class="cover-screen" id="coverScreen">
+      <div class="cover-color-panel">
+        <p class="palette-title">배경색 선택</p>
+        <div class="color-palette" id="coverPalette" aria-label="깜깜이 배경색">
+          <button class="color-chip is-selected" type="button" data-color="#000000" style="--chip:#000000"
+            aria-label="검정" title="검정"></button>
+          <button class="color-chip" type="button" data-color="#202632" style="--chip:#202632" aria-label="차콜"
+            title="차콜"></button>
+          <button class="color-chip" type="button" data-color="#26364a" style="--chip:#26364a" aria-label="네이비"
+            title="네이비"></button>
+          <button class="color-chip" type="button" data-color="#4b304d" style="--chip:#4b304d" aria-label="퍼플"
+            title="퍼플"></button>
+          <button class="color-chip" type="button" data-color="#285447" style="--chip:#285447" aria-label="그린"
+            title="그린"></button>
+          <label class="custom-color" title="원하는 색상 선택">
+            <input type="color" id="customCoverColor" value="#000000" aria-label="사용자 지정 색상">
+            <span>＋</span>
+          </label>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="attention-screen" id="attentionScreen" hidden>
+      <div class="attention-center">
+        <p class="attention-message" id="attentionMessage">여기보세요!</p>
+        <span class="spark spark-left">✳</span>
+        <span class="spark spark-right">✦</span>
+      </div>
+    </section>
+
+    <footer class="cover-guide">
+      <span><kbd>F</kbd> 전체 화면</span>
+      <i></i>
+      <span><kbd>화면 클릭</kbd> 전체화면 종료</span>
+
+    </footer>
+  </main>
+
+  <!-- 텍스트 입력 모달 -->
+  <div class="modal-backdrop" id="textModal" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="textModalTitle">
+      <button class="modal-close" type="button" data-close aria-label="닫기">×</button>
+      <span class="modal-eyebrow">TEXT SETTINGS</span>
+      <h2 id="textModalTitle">주목 문구 변경</h2>
+      <p class="modal-desc">화면에 보여줄 문구를 입력해 주세요.</p>
+      <label class="field-label" for="messageInput">안내 문구</label>
+      <input class="text-input" id="messageInput" type="text" maxlength="40" value="여기보세요!" placeholder="문구를 입력해 주세요">
+      <div class="modal-actions">
+        <button class="btn btn-light" type="button" data-close>취소</button>
+        <button class="btn btn-primary" id="applyTextBtn" type="button">적용하기</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- 배경 선택 모달 -->
+  <div class="modal-backdrop" id="backgroundModal" hidden>
+    <section class="modal background-modal" role="dialog" aria-modal="true" aria-labelledby="backgroundModalTitle">
+      <button class="modal-close" type="button" data-close aria-label="닫기">×</button>
+      <span class="modal-eyebrow">BACKGROUND</span>
+      <h2 id="backgroundModalTitle">배경 변경</h2>
+      <p class="modal-desc">주목 화면에 사용할 배경을 선택해 주세요.</p>
+      <div class="background-grid" id="attentionPalette">
+        <button class="background-choice bg-cream is-selected" type="button" data-bg="cream">
+          <span>크림</span>
+        </button>
+        <button class="background-choice bg-sky" type="button" data-bg="sky">
+          <span>스카이</span>
+        </button>
+        <button class="background-choice bg-lavender" type="button" data-bg="lavender">
+          <span>라벤더</span>
+        </button>
+        <button class="background-choice bg-mint" type="button" data-bg="mint">
+          <span>민트</span>
+        </button>
+        <button class="background-choice bg-night" type="button" data-bg="night">
+          <span>나이트</span>
+        </button>
+
+        <!-- 사용자 이미지 추가 -->
+        <button class="background-choice bg-custom" id="customBackgroundBtn" data-bg="custom" type="button">
+          <b>＋</b>
+          <span>내 배경 추가</span>
+        </button>
+      </div>
+
+      <!-- 이미지 파일 -->
+      <input type="file" id="imageInput" accept="image/*" hidden>
+
+      <div class="modal-actions">
+        <button class="btn btn-light" type="button" data-close>닫기</button>
+        <button class="btn btn-primary" id="applyBackgroundBtn" type="button">배경 적용</button>
+      </div>
+    </section>
+    <input type="file" id="imageInput" accept="image/*" hidden>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+
+</html>

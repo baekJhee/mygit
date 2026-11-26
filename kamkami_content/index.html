@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>깜깜이 | 수업 집중 도구</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <div class="brand"><span class="brand-mark">✦</span><div><h1>깜깜이</h1><p>모두의 시선을 모으는 시간</p></div></div>
+      <span class="header-tip">수업 집중 도구</span>
+    </header>
+
+    <section class="stage-wrap">
+      <div class="stage stage-cover" id="stage">
+        <div class="stage-toolbar">
+          <div class="mode-switch" role="group" aria-label="화면 모드">
+            <button class="mode-btn is-active" data-mode="cover" type="button">화면 가리기</button>
+            <button class="mode-btn" data-mode="attention" type="button">주목 시키기</button>
+          </div>
+          <div class="toolbar-actions">
+            <button class="icon-btn" id="textSettingsBtn" type="button" title="문구 설정">T</button>
+            <button class="icon-btn" id="imageSettingsBtn" type="button" title="이미지 추가">▧</button>
+            <button class="icon-btn" id="soundToggleBtn" type="button" title="소리 켜기/끄기">♫</button>
+            <button class="icon-btn" id="backgroundBtn" type="button" title="배경 선택">◐</button>
+          </div>
+        </div>
+        <div class="stage-content">
+          <button class="cover-card" id="coverCard" type="button"><span>✦</span><strong>깜깜이 창</strong><small>화면을 눌러 닫기</small></button>
+          <div class="attention-content" aria-live="polite">
+            <div class="attention-image" id="attentionImage" hidden></div>
+            <p class="attention-text" id="attentionText">여기보세요!</p>
+            <span class="attention-decoration decoration-one">✳</span>
+            <span class="attention-decoration decoration-two">✦</span>
+          </div>
+        </div>
+        <div class="stage-hint"><kbd>F</kbd> 전체 화면 <span>/</span> 화면 클릭: 창 닫기</div>
+      </div>
+    </section>
+
+    <section class="bottom-panel">
+      <p class="panel-copy"><span class="status-dot"></span><span id="modeDescription">화면 가리기 모드예요. 교실 화면을 잠시 가려보세요.</span></p>
+      <div class="panel-buttons">
+        <button class="secondary-btn" id="previewBtn" type="button">미리보기</button>
+        <button class="primary-btn" id="runBtn" type="button">깜깜이 실행하기 ↗</button>
+      </div>
+    </section>
+  </main>
+
+  <input type="file" id="imageInput" accept="image/*" hidden>
+
+  <div class="modal-backdrop" id="textModal" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="textModalTitle">
+      <button class="modal-close" data-close type="button" aria-label="닫기">×</button>
+      <span class="modal-eyebrow">TEXT SETTINGS</span><h2 id="textModalTitle">주목 문구 설정</h2>
+      <p class="modal-description">화면에 보여줄 문구를 입력해 주세요.</p>
+      <label class="field-label" for="messageInput">안내 문구</label>
+      <input class="text-field" id="messageInput" maxlength="32" value="여기보세요!" placeholder="문구를 입력해 주세요">
+      <div class="modal-footer"><button class="secondary-btn" data-close type="button">취소</button><button class="primary-btn" id="saveTextBtn" type="button">적용하기</button></div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="backgroundModal" hidden>
+    <section class="modal background-modal" role="dialog" aria-modal="true" aria-labelledby="backgroundModalTitle">
+      <button class="modal-close" data-close type="button" aria-label="닫기">×</button>
+      <span class="modal-eyebrow">BACKGROUND</span><h2 id="backgroundModalTitle">배경 선택</h2>
+      <p class="modal-description">수업 분위기에 어울리는 배경을 골라보세요.</p>
+      <div class="background-grid">
+        <button class="background-option bg-sunshine is-selected" data-background="sunshine" type="button"><span>햇살</span></button>
+        <button class="background-option bg-ocean" data-background="ocean" type="button"><span>바다</span></button>
+        <button class="background-option bg-lavender" data-background="lavender" type="button"><span>라벤더</span></button>
+        <button class="background-option bg-mint" data-background="mint" type="button"><span>민트</span></button>
+        <button class="background-option bg-space" data-background="space" type="button"><span>우주</span></button>
+        <button class="background-option bg-custom" id="customBackgroundBtn" type="button"><b>＋</b><span>내 배경 추가</span></button>
+      </div>
+      <div class="modal-footer"><button class="secondary-btn" data-close type="button">닫기</button><button class="primary-btn" id="applyBackgroundBtn" type="button">배경 적용</button></div>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
